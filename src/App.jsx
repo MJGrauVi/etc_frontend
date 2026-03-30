@@ -1,20 +1,23 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Inicio from "./pages/Inicio";
+import "./App.css";
 
-import ProveedorSesion from "./context/ProveedorSesion.jsx";
-
-import LoginRegistro from "./components/LoginRegistro.jsx";
-
-import './App.css'
-
-function App() {
-
-
+export default function App() {
   return (
-  
-      <ProveedorSesion>
-        <LoginRegistro />
-      </ProveedorSesion>
-    
-  )
-}
+    <>
 
-export default App;
+      {/* Navbar siempre visible */}
+      <Navbar />
+
+      {/* Contenido dinámico según la ruta */}
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+      </Routes>
+
+      {/* Footer siempre visible */}
+      <Footer />
+    </>
+  );
+}
