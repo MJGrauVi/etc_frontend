@@ -49,15 +49,8 @@ const useApiCrud = () => {
         if (!res.ok) throw new Error("Error al eliminar recurso");
         return await res.json();
     };
-     //Para recuperar un usuario autenticado, por si refresca la página
-    const me = async () => {
-        const res = await fetch(`${API_URL}/me`, {
-            headers: getHeaders()
-        });
-        if (!res.ok) throw new Error("No autenticado");
-        return await res.json();
-    };   
+  
 
-    return { get, post, put, remove, me};
+    return { get, post, put, remove};
 };
 export {useApiCrud};

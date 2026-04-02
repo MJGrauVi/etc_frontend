@@ -6,42 +6,35 @@ const useLoginRegistroForm = () => {
   const { iniciarLogin, registrarUsuario, cargando } = useContextoSesion();
   const navegar = useNavigate();
 
-  // Estado inicial del formulario
+  // Estado inicial del formulario.
   const estadoInicial = {
     nombre: "",
     direccion: "",
     telefono: "",
     email: "",
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
   };
 
   const [form, setForm] = useState(estadoInicial);
-  const [modoRegistro, setModoRegistro] = useState(true);
+  const [modoRegistro, setModoRegistro] = useState(false); //Empieza en login.
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
   // Delegación de eventos: un solo handler para todos los inputs
   const handleChange = ({ target }) => {
     const { name, value } = target;
-
-    setForm(prev => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm((prev) => ({...prev, [name]: value}));
   };
 
   // Mostrar mensaje temporal
   const mostrarMensaje = (tipo, texto, tiempo = 2000) => {
     setMensaje({ tipo, texto });
-
-    setTimeout(() => {
-      setMensaje({ tipo: "", texto: "" });
-    }, tiempo);
+    setTimeout(() => setMensaje({ tipo: "", texto: "" }), tiempo);
   };
 
   // Cambiar entre login y registro
   const toggleModoRegistro = () => {
-    setModoRegistro(prev => !prev);
+    setModoRegistro((prev) => !prev);
     setForm(estadoInicial);
     setMensaje({ tipo: "", texto: "" });
   };
@@ -55,22 +48,28 @@ const useLoginRegistroForm = () => {
       if (modoRegistro) {
         // REGISTRO
         await registrarUsuario(form);
-
-        mostrarMensaje("success", "¡Cuenta creada! Revisa tu correo para verificarla.", 2500);
+        mostrarMensaje("success", "¡Cuenta creada! Revisa tu correo para verificarla.",2500);
         setForm(estadoInicial);
-
         setTimeout(() => navegar("/"), 2500);
       } else {
         // LOGIN
-        await iniciarLogin(form.email, form.password);
-
-        mostrarMensaje("success", "¡Has iniciado sesión!", 2000);
+        const data = await iniciarLogin(form.email, form.password);
+        console.log("Respuesta login:", data); //
+        mostrarMensaje("success", "¡Has iniciado sesión!", 1500);
         setForm(estadoInicial);
-
-        setTimeout(() => navegar("/"), 2000);
+        setTimeout(() => {
+          if (data?.data?.rol === "Administrador") {
+            navegar("/admin/usuarios");
+          } else {
+            navegar("/");
+          }
+        }, 1500);
       }
     } catch (err) {
-      mostrarMensaje("error", err.message || "Error al conectar con el servidor.");
+      mostrarMensaje(
+        "error",
+        err.message || "Error al conectar con el servidor.",
+      );
     }
   };
 
@@ -81,7 +80,7 @@ const useLoginRegistroForm = () => {
     cargando,
     handleChange,
     handleSubmit,
-    toggleModoRegistro
+    toggleModoRegistro,
   };
 };
 

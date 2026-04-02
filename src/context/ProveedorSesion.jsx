@@ -5,7 +5,7 @@ import { useApiCrud } from "../services/useApiCrud.js";
 const ContextoSesion = createContext();
 
 const ProveedorSesion = ({ children }) => {
-  const { login, register, logout, me } = useApiAuth();
+  const { login, register, logout, me} = useApiAuth();
   const { get} = useApiCrud();
 
   const [usuario, setUsuario] = useState(null);
@@ -15,10 +15,10 @@ const ProveedorSesion = ({ children }) => {
   const iniciarLogin = async (email, password) => {
     setCargando(true);
     try {
-      const data = await login(email, password);
-      localStorage.setItem("token", data.token); //Guardamos el token para que useApiCrud pueda usarlo.
-      setUsuario(data.usuario); // Ajusta según tu backend.
-      return data;
+      const respuesta = await login(email, password);
+      localStorage.setItem("token", respuesta.token); //Guardamos el token para que useApiCrud pueda usarlo.
+      setUsuario(respuesta.data); // Ajusta según tu backend.
+      return respuesta;
     } finally {
       setCargando(false);
     }
@@ -34,8 +34,8 @@ const ProveedorSesion = ({ children }) => {
   const registrarUsuario = async (formData) => {
     setCargando(true);
     try {
-      const data = await register(formData);
-      return data;
+      const respuesta = await register(formData);
+      return respuesta;
     } finally {
       setCargando(false);
     }
@@ -52,7 +52,7 @@ const ProveedorSesion = ({ children }) => {
       } catch {
         //Token inválido o expirado.
         localStorage.removeItem("token");
-        setUsuario("null");
+        setUsuario(null);
       } finally {
         setCargando(false);
       }
@@ -71,11 +71,12 @@ const ProveedorSesion = ({ children }) => {
     <ContextoSesion.Provider
       value={{
         usuario,
-        cargando,
-        iniciarLogin,
-        cargarUsuarios,
-        registrarUsuario,
-        cerrarSesion,
+    cargando,
+    iniciarLogin,
+    registrarUsuario,
+    cerrarSesion,
+    get
+        
       }}
     >
       {children}

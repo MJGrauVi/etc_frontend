@@ -1,18 +1,17 @@
-
 const API_URL = "http://localhost:8095/api";
+
+// 👇 Necesitas definirla aquí también porque me() necesita el token
+const getToken = () => localStorage.getItem('token');
 
 const useApiAuth = () => {
 
-  //No necesito token porque el usuario AÚN no esta autenticado.
   const login = async (email, password) => {
     const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
-    
     if (!res.ok) throw new Error("Error al iniciar sesión");
-    //Laravel devuelve el token aquí y React lo guarda.
     return await res.json();
   };
 
@@ -22,24 +21,33 @@ const useApiAuth = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
     });
-
     if (!res.ok) throw new Error("Error al registrar usuario");
-
     return await res.json();
   };
-  
+
   const logout = async () => {
-    await fetch(`${API_URL}/logout`, { 
+    await fetch(`${API_URL}/logout`, {
       method: "POST",
       headers: {
-        'Authoriation': `Bearer ${localStorage.getItem('token')}`,
+        'Authorization': `Bearer ${getToken()}`, // 👈 typo corregido: Authoriation → Authorization
         'Accept': 'application/json'
       }
-
     });
-    localStorage.removeItem('token');//Limpia en el frontend.
+    localStorage.removeItem('token');
   };
 
-  return { login, register, logout};
+  const me = async () => {
+    const res = await fetch(`${API_URL}/me`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`, // 👈 reemplaza getHeaders() por esto
+        'Accept': 'application/json'
+      }
+    });
+    if (!res.ok) throw new Error("No autenticado");
+    return await res.json();
+  };
+
+  return { login, register, logout, me };
 };
-export {useApiAuth};
+
+export { useApiAuth };
