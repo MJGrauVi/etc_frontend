@@ -5,8 +5,8 @@ import { useApiCrud } from "../services/useApiCrud.js";
 const ContextoSesion = createContext();
 
 const ProveedorSesion = ({ children }) => {
-  const { login, register, logout, me} = useApiAuth();
-  const { get} = useApiCrud();
+  const { login, register, logout, me } = useApiAuth();
+  const { get, post, put, remove, postForm } = useApiCrud();
 
   const [usuario, setUsuario] = useState(null);
   const [cargando, setCargando] = useState(false);
@@ -22,12 +22,6 @@ const ProveedorSesion = ({ children }) => {
     } finally {
       setCargando(false);
     }
-  };
-  //Va directamente en el componente Admin.
-  //Ya autenticado. Usa el token directamente.
-  const cargarUsuarios = async () => {
-    const usuarios = await get("admin/users"); //Envia Bearer Toke solo.
-    return usuarios;
   };
 
   // REGISTRO
@@ -71,12 +65,15 @@ const ProveedorSesion = ({ children }) => {
     <ContextoSesion.Provider
       value={{
         usuario,
-    cargando,
-    iniciarLogin,
-    registrarUsuario,
-    cerrarSesion,
-    get
-        
+        cargando,
+        iniciarLogin,
+        registrarUsuario,
+        cerrarSesion,
+        get,
+        post,
+        put,
+        remove,
+        postForm,
       }}
     >
       {children}
@@ -85,4 +82,4 @@ const ProveedorSesion = ({ children }) => {
 };
 
 export default ProveedorSesion;
-export {ContextoSesion} ;
+export { ContextoSesion };

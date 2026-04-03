@@ -4,14 +4,12 @@ import logo from "../public/assets/LogoEtc.svg";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const Navbar = () => {
-    //Estado para manejar el menu hamburguesa.
   const [open, setOpen] = useState(false);
-    const { usuario, cerrarSesion } = useContextoSesion();
+  const { usuario, cerrarSesion } = useContextoSesion();
 
-return (
+  return (
     <nav className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4 mx-auto max-w-7xl">
-
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/">
@@ -25,19 +23,27 @@ return (
             Soporte
           </li>
 
-          {/* Solo visible si es administrador */}
           {usuario?.rol === "Administrador" && (
             <li className="transition cursor-pointer hover:text-orange-500">
               <Link to="/admin/usuarios">Usuarios</Link>
             </li>
           )}
 
-          {/* Si está logueado muestra su nombre y logout */}
+          {/* 👇 Nueva pieza dentro del ul como li */}
+          {usuario && (
+            <li className="transition cursor-pointer hover:text-orange-500">
+              <Link to="/pieza/nueva">Nueva pieza</Link>
+            </li>
+          )}
+          {/* Mis piezas — desktop */}
+          {usuario && (
+            <li className="transition cursor-pointer hover:text-orange-500">
+              <Link to="/mis-piezas">Mis piezas</Link>
+            </li>
+          )}
           {usuario ? (
             <>
-              <li className="text-sm text-gray-500">
-                Hola, {usuario.nombre}
-              </li>
+              <li className="text-sm text-gray-500">Hola, {usuario.nombre}</li>
               <li>
                 <button
                   onClick={cerrarSesion}
@@ -50,10 +56,7 @@ return (
           ) : (
             <>
               <li>
-                <Link
-                  to="/login"
-                  className="transition hover:text-orange-500"
-                >
+                <Link to="/login" className="transition hover:text-orange-500">
                   Iniciar sesión
                 </Link>
               </li>
@@ -79,9 +82,19 @@ return (
             stroke="currentColor"
           >
             {open ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             )}
           </svg>
         </button>
@@ -102,14 +115,32 @@ return (
             </li>
           )}
 
+          {/* 👇 Nueva pieza en móvil */}
+          {usuario && (
+            <li className="transition cursor-pointer hover:text-orange-500">
+              <Link to="/pieza/nueva" onClick={() => setOpen(false)}>
+                Nueva pieza
+              </Link>
+            </li>
+          )}
+          {/* Mis piezas — móvil */}
+          {usuario && (
+            <li className="transition cursor-pointer hover:text-orange-500">
+              <Link to="/mis-piezas" onClick={() => setOpen(false)}>
+                Mis piezas
+              </Link>
+            </li>
+          )}
+
           {usuario ? (
             <>
-              <li className="text-sm text-gray-500">
-                Hola, {usuario.nombre}
-              </li>
+              <li className="text-sm text-gray-500">Hola, {usuario.nombre}</li>
               <li>
                 <button
-                  onClick={() => { cerrarSesion(); setOpen(false); }}
+                  onClick={() => {
+                    cerrarSesion();
+                    setOpen(false);
+                  }}
                   className="w-full px-4 py-2 font-semibold text-orange-500 transition border border-orange-300 rounded-lg hover:bg-orange-50"
                 >
                   Cerrar sesión
@@ -119,8 +150,11 @@ return (
           ) : (
             <>
               <li>
-                <Link to="/login" onClick={() => setOpen(false)}
-                  className="transition hover:text-orange-500">
+                <Link
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className="transition hover:text-orange-500"
+                >
                   Iniciar sesión
                 </Link>
               </li>
@@ -136,4 +170,5 @@ return (
     </nav>
   );
 };
+
 export default Navbar;
