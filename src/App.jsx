@@ -5,7 +5,8 @@ import Inicio from "./pages/Inicio";
 import AdminPanelTailwind from "./pages/AdminPanelTailwind.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import NuevaPiezaPage from "./pages/NuevaPiezaPage.jsx";
-import MisPiezasPage from "./pages/MisPiezasPage.jsx"; // 👈
+import MisPiezasPage from "./pages/MisPiezasPage.jsx";
+import PiezaDetallePage from "./pages/PiezaDetallePage.jsx";
 import useContextoSesion from "./hooks/useContextoSesion.js";
 import "./App.css";
 
@@ -54,7 +55,15 @@ export default function App() {
           path="/mis-piezas"
           element={
             <RutaPrivada>
-              <MisPiezasPage /> // 👈
+              <MisPiezasPage />
+            </RutaPrivada>
+          }
+        />
+        <Route
+          path="/pieza/:id"
+          element={
+            <RutaPrivada>
+              <PiezaDetallePage />
             </RutaPrivada>
           }
         />
