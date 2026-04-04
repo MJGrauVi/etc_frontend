@@ -4,7 +4,7 @@ import useContextoSesion from "./useContextoSesion.js";
 
 const usePiezaDetalle = () => {
   const { id } = useParams();
-  const { get, post } = useContextoSesion();
+  const { get, post, put } = useContextoSesion();
 
   const [pieza, setPieza] = useState(null);
   const [publicacion, setPublicacion] = useState(null);
@@ -59,12 +59,12 @@ const usePiezaDetalle = () => {
   const guardarCambios = async () => {
     setGuardando(true);
     try {
-      const respuesta = await post(`publicacion/${publicacion.id}`, {
+      const respuesta = await put(`publicacion/${publicacion.id}`, {
         titulo: publicacion.titulo,
         contenido: publicacion.contenido,
         hashtags: publicacion.hashtags,
         estado: publicacion.estado,
-        _method: "PUT" // Laravel acepta PUT con _method
+      /*   _method: "PUT" // Laravel acepta PUT con _method */
       });
       setPublicacion(respuesta.data);
       setMensaje({ tipo: "success", texto: "Cambios guardados correctamente." });
