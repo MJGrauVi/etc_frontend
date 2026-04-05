@@ -7,8 +7,8 @@ const PublicacionPreview = ({
   onEditar,
   onGuardar,
 }) => {
-  const imagenUrl = publicacion.piezas?.medias?.find(m => m.es_portada)?.url_completa
-    || publicacion.piezas?.medias?.[0]?.url_completa;
+  const imagenUrl = publicacion.pieza?.medias?.find(m => m.es_portada)?.url_completa
+    || publicacion.pieza?.medias?.[0]?.url_completa;
 
   return (
     <div className="mt-10 border border-orange-200 bg-orange-50">
