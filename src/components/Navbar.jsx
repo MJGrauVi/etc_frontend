@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../public/assets/LogoEtc.svg";
+
+import LogoEtc from "../components/logo/LogoEtc.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const Navbar = () => {
@@ -9,11 +10,14 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
-      <div className="flex items-center justify-between px-6 py-4 mx-auto max-w-7xl">
+      <div className="flex items-center justify-between py-2 mx-auto px-15 max-w-7xl">
         {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center gap-1 md:gap-2">
           <Link to="/">
-            <img src={logo} alt="Logo ETC" className="w-auto h-10" />
+            <LogoEtc />
+            <span className="text-xl font-bold text-gray-800 md:text-2xl">
+              Etc Apps
+            </span>
           </Link>
         </div>
 
@@ -47,7 +51,7 @@ const Navbar = () => {
               <li>
                 <button
                   onClick={cerrarSesion}
-                  className="px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 rounded-lg hover:bg-orange-50"
+                  className="px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50"
                 >
                   Cerrar sesión
                 </button>
@@ -61,7 +65,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <button className="px-5 py-2 font-semibold text-white transition bg-orange-500 rounded-lg shadow-sm hover:bg-orange-600">
+                <button className="px-5 py-2 font-semibold text-white transition bg-orange-500 shadow-sm hover:bg-orange-600">
                   Prueba gratis
                 </button>
               </li>
@@ -141,7 +145,7 @@ const Navbar = () => {
                     cerrarSesion();
                     setOpen(false);
                   }}
-                  className="w-full px-4 py-2 font-semibold text-orange-500 transition border border-orange-300 rounded-lg hover:bg-orange-50"
+                  className="w-full px-4 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50"
                 >
                   Cerrar sesión
                 </button>
@@ -159,7 +163,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <button className="w-full px-4 py-2 font-semibold text-white transition bg-orange-500 rounded-lg shadow-sm hover:bg-orange-600">
+                <button className="w-full px-4 py-2 font-semibold text-white transition bg-orange-500 shadow-sm hover:bg-orange-600">
                   Prueba gratis
                 </button>
               </li>

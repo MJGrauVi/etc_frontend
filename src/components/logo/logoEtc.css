@@ -1,0 +1,19 @@
+/*Estilo para el logo*/
+
+.etc {
+  width: 5rem; /* Ocupa todo el ancho del contenedor padre. */
+  max-width: 150px; /* Ancho máximo limitado a 230px */
+  height: auto; /* Mantiene la proporción */
+  display: inline-block;
+  
+}
+
+.etc:hover {
+  filter: drop-shadow(0 0 0.5em #e0eccb);
+  transition: filter 0.3s ease-in-out;
+  cursor: pointer;
+}
+.dark{
+  fill: white;  
+  
+}

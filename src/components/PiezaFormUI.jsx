@@ -1,7 +1,5 @@
 import Mensaje from "./Mensaje.jsx";
 
-const inputClase = "w-full px-4 py-2 text-gray-800 bg-white border border-gray-300 focus:outline-none focus:border-orange-400 transition";
-const labelClase = "block mb-1 text-sm font-medium text-gray-700";
 
 const PiezaFormUI = ({
   form,
@@ -20,7 +18,7 @@ const PiezaFormUI = ({
 
       {/* NOMBRE */}
       <div className="mb-4">
-        <label htmlFor="nombre" className={labelClase}>
+        <label htmlFor="nombre" className="labelClass">
           Nombre de la pieza
         </label>
         <input
@@ -30,14 +28,14 @@ const PiezaFormUI = ({
           value={form.nombre}
           onChange={onChange}
           required
-          className={inputClase}
+          className="inputClass"
           placeholder="Ej: Jarrón de cerámica azul"
         />
       </div>
 
       {/* DESCRIPCIÓN */}
       <div className="mb-4">
-        <label htmlFor="descripcion" className={labelClase}>
+        <label htmlFor="descripcion" className="labelClass">
           Descripción
         </label>
         <textarea
@@ -47,7 +45,7 @@ const PiezaFormUI = ({
           onChange={onChange}
           required
           rows={4}
-          className={`${inputClase} resize-none`}
+          className="resize-none inputClass"
           placeholder="Describe tu pieza: materiales, técnica, inspiración..."
         />
       </div>
@@ -55,7 +53,7 @@ const PiezaFormUI = ({
       {/* CATEGORÍA Y PRECIO en fila */}
       <div className="flex gap-4 mb-4">
         <div className="flex-1">
-          <label htmlFor="categoria" className={labelClase}>
+          <label htmlFor="categoria" className="labelClass">
             Categoría <span className="font-normal text-gray-400">(opcional)</span>
           </label>
           <input
@@ -64,12 +62,12 @@ const PiezaFormUI = ({
             type="text"
             value={form.categoria}
             onChange={onChange}
-            className={inputClase}
+            className="inputClass"
             placeholder="Ej: Cerámica, Joyería..."
           />
         </div>
         <div className="w-36">
-          <label htmlFor="precio" className={labelClase}>
+          <label htmlFor="precio" className="labelClass">
             Precio <span className="font-normal text-gray-400">(€)</span>
           </label>
           <input
@@ -80,7 +78,7 @@ const PiezaFormUI = ({
             step="0.01"
             value={form.precio}
             onChange={onChange}
-            className={inputClase}
+            className="inputClass"
             placeholder="0.00"
           />
         </div>
@@ -88,7 +86,7 @@ const PiezaFormUI = ({
 
       {/* FOTOS */}
       <div className="mb-6">
-        <label className={labelClase}>
+        <label className="labelClass">
           Fotos de la pieza <span className="font-normal text-gray-400">(jpeg, png, jpg · máx 2MB por foto)</span>
         </label>
 

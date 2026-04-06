@@ -7,12 +7,12 @@ const PublicacionPreview = ({
   onEditar,
   onGuardar,
 }) => {
-  const imagenUrl = publicacion.pieza?.medias?.find(m => m.es_portada)?.url_completa
-    || publicacion.pieza?.medias?.[0]?.url_completa;
+  const imagenUrl =
+    publicacion.pieza?.medias?.find((m) => m.es_portada)?.url_completa ||
+    publicacion.pieza?.medias?.[0]?.url_completa;
 
   return (
     <div className="mt-10 border border-orange-200 bg-orange-50">
-
       <div className="px-6 py-4 bg-orange-100 border-b border-orange-200">
         <h2 className="text-lg font-semibold text-orange-700">
           Previsualización de la publicación
@@ -26,7 +26,6 @@ const PublicacionPreview = ({
         <Mensaje tipo={mensaje.tipo} texto={mensaje.texto} />
 
         <div className="flex flex-col gap-6 md:flex-row">
-
           {/* Imagen de la pieza */}
           <div className="flex-shrink-0 w-full md:w-64">
             {imagenUrl ? (
@@ -44,7 +43,6 @@ const PublicacionPreview = ({
 
           {/* Campos editables */}
           <div className="flex flex-col flex-1 gap-4">
-
             {/* Título */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">

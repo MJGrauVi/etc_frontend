@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* Variables globales. */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -13,7 +14,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* Reset y estilos base. */
 a {
   font-weight: 500;
   color: #646cff;
@@ -36,17 +37,7 @@ h1 {
   line-height: 1.1;
 }
 
-/* button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-} */
+
 button:hover {
   border-color: #646cff;
 }
@@ -54,3 +45,44 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+/* Clases personalizadas para tu proyecto */
+.btn-principal {
+  @apply px-6 py-3 font-semibold text-white transition bg-orange-500 rounded shadow hover:bg-orange-600;
+}
+
+.card-curso {
+  @apply p-4 transition bg-white rounded-lg shadow-md hover:shadow-lg;
+}
+
+.alerta {
+  @apply px-4 py-3 text-center rounded-lg;
+}
+.alerta.info {
+  @apply text-blue-800 bg-blue-100;
+}
+.alerta.error {
+  @apply text-red-800 bg-red-100;
+}
+.alerta.success {
+  @apply text-green-800 bg-green-100;
+}
+
+/* @apply → combina utilidades de Tailwind en una sola clase CSS.
+Luego en JSX solo pones className="btn-principal" o className="alerta error" */
+
+/* LoginRegistroFormUI, PiezaFormUI */
+.labelClass {
+  @apply block mb-1 text-sm font-medium text-gray-700;
+}
+.inputClass {
+  @apply w-full px-4 py-2 text-gray-800 transition bg-white border border-gray-300 focus:outline-none focus:border-orange-400;
+}
+/* Logo */
+.line {
+  stroke: black;
+}
+.shadow {
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+}
+
+
