@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import LogoEtc from "../components/logo/LogoEtc.jsx";
+import LogoEtcTail from "../components/logo/LogoEtcTail.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { usuario, cerrarSesion } = useContextoSesion();
+  
 
   return (
     <nav className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
       <div className="flex items-center justify-between py-2 mx-auto px-15 max-w-7xl">
         {/* Logo */}
         <div className="flex items-center gap-1 md:gap-2">
-          <Link to="/">
-            <LogoEtc />
+          <Link to="/" className="flex items-center gap-2">
+            <LogoEtcTail />
             <span className="text-xl font-bold text-gray-800 md:text-2xl">
               Etc Apps
             </span>

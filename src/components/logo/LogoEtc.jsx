@@ -2,7 +2,7 @@
 import './logoEtc.css'
 function LogoEtc() {
   return (
-    <>
+    
       <svg
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ function LogoEtc() {
         </g>
         <circle cx="105" cy="90" r="15" fill="url(#gradNaranja)" />
       </svg>
-    </>
+    
   )
 }
 export default LogoEtc;
