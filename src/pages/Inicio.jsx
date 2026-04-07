@@ -55,7 +55,7 @@ export default function Inicio() {
             gestionar tu actividad y reducir tiempos y costes. Podrás conocer
             todas las características y acceder al contenido detallado de cada
             herramienta que te ayudará a impulsar tu empresa, taller, agencia o
-            asociación.
+            asociación,... etc.
           </p>
 
           {/* Grid de beneficios */}
@@ -183,50 +183,7 @@ export default function Inicio() {
       </section>
 
       {/* Sección de beneficios */}
-      {/* <section className="py-20 bg-white">
-        <div className="px-6 mx-auto max-w-7xl">
-          <h2 className="text-3xl font-semibold text-center text-gray-800 md:text-4xl">
-            ¿Por qué usar ETC?
-          </h2>
-
-          <p className="max-w-2xl mx-auto mt-4 text-lg text-center text-gray-600">
-            Diseñado para creadores, artesanos y pequeñas empresas que quieren
-            mostrar su trabajo sin complicaciones.
-          </p>
-
-          <div className="grid grid-cols-1 gap-10 mt-12 md:grid-cols-3">
-            <div className="p-6 transition shadow-sm bg-gray-50 rounded-xl hover:shadow-md">
-              <h3 className="text-xl font-semibold text-gray-800">
-                Fácil de usar
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Crea publicaciones profesionales en minutos, sin necesidad de
-                conocimientos técnicos.
-              </p>
-            </div>
-
-            <div className="p-6 transition shadow-sm bg-gray-50 rounded-xl hover:shadow-md">
-              <h3 className="text-xl font-semibold text-gray-800">
-                Escaparate digital
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Muestra tus piezas únicas en un espacio visual pensado para
-                destacar tu trabajo.
-              </p>
-            </div>
-
-            <div className="p-6 transition shadow-sm bg-gray-50 rounded-xl hover:shadow-md">
-              <h3 className="text-xl font-semibold text-gray-800">
-                Comparte en redes
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Publica directamente en tus redes sociales favoritas con un solo
-                clic.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section> */}
+   
 
       {/* CTA final */}
       <section className="py-20 bg-gray-50">

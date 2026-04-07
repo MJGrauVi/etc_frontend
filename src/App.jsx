@@ -25,50 +25,52 @@ const RutaPrivada = ({ children }) => {
 
 export default function App() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Routes>
-        {/* Públicas */}
-        <Route path="/" element={<Inicio />} />
-        <Route path="/login" element={<LoginPage />} />
+      <main className="flex-1 pt-16">
+        <Routes>
+          {/* Públicas */}
+          <Route path="/" element={<Inicio />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* Solo admin */}
-        <Route
-          path="/admin/usuarios"
-          element={
-            <RutaAdmin>
-              <AdminPanelTailwind />
-            </RutaAdmin>
-          }
-        />
+          {/* Solo admin */}
+          <Route
+            path="/admin/usuarios"
+            element={
+              <RutaAdmin>
+                <AdminPanelTailwind />
+              </RutaAdmin>
+            }
+          />
 
-        {/* Usuario autenticado */}
-        <Route
-          path="/pieza/nueva"
-          element={
-            <RutaPrivada>
-              <NuevaPiezaPage />
-            </RutaPrivada>
-          }
-        />
-        <Route
-          path="/mis-piezas"
-          element={
-            <RutaPrivada>
-              <MisPiezasPage />
-            </RutaPrivada>
-          }
-        />
-        <Route
-          path="/pieza/:id"
-          element={
-            <RutaPrivada>
-              <PiezaDetallePage />
-            </RutaPrivada>
-          }
-        />
-      </Routes>
+          {/* Usuario autenticado */}
+          <Route
+            path="/pieza/nueva"
+            element={
+              <RutaPrivada>
+                <NuevaPiezaPage />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/mis-piezas"
+            element={
+              <RutaPrivada>
+                <MisPiezasPage />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/pieza/:id"
+            element={
+              <RutaPrivada>
+                <PiezaDetallePage />
+              </RutaPrivada>
+            }
+          />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }

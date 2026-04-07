@@ -1,11 +1,8 @@
-import Mensaje from "./Mensaje.jsx";
-
 
 const PiezaFormUI = ({
   form,
   previews,
   cargando,
-  mensaje,
   onChange,
   onFotos,
   onEliminarFoto,
@@ -13,8 +10,6 @@ const PiezaFormUI = ({
 }) => {
   return (
     <form onSubmit={onSubmit} className="w-full max-w-2xl mx-auto">
-
-      <Mensaje tipo={mensaje.tipo} texto={mensaje.texto} />
 
       {/* NOMBRE */}
       <div className="mb-4">

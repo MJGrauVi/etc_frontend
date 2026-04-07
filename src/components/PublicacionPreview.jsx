@@ -1,9 +1,8 @@
-import Mensaje from "./Mensaje.jsx";
+import MensajeTail from "./MensajeTail.jsx";
 
 const PublicacionPreview = ({
   publicacion,
   guardando,
-  mensaje,
   onEditar,
   onGuardar,
 }) => {
@@ -12,6 +11,7 @@ const PublicacionPreview = ({
     publicacion.pieza?.medias?.[0]?.url_completa;
 
   return (
+  
     <div className="mt-10 border border-orange-200 bg-orange-50">
       <div className="px-6 py-4 bg-orange-100 border-b border-orange-200">
         <h2 className="text-lg font-semibold text-orange-700">
@@ -23,7 +23,7 @@ const PublicacionPreview = ({
       </div>
 
       <div className="p-6">
-        <Mensaje tipo={mensaje.tipo} texto={mensaje.texto} />
+        
 
         <div className="flex flex-col gap-6 md:flex-row">
           {/* Imagen de la pieza */}
@@ -114,6 +114,7 @@ const PublicacionPreview = ({
         </div>
       </div>
     </div>
+  
   );
 };
 

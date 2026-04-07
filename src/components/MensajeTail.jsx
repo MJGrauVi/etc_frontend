@@ -1,46 +1,34 @@
 import { useEffect } from "react";
+import { createPortal } from "react-dom"; // Importante
 
-const estilos = {
-  info: "bg-blue-100 text-blue-800 text-xl py-50",
-  error: "bg-red-100 text-red-800 text-xl py-50",
-  success: "bg-green-100 text-green-800 text-xl py-50"
+const estilosPorTipo = {
+  info: "alerta-info",
+  error: "alerta-error",
+  success: "alerta-success",
 };
 
 const MensajeTail = ({ tipo = "info", texto, onClose, autoClose = true }) => {
-
   useEffect(() => {
-    if (autoClose) {
+    if (autoClose && texto) {
       const timer = setTimeout(() => {
         onClose && onClose();
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [autoClose, onClose]);
+  }, [autoClose, onClose, texto]);
 
   if (!texto) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      
-      {/* fondo oscuro */}
-     {/*  <div className="absolute inset-0 bg-black opacity-30"></div> */}
+  const claseTipo = estilosPorTipo[tipo] || estilosPorTipo.info;
 
-      {/* caja mensaje */}
-      <div className={`relative z-10 px-20 py-4 shadow-lg
-        w-80 text-center
-        ${estilos[tipo]}
-      `}>
-        
-        {/* <button
-          onClick={onClose}
-          className="absolute text-sm font-bold cursor-pointer top-2 right-2"
-        >
-          ✕
-        </button> */}
-
-        <p>{texto}</p>
+  // Usamos createPortal para "teletransportar" el mensaje fuera del main
+  return createPortal(
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-6 pointer-events-none overflow-hidden backdrop-blur-sm">
+      <div className={`alerta-base ${claseTipo} pointer-events-auto`}>
+        <p className="text-2xl font-bold tracking-tight">{texto}</p>
       </div>
-    </div>
+    </div>,
+    document.body // Lo envía directamente al final del body
   );
 };
 

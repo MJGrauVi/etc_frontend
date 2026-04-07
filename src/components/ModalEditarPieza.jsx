@@ -1,11 +1,20 @@
+import MensajeTail from "./MensajeTail.jsx";
 const ModalEditarPieza = ({
   piezaEdit,
   guardando,
   onChange,
   onGuardar,
   onCerrar,
+  mensaje,
+  setMensaje
 }) => {
   return (
+    <>     
+    <MensajeTail
+        tipo={mensaje?.tipo}
+        texto={mensaje?.texto}
+        onClose={() => setMensaje(null)}
+      />
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40">
       <div className="w-full max-w-lg bg-white border border-gray-200 shadow-xl">
 
@@ -98,6 +107,7 @@ const ModalEditarPieza = ({
 
       </div>
     </div>
+    </>
   );
 };
 

@@ -17,11 +17,7 @@ const LoginRegistro = () => {
 
   return (
     <>
-      <MensajeTail
-        tipo={mensaje?.tipo}
-        texto={mensaje?.texto}
-        onClose={() => setMensaje(null)}
-      />
+  
       <LoginRegistroFormUI
         form={form}
         mensaje={mensaje}
@@ -30,6 +26,11 @@ const LoginRegistro = () => {
         onChange={handleChange}
         onSubmit={handleSubmit}
         onToggleModo={toggleModoRegistro}
+      />
+          <MensajeTail
+        tipo={mensaje?.tipo}
+        texto={mensaje?.texto}
+        onClose={() => setMensaje(null)}
       />
     </>
   );
