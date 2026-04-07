@@ -34,7 +34,7 @@ const Navbar = () => {
             </li>
           )}
 
-          {/* 👇 Nueva pieza dentro del ul como li */}
+          {/* Nueva pieza dentro del ul como li */}
           {usuario && (
             <li className="transition cursor-pointer hover:text-orange-500">
               <Link to="/pieza/nueva">Nueva pieza</Link>
@@ -165,7 +165,13 @@ const Navbar = () => {
               </li>
               <li>
                 <button className="w-full px-4 py-2 font-semibold text-white transition bg-orange-500 shadow-sm hover:bg-orange-600">
+                  <Link  
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className="transition hover:text-orange-500"
+                >
                   Prueba gratis
+                </Link>
                 </button>
               </li>
             </>
