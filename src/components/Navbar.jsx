@@ -23,72 +23,86 @@ const Navbar = () => {
 
         {/* Menu desktop */}
         <ul className="items-center hidden h-full gap-8 font-medium text-gray-700 md:flex">
+          <li className="flex items-center h-full">
+            <a
+              href="mailto:etc-apps@proton.me"
+              className="flex items-center h-full px-4 transition hover:bg-orange-50"
+            >
+              Soporte
+            </a>
+          </li>
 
-  <li className="flex items-center h-full transition hover:text-orange-500">
-    <a href="mailto:etc-apps@proton.me" className="flex items-center h-full px-4">
-      Soporte
-    </a>
-  </li>
+          {usuario?.rol === "Administrador" && (
+            <li className="flex items-center h-full">
+              <Link
+                to="/admin/usuarios"
+                className="flex items-center h-full px-4 transition hover:bg-orange-50"
+              >
+                Usuarios
+              </Link>
+            </li>
+          )}
 
-  {usuario?.rol === "Administrador" && (
-    <li className="flex items-center h-full transition hover:text-orange-500">
-      <Link to="/admin/usuarios" className="flex items-center h-full px-4">
-        Usuarios
-      </Link>
-    </li>
-  )}
+          {usuario && (
+            <li className="flex items-center h-full">
+              <Link
+                to="/pieza/nueva"
+                className="flex items-center h-full px-4 transition hover:bg-orange-50"
+              >
+                Nueva pieza
+              </Link>
+            </li>
+          )}
 
-  {usuario && (
-    <li className="flex items-center h-full transition hover:text-orange-500">
-      <Link to="/pieza/nueva" className="flex items-center h-full px-4">
-        Nueva pieza
-      </Link>
-    </li>
-  )}
+          {usuario && (
+            <li className="flex items-center h-full">
+              <Link
+                to="/mis-piezas"
+                className="flex items-center h-full px-4 transition hover:bg-orange-50"
+              >
+                Mis piezas
+              </Link>
+            </li>
+          )}
 
-  {usuario && (
-    <li className="flex items-center h-full transition hover:text-orange-500">
-      <Link to="/mis-piezas" className="flex items-center h-full px-4">
-        Mis piezas
-      </Link>
-    </li>
-  )}
+          {usuario ? (
+            <>
+              <li className="flex items-center h-full px-4 text-sm text-gray-500">
+                Hola, {usuario.nombre}
+              </li>
 
-  {usuario ? (
-    <>
-      <li className="flex items-center h-full px-4 text-sm text-gray-500">
-        Hola, {usuario.nombre}
-      </li>
+              <li className="flex items-center h-full">
+                <button
+                  onClick={cerrarSesion}
+                  className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
+                >
+                  Cerrar sesión
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="flex items-center h-full">
+                <Link
+                  to="/login"
+                  className="flex items-center h-full px-4 transition hover:bg-orange-50"
+                >
+                  Iniciar sesión
+                </Link>
+              </li>
 
-      <li className="flex items-center h-full">
-        <button
-          onClick={cerrarSesion}
-          className="px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50"
-        >
-          Cerrar sesión
-        </button>
-      </li>
-    </>
-  ) : (
-    <>
-      <li className="flex items-center h-full transition hover:text-orange-500">
-        <Link to="/login" className="flex items-center h-full px-4">
-          Iniciar sesión
-        </Link>
-      </li>
-
-      <li className="flex items-center h-full">
-        <Link
-          to="/login"
-          state={{ mostrarRegistro: true }}
-          className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
-        >
-          Prueba gratis
-        </Link>
-      </li>
-    </>
-  )}
-</ul>
+              <li className="flex items-center h-full">
+                <Link
+                  to="/login"
+                  state={{ mostrarRegistro: true }}
+                  className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
+                >
+                  Prueba gratis
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
 
         {/* Botón hamburguesa móvil */}
         <button
