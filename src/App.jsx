@@ -11,14 +11,17 @@ import useContextoSesion from "./hooks/useContextoSesion.js";
 import "./App.css";
 
 const RutaAdmin = ({ children }) => {
-  const { usuario } = useContextoSesion();
+  const { usuario, cargando } = useContextoSesion();
+  if(cargando) return null;//Espera a que termine de recuperar la sesión.
+
   if (!usuario) return <Navigate to="/login" />;
-  if (usuario.rol !== "Administrador") return <Navigate to="/" />;
+  if (usuario.rol.trim() !== "Administrador") return <Navigate to="/" />;
   return children;
 };
 
 const RutaPrivada = ({ children }) => {
-  const { usuario } = useContextoSesion();
+  const { usuario, cargando } = useContextoSesion();
+  if (cargando) return null; 
   if (!usuario) return <Navigate to="/login" />;
   return children;
 };

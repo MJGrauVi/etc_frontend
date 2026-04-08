@@ -41,8 +41,8 @@ const ProveedorSesion = ({ children }) => {
       if (!token) return;
       setCargando(true);
       try {
-        const data = await me();
-        setUsuario(data);
+        const respuesta = await me();
+        setUsuario(respuesta.data);
       } catch {
         //Token inválido o expirado.
         localStorage.removeItem("token");
