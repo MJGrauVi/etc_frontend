@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-60">
-      <div className="flex items-center justify-between py-2 mx-auto px-15 max-w-7xl">
+      <div className="flex items-center justify-between h-16 mx-auto px-15 max-w-7xl">
         {/* Logo */}
         <div className="flex items-center gap-1 md:gap-1">
           <Link to="/" className="flex items-center gap-2">
@@ -23,59 +23,72 @@ const Navbar = () => {
 
         {/* Menu desktop */}
         <ul className="items-center hidden h-full gap-8 font-medium text-gray-700 md:flex">
-          <li className="transition cursor-pointer hover:text-orange-500">
-            <a href="mailto:etc-apps@proton.me">Soporte</a>
-          </li>
 
-          {usuario?.rol === "Administrador" && (
-            <li className="transition cursor-pointer hover:text-orange-500">
-              <Link to="/admin/usuarios">Usuarios</Link>
-            </li>
-          )}
+  <li className="flex items-center h-full transition hover:text-orange-500">
+    <a href="mailto:etc-apps@proton.me" className="flex items-center h-full px-4">
+      Soporte
+    </a>
+  </li>
 
-          {/* Nueva pieza dentro del ul como li */}
-          {usuario && (
-            <li className="transition cursor-pointer hover:text-orange-500">
-              <Link to="/pieza/nueva">Nueva pieza</Link>
-            </li>
-          )}
-          {/* Mis piezas — desktop */}
-          {usuario && (
-            <li className="transition cursor-pointer hover:text-orange-500">
-              <Link to="/mis-piezas">Mis piezas</Link>
-            </li>
-          )}
-          {usuario ? (
-            <>
-              <li className="text-sm text-gray-500">Hola, {usuario.nombre}</li>
-              <li>
-                <button
-                  onClick={cerrarSesion}
-                  className="px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50"
-                >
-                  Cerrar sesión
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login" className="transition hover:text-orange-500">
-                  Iniciar sesión
-                </Link>
-              </li>
-              <li className="flex items-center h-full">
-                <Link
-                  to="/login"
-                  state={{ mostrarRegistro: true }}
-                  className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 shadow-sm"
-                >
-                  Prueba gratis
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
+  {usuario?.rol === "Administrador" && (
+    <li className="flex items-center h-full transition hover:text-orange-500">
+      <Link to="/admin/usuarios" className="flex items-center h-full px-4">
+        Usuarios
+      </Link>
+    </li>
+  )}
+
+  {usuario && (
+    <li className="flex items-center h-full transition hover:text-orange-500">
+      <Link to="/pieza/nueva" className="flex items-center h-full px-4">
+        Nueva pieza
+      </Link>
+    </li>
+  )}
+
+  {usuario && (
+    <li className="flex items-center h-full transition hover:text-orange-500">
+      <Link to="/mis-piezas" className="flex items-center h-full px-4">
+        Mis piezas
+      </Link>
+    </li>
+  )}
+
+  {usuario ? (
+    <>
+      <li className="flex items-center h-full px-4 text-sm text-gray-500">
+        Hola, {usuario.nombre}
+      </li>
+
+      <li className="flex items-center h-full">
+        <button
+          onClick={cerrarSesion}
+          className="px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50"
+        >
+          Cerrar sesión
+        </button>
+      </li>
+    </>
+  ) : (
+    <>
+      <li className="flex items-center h-full transition hover:text-orange-500">
+        <Link to="/login" className="flex items-center h-full px-4">
+          Iniciar sesión
+        </Link>
+      </li>
+
+      <li className="flex items-center h-full">
+        <Link
+          to="/login"
+          state={{ mostrarRegistro: true }}
+          className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
+        >
+          Prueba gratis
+        </Link>
+      </li>
+    </>
+  )}
+</ul>
 
         {/* Botón hamburguesa móvil */}
         <button
