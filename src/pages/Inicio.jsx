@@ -2,15 +2,16 @@ import fondo from "../assets/escritorioApp2.jpeg";
 
 export default function Inicio() {
   return (
-    <main className="min-h-screen font-sans">
-      <section className="relative flex items-center justify-center min-h-[600px] w-full overflow-hidden bg-white">
+    <div className="min-h-screen font-sans">
+      <section className="relative flex items-center justify-center min-h-[600px] w-full overflow-hidden bg-white pt-16">
         {" "}
         {/* Fondo blanco para que contraste con el texto negro si la imagen tarda en cargar */}
         {/* Imagen de fondo ocupando todo el espacio con opacidad */}
         <img
           src={fondo}
           alt="Fondo escritorio"
-          className="absolute inset-0 z-0 object-cover w-full h-full opacity-25"
+          className="absolute bottom-0 z-0 object-cover w-full h-full opacity-25"
+         /*  className="absolute inset-0 z-0 object-cover w-full h-full opacity-25" */
         />
         {/* Contenido centrado sobre la imagen con z-index mayor */}
         <div className="relative z-10 max-w-4xl px-6 mx-auto text-center">
@@ -306,6 +307,6 @@ export default function Inicio() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
