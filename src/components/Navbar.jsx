@@ -137,97 +137,102 @@ const Navbar = () => {
 
       {/* Menu móvil */}
       {open && (
-        <ul className="px-6 pb-4 space-y-4 font-medium text-gray-700 bg-white shadow-inner md:hidden animate-fadeIn">
-          <li className="w-full">
-            <a
-              href="mailto:etc-apps@proton.me"
-              onClick={() => setOpen(false)}
-              className="block w-full px-4 py-2 transition hover:text-orange-500"
-            >
-              Soporte
-            </a>
-          </li>
+  <ul className="px-6 pb-4 space-y-2 font-medium text-gray-700 bg-white shadow-inner md:hidden animate-fadeIn">
 
-          {usuario?.rol === "Administrador" && (
-            <li className="w-full">
-              <Link
-                to="/admin/usuarios"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:text-orange-500"
-              >
-                Usuarios
-              </Link>
-            </li>
-          )}
+    {/* Enlaces normales */}
+    <li className="w-full">
+      <a
+        href="mailto:etc-apps@proton.me"
+        onClick={() => setOpen(false)}
+        className="block w-full px-4 py-2 transition hover:bg-orange-50"
+      >
+        Soporte
+      </a>
+    </li>
 
-          {usuario && (
-            <li className="w-full">
-              <Link
-                to="/pieza/nueva"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:text-orange-500"
-              >
-                Nueva pieza
-              </Link>
-            </li>
-          )}
+    {usuario?.rol === "Administrador" && (
+      <li className="w-full">
+        <Link
+          to="/admin/usuarios"
+          onClick={() => setOpen(false)}
+          className="block w-full px-4 py-2 transition hover:bg-orange-50"
+        >
+          Usuarios
+        </Link>
+      </li>
+    )}
 
-          {usuario && (
-            <li className="w-full">
-              <Link
-                to="/mis-piezas"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:text-orange-500"
-              >
-                Mis piezas
-              </Link>
-            </li>
-          )}
+    {usuario && (
+      <li className="w-full">
+        <Link
+          to="/pieza/nueva"
+          onClick={() => setOpen(false)}
+          className="block w-full px-4 py-2 transition hover:bg-orange-50"
+        >
+          Nueva pieza
+        </Link>
+      </li>
+    )}
 
-          {usuario ? (
-            <>
-              <li className="w-full px-4 text-sm text-gray-500">
-                Hola, {usuario.nombre}
-              </li>
+    {usuario && (
+      <li className="w-full">
+        <Link
+          to="/mis-piezas"
+          onClick={() => setOpen(false)}
+          className="block w-full px-4 py-2 transition hover:bg-orange-50"
+        >
+          Mis piezas
+        </Link>
+      </li>
+    )}
 
-              <li className="w-full">
-                <button
-                  onClick={() => {
-                    cerrarSesion();
-                    setOpen(false);
-                  }}
-                  className="w-full px-4 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50"
-                >
-                  Cerrar sesión
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="w-full">
-                <Link
-                  to="/login"
-                  onClick={() => setOpen(false)}
-                  className="block w-full px-4 py-2 transition hover:text-orange-500"
-                >
-                  Iniciar sesión
-                </Link>
-              </li>
+    {/* Si hay usuario */}
+    {usuario ? (
+      <>
+        <li className="px-4 text-sm text-gray-500">
+          Hola, {usuario.nombre}
+        </li>
 
-              <li className="w-full">
-                <Link
-                  to="/login"
-                  state={{ mostrarRegistro: true }}
-                  onClick={() => setOpen(false)}
-                  className="block w-full px-4 py-2 font-semibold text-center text-white bg-orange-500 shadow-sm hover:bg-orange-600"
-                >
-                  Prueba gratis
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
-      )}
+        <li className="w-full">
+          <button
+            onClick={() => {
+              cerrarSesion();
+              setOpen(false);
+            }}
+            className="block w-full px-4 py-2 font-semibold text-center text-white transition bg-orange-500 hover:bg-orange-600"
+          >
+            Cerrar sesión
+          </button>
+        </li>
+      </>
+    ) : (
+      <>
+        {/* Iniciar sesión */}
+        <li className="w-full">
+          <Link
+            to="/login"
+            onClick={() => setOpen(false)}
+            className="block w-full px-4 py-2 transition hover:bg-orange-50"
+          >
+            Iniciar sesión
+          </Link>
+        </li>
+
+        {/* Prueba gratis */}
+        <li className="w-full">
+          <Link
+            to="/login"
+            state={{ mostrarRegistro: true }}
+            onClick={() => setOpen(false)}
+            className="block w-full px-4 py-2 font-semibold text-center text-white transition bg-orange-500 hover:bg-orange-600"
+          >
+            Prueba gratis
+          </Link>
+        </li>
+      </>
+    )}
+  </ul>
+)}
     </nav>
   );
 };
