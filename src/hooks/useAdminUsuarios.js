@@ -26,7 +26,7 @@ const useAdminUsuarios = () => {
     try {
       await put(`admin/usuarios/${id}/rol`, { rol: nuevoRol });
       setUsuarios(prev =>
-        prev.map(u => u.id === id ? { ...u, rol: nuevoRol } : u)
+        prev.map(u => u.id === id ? { ...u, roles:[{name: nuevoRol }] } : u)
       );
     } catch (err) {
       setError(err.message);

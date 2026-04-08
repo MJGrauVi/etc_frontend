@@ -1,9 +1,16 @@
 import React from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import LoginRegistroFormUI from "./LoginRegistroFormUI";
 import useLoginRegistroForm from "../hooks/useLoginRegistroForm";
 import MensajeTail from "./MensajeTail.jsx";
 
 const LoginRegistro = () => {
+
+  //Mostar form registro si viene de Prueba Gratis.
+  const location = useLocation();
+  const mostrarRegistro = location.state?.mostrarRegistro;
+  
   const {
     form,
     mensaje,
@@ -12,8 +19,16 @@ const LoginRegistro = () => {
     handleChange,
     handleSubmit,
     toggleModoRegistro,
-    setMensaje
+    setMensaje,
+    setModoRegistro
   } = useLoginRegistroForm();
+
+  //Mostar form registro si viene de "Prueba Gratis" .
+  useEffect(()=>{
+    if(mostrarRegistro){
+      setModoRegistro(true);
+    }
+  },[mostrarRegistro, setModoRegistro])
 
   return (
     <>

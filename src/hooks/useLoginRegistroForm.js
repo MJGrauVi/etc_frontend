@@ -80,6 +80,7 @@ const useLoginRegistroForm = () => {
     form,
     mensaje,
     modoRegistro,
+    setModoRegistro,
     cargando,
     handleChange,
     handleSubmit,

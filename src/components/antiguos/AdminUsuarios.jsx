@@ -1,5 +1,5 @@
-import useAdminUsuarios from "../hooks/useAdminUsuarios.js";
-import Cargando from "../components/Cargando";
+import useAdminUsuarios from "../../hooks/useAdminUsuarios.js";
+import Cargando from "../Cargando.jsx";
 import "./AdminUsuarios.css";
 
 const AdminUsuarios = () => {
@@ -49,8 +49,9 @@ const AdminUsuarios = () => {
                   value={u.rol}
                   onChange={(e) => cambiarRol(u.id, e.target.value)}
                 >
-                  <option value="usuario">usuario</option>
-                  <option value="administrador">administrador</option>
+                  <option value="Usuario">Usuario</option>
+                  <option value="Administrador">Administrador</option>
+                  <option value="Invitado">Invitado</option>
                 </select>
               </td>
             </tr>

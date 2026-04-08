@@ -7,7 +7,6 @@ import useContextoSesion from "../hooks/useContextoSesion.js";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { usuario, cerrarSesion } = useContextoSesion();
-  
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-60">
@@ -23,9 +22,9 @@ const Navbar = () => {
         </div>
 
         {/* Menu desktop */}
-        <ul className="items-center hidden gap-8 font-medium text-gray-700 md:flex">
+        <ul className="items-center hidden h-full gap-8 font-medium text-gray-700 md:flex">
           <li className="transition cursor-pointer hover:text-orange-500">
-            Soporte
+            <a href="mailto:etc-apps@proton.me">Soporte</a>
           </li>
 
           {usuario?.rol === "Administrador" && (
@@ -65,10 +64,14 @@ const Navbar = () => {
                   Iniciar sesión
                 </Link>
               </li>
-              <li>
-                <button className="px-5 py-2 font-semibold text-white transition bg-orange-500 shadow-sm hover:bg-orange-600">
+              <li className="flex items-center h-full">
+                <Link
+                  to="/login"
+                  state={{ mostrarRegistro: true }}
+                  className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 shadow-sm"
+                >
                   Prueba gratis
-                </button>
+                </Link>
               </li>
             </>
           )}
@@ -108,30 +111,47 @@ const Navbar = () => {
       {/* Menu móvil */}
       {open && (
         <ul className="px-6 pb-4 space-y-4 font-medium text-gray-700 bg-white shadow-inner md:hidden animate-fadeIn">
-          <li className="transition cursor-pointer hover:text-orange-500">
-            Soporte
+          <li className="w-full">
+            <a
+              href="mailto:etc-apps@proton.me"
+              onClick={() => setOpen(false)}
+              className="block w-full px-4 py-2 transition hover:text-orange-500"
+            >
+              Soporte
+            </a>
           </li>
 
           {usuario?.rol === "Administrador" && (
-            <li className="transition cursor-pointer hover:text-orange-500">
-              <Link to="/admin/usuarios" onClick={() => setOpen(false)}>
+            <li className="w-full">
+              <Link
+                to="/admin/usuarios"
+                onClick={() => setOpen(false)}
+                className="block w-full px-4 py-2 transition hover:text-orange-500"
+              >
                 Usuarios
               </Link>
             </li>
           )}
 
-          {/* 👇 Nueva pieza en móvil */}
           {usuario && (
-            <li className="transition cursor-pointer hover:text-orange-500">
-              <Link to="/pieza/nueva" onClick={() => setOpen(false)}>
+            <li className="w-full">
+              <Link
+                to="/pieza/nueva"
+                onClick={() => setOpen(false)}
+                className="block w-full px-4 py-2 transition hover:text-orange-500"
+              >
                 Nueva pieza
               </Link>
             </li>
           )}
-          {/* Mis piezas — móvil */}
+
           {usuario && (
-            <li className="transition cursor-pointer hover:text-orange-500">
-              <Link to="/mis-piezas" onClick={() => setOpen(false)}>
+            <li className="w-full">
+              <Link
+                to="/mis-piezas"
+                onClick={() => setOpen(false)}
+                className="block w-full px-4 py-2 transition hover:text-orange-500"
+              >
                 Mis piezas
               </Link>
             </li>
@@ -139,8 +159,11 @@ const Navbar = () => {
 
           {usuario ? (
             <>
-              <li className="text-sm text-gray-500">Hola, {usuario.nombre}</li>
-              <li>
+              <li className="w-full px-4 text-sm text-gray-500">
+                Hola, {usuario.nombre}
+              </li>
+
+              <li className="w-full">
                 <button
                   onClick={() => {
                     cerrarSesion();
@@ -154,25 +177,25 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <li>
+              <li className="w-full">
                 <Link
                   to="/login"
                   onClick={() => setOpen(false)}
-                  className="transition hover:text-orange-500"
+                  className="block w-full px-4 py-2 transition hover:text-orange-500"
                 >
                   Iniciar sesión
                 </Link>
               </li>
-              <li>
-                <button className="w-full px-4 py-2 font-semibold text-white transition bg-orange-500 shadow-sm hover:bg-orange-600">
-                  <Link  
+
+              <li className="w-full">
+                <Link
                   to="/login"
+                  state={{ mostrarRegistro: true }}
                   onClick={() => setOpen(false)}
-                  className="transition hover:text-orange-500"
+                  className="block w-full px-4 py-2 font-semibold text-center text-white bg-orange-500 shadow-sm hover:bg-orange-600"
                 >
                   Prueba gratis
                 </Link>
-                </button>
               </li>
             </>
           )}
