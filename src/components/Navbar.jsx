@@ -64,6 +64,12 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+          {/* perfil */}
+          {usuario && (
+            <li className="transition cursor-pointer hover:text-orange-500">
+              <Link to="/mi-perfil">Mi perfil</Link>
+            </li>
+          )}
 
           {usuario ? (
             <>

@@ -26,7 +26,12 @@ const useApiCrud = () => {
       headers: getHeaders(true),
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error("Error al crear recurso");
+    if (!res.ok) {
+      // 👇 Lanza el status para que el hook pueda distinguir el error.
+      const error = new Error("Error al crear recurso");
+      error.status = res.status;
+      throw error;
+    }
     return await res.json();
   };
 
@@ -36,7 +41,11 @@ const useApiCrud = () => {
       headers: getHeaders(true),
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error("Error al actualizar recurso");
+    if (!res.ok) {
+      const errorData = await res.json();
+    
+      throw new Error(`Error ${res.status}: ${JSON.stringify(errorData)}`);
+    }
     return await res.json();
   };
 

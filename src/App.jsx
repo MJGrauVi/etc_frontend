@@ -8,6 +8,7 @@ import NuevaPiezaPage from "./pages/NuevaPiezaPage.jsx";
 import MisPiezasPage from "./pages/MisPiezasPage.jsx";
 import PiezaDetallePage from "./pages/PiezaDetallePage.jsx";
 import useContextoSesion from "./hooks/useContextoSesion.js";
+import PerfilPage from "./pages/PerfilPage.jsx";
 import "./App.css";
 
 const RutaAdmin = ({ children }) => {
@@ -71,6 +72,7 @@ export default function App() {
               </RutaPrivada>
             }
           />
+          <Route path="/mi-perfil" element={<RutaPrivada><PerfilPage/></RutaPrivada>} />
         </Routes>
       </main>
       <Footer />

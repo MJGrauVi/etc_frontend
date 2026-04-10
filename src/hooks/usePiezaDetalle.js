@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useContextoSesion from "./useContextoSesion.js";
+import usePerfil from "./usePerfil.js";
 
 const usePiezaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { get, post, put, remove, postForm } = useContextoSesion(); // ← remove + postForm
+  const perfil = usePerfil();
 
   const [pieza, setPieza]             = useState(null);
   const [publicacion, setPublicacion] = useState(null);
@@ -14,6 +16,8 @@ const usePiezaDetalle = () => {
   const [guardando, setGuardando]     = useState(false);
   const [error, setError]             = useState(null);
   const [mensaje, setMensaje]         = useState({ tipo: "", texto: "" });
+  const [modoManual, setModoManual] = useState(false);
+
 
   const [modalEditar, setModalEditar]       = useState(false);
   const [piezaEdit, setPiezaEdit]           = useState({});
@@ -124,29 +128,99 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // ── IA ────────────────────────────────────────────────────────────────────
+  // ── Modo Manual ────────────────────────────────────────────────────────────────────
+
+
+// Publicación vacía para rellenar manualmente
+const iniciarManual = () => {
+    setPublicacion({
+        id: null, // 👈 null indica que aún no está en BD
+        titulo: "",
+        contenido: "",
+        hashtags: "",
+        estado: "borrador",
+        piezas: pieza,
+    });
+    setModoManual(true);
+};
+
+// Guardar cambia según si ya existe o no
+const guardarCambios = async () => {
+    setGuardando(true);
+    try {
+        let respuesta;
+
+        if (publicacion.id) {
+            // 👇 Ya existe → actualizar con PUT
+            respuesta = await put(`publicacion/${publicacion.id}`, {
+                titulo:    publicacion.titulo,
+                contenido: publicacion.contenido,
+                hashtags:  publicacion.hashtags,
+                estado:    publicacion.estado,
+            });
+        } else {
+            // 👇 No existe → crear con POST
+            respuesta = await post("publicacion", {
+                pieza_id:  id,
+                titulo:    publicacion.titulo,
+                contenido: publicacion.contenido,
+                hashtags:  publicacion.hashtags,
+                estado:    publicacion.estado,
+            });
+        }
+
+        setPublicacion(respuesta.data);
+        setModoManual(false);
+        setMensaje({ tipo: "success", texto: "Publicación guardada correctamente." });
+    } catch (err) {
+        if (err.status === 403) {
+            setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicación." });
+        } else {
+            setMensaje({ tipo: "error", texto: err.message });
+        }
+    } finally {
+        setGuardando(false);
+    }
+};
+
+   // ── IA ────────────────────────────────────────────────────────────────────
   const generarPublicacion = async () => {
     setGenerando(true);
     setMensaje({ tipo: "", texto: "" });
+
     try {
-      const respuesta = await post("publicacion/generar", { pieza_id: id });
-      const pub = respuesta.data;
-      pub.titulo = pub.titulo.replace(/[*:#]/g, "").trim();
-      setPublicacion(pub);
-      setMensaje({ tipo: "success", texto: "Publicación generada correctamente." });
+        const respuesta = await post("publicacion/generar", { pieza_id: id });
+        const pub = respuesta.data;
+        pub.titulo = pub.titulo.replace(/[*:#]/g, "").trim();
+        setPublicacion(pub);
+        setMensaje({ tipo: "success", texto: "Publicación generada correctamente." });
     } catch (err) {
-      setMensaje({ tipo: "error", texto: err.message });
+        // Mensaje específico según el código de error.
+        if (err.status === 429) {
+            setMensaje({
+                tipo: "error",
+                texto: "Has alcanzado el límite diario de peticiones de IA. Inténtalo mañana."
+            });
+        // 500 = error de servidor, probablemente timeout de Gemini.
+          }else if (err.status === 500) {
+            setMensaje({
+                tipo: "error",
+                texto: "La IA está tardando demasiado. Inténtalo de nuevo en unos segundos."
+            });
+        } else {
+            setMensaje({ tipo: "error", texto: err.message });
+        }
     } finally {
-      setGenerando(false);
+        setGenerando(false);
     }
-  };
+};
 
   const handleEditar = ({ target }) => {
     const { name, value } = target;
     setPublicacion(prev => ({ ...prev, [name]: value }));
   };
 
-  const guardarCambios = async () => {
+  const guardarCambiosAnterior = async () => {
     setGuardando(true);
     try {
       const respuesta = await put(`publicacion/${publicacion.id}`, {
@@ -155,10 +229,24 @@ const usePiezaDetalle = () => {
         hashtags:  publicacion.hashtags,
         estado:    publicacion.estado,
       });
+
+       console.log("Respuesta guardar:", respuesta); // 👈
+        console.log("Estado enviado:", publicacion.estado); // 👈
+
       setPublicacion(respuesta.data);
       setMensaje({ tipo: "success", texto: "Cambios guardados correctamente." });
-    } catch (err) {
-      setMensaje({ tipo: "error", texto: err.message });
+    } catch (err){
+       if (err.status === 403) {
+        setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicación." });
+    } else if (err.status === 422) {
+        setMensaje({ tipo: "error", texto: "Datos incorrectos. Revisa los campos." });
+    } else if (err.status === 500){
+      setMensaje({
+        tipo: "error", 
+        texto: "La IA está tardando demasiado. Inténtalo de nuevo en unos segundos."});
+    }else {
+        setMensaje({ tipo: "error", texto: err.message });
+    }
     } finally {
       setGuardando(false);
     }
@@ -172,6 +260,7 @@ const usePiezaDetalle = () => {
     guardando,
     error,
     mensaje,
+    setMensaje,
     generarPublicacion,
     handleEditar,
     guardarCambios,
@@ -187,6 +276,9 @@ const usePiezaDetalle = () => {
     subirImagen,
     eliminarImagen,
     marcarPortada,
+    perfil, 
+    iniciarManual,
+    guardarCambiosAnterior
   };
 };
 
