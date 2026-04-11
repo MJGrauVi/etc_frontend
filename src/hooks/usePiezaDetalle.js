@@ -230,9 +230,6 @@ const guardarCambios = async () => {
         estado:    publicacion.estado,
       });
 
-       console.log("Respuesta guardar:", respuesta); // 👈
-        console.log("Estado enviado:", publicacion.estado); // 👈
-
       setPublicacion(respuesta.data);
       setMensaje({ tipo: "success", texto: "Cambios guardados correctamente." });
     } catch (err){
