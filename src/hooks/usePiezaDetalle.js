@@ -6,7 +6,7 @@ import usePerfil from "./usePerfil.js";
 const usePiezaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { get, post, put, remove, postForm } = useContextoSesion(); // ← remove + postForm
+  const { get, post, put, remove, postForm } = useContextoSesion();
   const perfil = usePerfil();
 
   const [pieza, setPieza]             = useState(null);
@@ -16,15 +16,14 @@ const usePiezaDetalle = () => {
   const [guardando, setGuardando]     = useState(false);
   const [error, setError]             = useState(null);
   const [mensaje, setMensaje]         = useState({ tipo: "", texto: "" });
-  const [modoManual, setModoManual] = useState(false);
-
+  const [modoManual, setModoManual]   = useState(false);
 
   const [modalEditar, setModalEditar]       = useState(false);
   const [piezaEdit, setPiezaEdit]           = useState({});
   const [guardandoPieza, setGuardandoPieza] = useState(false);
   const [subiendoImagen, setSubiendoImagen] = useState(false);
 
-  // ── Carga ────────────────────────────────────────────────────────────────
+  // ── Carga ──────────────────────────────────────────────────────
   const cargarPieza = async () => {
     try {
       const respuesta = await get(`pieza/${id}`);
@@ -38,7 +37,7 @@ const usePiezaDetalle = () => {
 
   useEffect(() => { cargarPieza(); }, [id]);
 
-  // ── Editar pieza ─────────────────────────────────────────────────────────
+  // ── Editar pieza ───────────────────────────────────────────────
   const abrirModalEditar = () => {
     setPiezaEdit({
       nombre:      pieza.nombre      ?? "",
@@ -48,9 +47,8 @@ const usePiezaDetalle = () => {
     });
     setModalEditar(true);
   };
-  const cerrarModalEditar = () =>{
-    setModalEditar(false);
-  }
+
+  const cerrarModalEditar = () => setModalEditar(false);
 
   const handleEditarPieza = ({ target }) => {
     const { name, value } = target;
@@ -71,25 +69,24 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // ── Eliminar pieza ───────────────────────────────────────────────────────
+  // ── Eliminar pieza ─────────────────────────────────────────────
   const eliminarPieza = async () => {
     try {
-      await remove(`pieza/${id}`); // ← remove, no del
+      await remove(`pieza/${id}`);
       navigate("/mis-piezas");
     } catch (err) {
       setMensaje({ tipo: "error", texto: err.message });
     }
   };
 
-  // ── Imágenes ─────────────────────────────────────────────────────────────
+  // ── Imágenes ───────────────────────────────────────────────────
   const subirImagen = async (archivo) => {
     setSubiendoImagen(true);
     try {
       const formData = new FormData();
       formData.append("imagen", archivo);
       formData.append("pieza_id", id);
-
-      const respuesta = await postForm("media", formData); // ← postForm para multipart
+      const respuesta = await postForm("media", formData);
       setPieza(prev => ({
         ...prev,
         medias: [...(prev.medias ?? []), respuesta.data],
@@ -104,7 +101,7 @@ const usePiezaDetalle = () => {
 
   const eliminarImagen = async (mediaId) => {
     try {
-      await remove(`media/${mediaId}`); // ← remove
+      await remove(`media/${mediaId}`);
       setPieza(prev => ({
         ...prev,
         medias: prev.medias.filter(m => m.id !== mediaId),
@@ -128,122 +125,93 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // ── Modo Manual ────────────────────────────────────────────────────────────────────
-
-
-// Publicación vacía para rellenar manualmente
-const iniciarManual = () => {
+  // ── Modo manual ────────────────────────────────────────────────
+  const iniciarManual = () => {
     setPublicacion({
-        id: null, // 👈 null indica que aún no está en BD
-        titulo: "",
-        contenido: "",
-        hashtags: "",
-        estado: "borrador",
-        piezas: pieza,
+      id:       null,
+      titulo:   "",
+      contenido: "",
+      hashtags: "",
+      estado:   "borrador",
+      piezas:   pieza,
     });
     setModoManual(true);
-};
+  };
 
-// Guardar cambia según si ya existe o no
-const guardarCambios = async () => {
-    setGuardando(true);
-    try {
-        let respuesta;
-
-        if (publicacion.id) {
-            // 👇 Ya existe → actualizar con PUT
-            respuesta = await put(`publicacion/${publicacion.id}`, {
-                titulo:    publicacion.titulo,
-                contenido: publicacion.contenido,
-                hashtags:  publicacion.hashtags,
-                estado:    publicacion.estado,
-            });
-        } else {
-            // 👇 No existe → crear con POST
-            respuesta = await post("publicacion", {
-                pieza_id:  id,
-                titulo:    publicacion.titulo,
-                contenido: publicacion.contenido,
-                hashtags:  publicacion.hashtags,
-                estado:    publicacion.estado,
-            });
-        }
-
-        setPublicacion(respuesta.data);
-        setModoManual(false);
-        setMensaje({ tipo: "success", texto: "Publicación guardada correctamente." });
-    } catch (err) {
-        if (err.status === 403) {
-            setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicación." });
-        } else {
-            setMensaje({ tipo: "error", texto: err.message });
-        }
-    } finally {
-        setGuardando(false);
-    }
-};
-
-   // ── IA ────────────────────────────────────────────────────────────────────
+  // ── IA ─────────────────────────────────────────────────────────
   const generarPublicacion = async () => {
     setGenerando(true);
     setMensaje({ tipo: "", texto: "" });
-
     try {
-        const respuesta = await post("publicacion/generar", { pieza_id: id });
-        const pub = respuesta.data;
-        pub.titulo = pub.titulo.replace(/[*:#]/g, "").trim();
-        setPublicacion(pub);
-        setMensaje({ tipo: "success", texto: "Publicación generada correctamente." });
+      const respuesta = await post("publicacion/generar", { pieza_id: id });
+      const pub = respuesta.data;
+      pub.titulo = pub.titulo.replace(/[*:#]/g, "").trim();
+      setPublicacion(pub);
+      setModoManual(false);
+      setMensaje({ tipo: "success", texto: "Publicación generada correctamente." });
     } catch (err) {
-        // Mensaje específico según el código de error.
-        if (err.status === 429) {
-            setMensaje({
-                tipo: "error",
-                texto: "Has alcanzado el límite diario de peticiones de IA. Inténtalo mañana."
-            });
-        // 500 = error de servidor, probablemente timeout de Gemini.
-          }else if (err.status === 500) {
-            setMensaje({
-                tipo: "error",
-                texto: "La IA está tardando demasiado. Inténtalo de nuevo en unos segundos."
-            });
-        } else {
-            setMensaje({ tipo: "error", texto: err.message });
-        }
+      if (err.status === 429) {
+        setMensaje({
+          tipo: "error",
+          texto: "Has alcanzado el límite diario de peticiones de IA. Inténtalo mañana."
+        });
+      } else if (err.status === 500) {
+        setMensaje({
+          tipo: "error",
+          texto: "La IA está tardando demasiado. Inténtalo de nuevo en unos segundos."
+        });
+      } else {
+        setMensaje({ tipo: "error", texto: err.message });
+      }
     } finally {
-        setGenerando(false);
+      setGenerando(false);
     }
-};
+  };
 
   const handleEditar = ({ target }) => {
     const { name, value } = target;
     setPublicacion(prev => ({ ...prev, [name]: value }));
   };
 
-  const guardarCambiosAnterior = async () => {
+  // ── Guardar — funciona para IA (PUT) y manual (POST) ──────────
+  const guardarCambios = async () => {
     setGuardando(true);
     try {
-      const respuesta = await put(`publicacion/${publicacion.id}`, {
-        titulo:    publicacion.titulo,
-        contenido: publicacion.contenido,
-        hashtags:  publicacion.hashtags,
-        estado:    publicacion.estado,
-      });
+      let respuesta;
+
+      if (publicacion.id) {
+        // Ya existe en BD → actualizar con PUT
+        respuesta = await put(`publicacion/${publicacion.id}`, {
+          titulo:    publicacion.titulo,
+          contenido: publicacion.contenido,
+          hashtags:  publicacion.hashtags,
+          estado:    publicacion.estado,
+        });
+      } else {
+        // Es manual, no existe → crear con POST
+        respuesta = await post("publicacion", {
+          pieza_id:  id,
+          titulo:    publicacion.titulo,
+          contenido: publicacion.contenido,
+          hashtags:  publicacion.hashtags,
+          estado:    publicacion.estado,
+        });
+      }
 
       setPublicacion(respuesta.data);
-      setMensaje({ tipo: "success", texto: "Cambios guardados correctamente." });
-    } catch (err){
-       if (err.status === 403) {
+      setModoManual(false);
+      setMensaje({ tipo: "success", texto: "Publicación guardada correctamente." });
+
+    } catch (err) {
+      if (err.status === 403) {
         setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicación." });
-    } else if (err.status === 422) {
+      } else if (err.status === 422) {
         setMensaje({ tipo: "error", texto: "Datos incorrectos. Revisa los campos." });
-    } else if (err.status === 500){
-      setMensaje({
-        tipo: "error", 
-        texto: "La IA está tardando demasiado. Inténtalo de nuevo en unos segundos."});
-    }else {
+      } else if (err.status === 500) {
+        setMensaje({ tipo: "error", texto: "Error del servidor. Inténtalo de nuevo." });
+      } else {
         setMensaje({ tipo: "error", texto: err.message });
-    }
+      }
     } finally {
       setGuardando(false);
     }
@@ -273,9 +241,9 @@ const guardarCambios = async () => {
     subirImagen,
     eliminarImagen,
     marcarPortada,
-    perfil, 
+    perfil,
+    modoManual,
     iniciarManual,
-    guardarCambiosAnterior
   };
 };
 

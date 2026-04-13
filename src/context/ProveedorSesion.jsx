@@ -1,23 +1,31 @@
 import { createContext, useState, useEffect } from "react";
-import { useApiAuth } from "../services/useApiAuth.js";
-import { useApiCrud } from "../services/useApiCrud.js";
+import { authService } from "../services/authService.js";
+import { crudService } from "../services/crudService.js";
 
 const ContextoSesion = createContext();
 
 const ProveedorSesion = ({ children }) => {
-  const { login, register, logout, me } = useApiAuth();
-  const { get, post, put, remove, postForm } = useApiCrud();
+  // CAMBIO 1: Ya no invocamos con (), usamos el objeto directamente
+  // Si quieres mantener las variables cortas, puedes hacer esto:
+  const { get, post, put, remove, postForm } = crudService;
 
   const [usuario, setUsuario] = useState(null);
-  const [cargando, setCargando] = useState(false);
+  const [cargando, setCargando] = useState(true); // Empezamos en true para evitar parpadeos de UI.
 
   // LOGIN
   const iniciarLogin = async (email, password) => {
     setCargando(true);
     try {
-      const respuesta = await login(email, password);
-      localStorage.setItem("token", respuesta.token); //Guardamos el token para que useApiCrud pueda usarlo.
-      setUsuario(respuesta.data); // Ajusta según tu backend.
+      // CAMBIO 2: Usar authService.login directamente
+      const respuesta = await authService.login(email, password);
+      
+      // Guardamos el token. El apiClient lo leerá automáticamente en la próxima petición
+      localStorage.setItem("token", respuesta.token); 
+      
+      // CAMBIO 3: Pedir los datos frescos del usuario tras el login
+      const datosUser = await authService.me();
+      setUsuario(datosUser.data || datosUser); 
+      
       return respuesta;
     } finally {
       setCargando(false);
@@ -25,26 +33,26 @@ const ProveedorSesion = ({ children }) => {
   };
 
   // REGISTRO
-  const registrarUsuario = async (formData) => {
+  const registrarUsuario = async (userData) => {
     setCargando(true);
     try {
-      const respuesta = await register(formData);
-      return respuesta;
+      return await authService.register(userData);
     } finally {
       setCargando(false);
     }
   };
+
   useEffect(() => {
     const recuperarSesion = async () => {
-      //Si el usuario refresca la página se pierde el estado aunque tengas token, con esto recuperamos sesion.
       const token = localStorage.getItem("token");
-      if (!token) return;
-      setCargando(true);
+      if (!token) {
+        setCargando(false);
+        return;
+      }
       try {
-        const respuesta = await me();
-        setUsuario(respuesta.data);
+        const respuesta = await authService.me();
+        setUsuario(respuesta.data || respuesta);
       } catch {
-        //Token inválido o expirado.
         localStorage.removeItem("token");
         setUsuario(null);
       } finally {
@@ -56,9 +64,13 @@ const ProveedorSesion = ({ children }) => {
 
   // LOGOUT
   const cerrarSesion = async () => {
-    await logout();
-    localStorage.removeItem("token"); //Eliminamos el token al cerrar sesión.
-    setUsuario(null);
+    try {
+      await authService.logout();
+    } finally {
+      // Siempre limpiamos localmente, falle o no la petición al servidor
+      localStorage.removeItem("token");
+      setUsuario(null);
+    }
   };
 
   return (

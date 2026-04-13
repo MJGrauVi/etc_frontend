@@ -23,7 +23,7 @@ const MensajeTail = ({ tipo = "info", texto, onClose, autoClose = true }) => {
 
   // Usamos createPortal para "teletransportar" el mensaje fuera del main(backdrop-blur-sm).
   return createPortal(
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-6 pointer-events-none overflow-hidden ">
+    <div className="fixed inset-0 flex items-center justify-center p-6 overflow-hidden pointer-events-none z-999 ">
       <div className={`alerta-base ${claseTipo} pointer-events-auto`}>
         <p className="text-2xl font-bold tracking-tight">{texto}</p>
       </div>

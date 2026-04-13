@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useContextoSesion from "./useContextoSesion.js";
 
+//Hooks consumen los servicios y gestionan el estado React.
 const useAdminUsuarios = () => {
   const { get, put } = useContextoSesion();
   const [usuarios, setUsuarios] = useState([]);

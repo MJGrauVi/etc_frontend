@@ -1,4 +1,5 @@
 import fondo from "../assets/escritorioApp2.jpeg";
+import { Link } from "react-router-dom";
 
 export default function Inicio() {
   return (
@@ -11,7 +12,7 @@ export default function Inicio() {
           src={fondo}
           alt="Fondo escritorio"
           className="absolute bottom-0 z-0 object-cover w-full h-full opacity-25"
-         /*  className="absolute inset-0 z-0 object-cover w-full h-full opacity-25" */
+          /*  className="absolute inset-0 z-0 object-cover w-full h-full opacity-25" */
         />
         {/* Contenido centrado sobre la imagen con z-index mayor */}
         <div className="relative z-10 max-w-4xl px-6 mx-auto text-center">
@@ -28,9 +29,13 @@ export default function Inicio() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <button className="px-8 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600">
+            <Link
+              to="/login"
+              state={{ mostrarRegistro: true }}
+              className="px-8 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
+            >
               Solicita una prueba gratis
-            </button>
+            </Link>
             {/* Botón secundario ajustado para fondo claro */}
             <button className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50">
               Saber más
@@ -184,7 +189,6 @@ export default function Inicio() {
       </section>
 
       {/* Sección de beneficios */}
-   
 
       {/* CTA final */}
       <section className="py-20 bg-gray-50">
@@ -197,9 +201,13 @@ export default function Inicio() {
             Empieza hoy mismo y crea tu primera publicación en minutos.
           </p>
 
-          <button className="px-10 py-4 mt-8 font-semibold text-white transition bg-orange-500 hover:bg-orange-600">
+          <Link
+            to="/login"
+            state={{ mostrarRegistro: true }}
+            className="inline-block px-10 py-4 font-semibold text-white transition bg-orange-500 mt-9 hover:bg-orange-600"
+          >
             Crear mi primera publicación
-          </button>
+          </Link>
         </div>
       </section>
       <section className="py-20 bg-white">

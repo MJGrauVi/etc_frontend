@@ -1,29 +1,19 @@
-/* const getHeaders = (includeBody = false) => {
-    const headers = {
-        'Accept': 'application/json'
-    };
 
-    const token = getToken();
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    if (includeBody) headers['Content-Type'] = 'application/json';
-
-    return headers;
-};
-export default getHeaders; */
-
-//Ejecuta la petición http, interpreta la respuesta y maneja errores de red.
-//Captura backen apagado, CORS Y FALLO DE CONEXIÓN.
 export const fetchErroresRed = async (url, options = {}) => {
   try {
     const res = await fetch(url, options);
 
-    if (!res.ok) {
-      if (res.status === 401) throw new Error("UNAUTHORIZED");
-      throw new Error("HTTP_ERROR");
-    }
+// Propaga el status para que los hooks puedan distinguir 403, 422, 429...
+//
+if (!res.ok) {
+    const error = new Error(res.statusText || "HTTP_ERROR");
+    //Al añadir .status permiteañadir lógica condicinal dependiendo del error.
+    //si 401 redirige a Login, si 404 muestra mensaje 'No encontrado?..
+    error.status = res.status; 
+    console.log("Esta:",error);
+    throw error;
+    
+}
 
     return await res.json();
     

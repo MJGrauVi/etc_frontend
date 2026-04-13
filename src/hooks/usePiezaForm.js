@@ -56,7 +56,7 @@ const usePiezaForm = () => {
       setFotos([]);
       setPreviews([]);
 
-      // Redirigimos al detalle de la pieza creada
+      // Redirigimos al detalle de la pieza creada.
       setTimeout(() => navegar(`/pieza/${data.data.id}`), 1500);
 
     } catch (err) {
