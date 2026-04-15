@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const useLoginRegistroForm = () => {
-  const { iniciarLogin, registrarUsuario, cargando } = useContextoSesion();
+  const { iniciarLogin, registrarUsuario, cargando, comprobarDisponibilidadEmail } = useContextoSesion();
   const navegar = useNavigate();
 
   // Estado inicial del formulario.
@@ -19,6 +19,7 @@ const useLoginRegistroForm = () => {
   const [form, setForm] = useState(estadoInicial);
   const [modoRegistro, setModoRegistro] = useState(false); //Empieza en login.
   const [mensaje, setMensaje] = useState(null);
+  const [emailEnUso, setEmailEnUso] = useState(true);
 
   // Delegación de eventos: un solo handler para todos los inputs
   const handleChange = ({ target }) => {
@@ -38,10 +39,28 @@ const useLoginRegistroForm = () => {
     setForm(estadoInicial);
     setMensaje(null);
   };
-
+  // --- SOLUCIÓN: Definir fuera de handleSubmit ---
+  const validarEmailUnico = async (email) => {
+    if (!email || !modoRegistro) return;
+    try {
+      const existe = await comprobarDisponibilidadEmail(email);
+      if (existe) {
+        setEmailEnUso(true);
+        mostrarMensaje("error", "Este email ya está registrado.");
+      } else {
+        setEmailEnUso(false);
+      }
+    } catch (err) {
+      console.error("Error validando email", err);
+    }
+  };
   // Enviar formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (modoRegistro && emailEnUso) {
+        mostrarMensaje("error", "Corrige el email antes de continuar");
+        return;
+    }
     setMensaje(null);
 
     try {
@@ -85,7 +104,9 @@ const useLoginRegistroForm = () => {
     handleChange,
     handleSubmit,
     toggleModoRegistro,
-    setMensaje
+    setMensaje,
+    emailEnUso,
+    validarEmailUnico
   };
 };
 

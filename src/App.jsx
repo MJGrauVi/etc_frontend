@@ -6,9 +6,10 @@ import AdminPanelTailwind from "./pages/AdminPanelTailwind.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import NuevaPiezaPage from "./pages/NuevaPiezaPage.jsx";
 import MisPiezasPage from "./pages/MisPiezasPage.jsx";
-import PiezaDetallePage from "./pages/PiezaDetallePage.jsx";
+import PiezaDetallePage from "./pages/PiezaDetallePageOriginal.jsx";
 import useContextoSesion from "./hooks/useContextoSesion.js";
 import PerfilPage from "./pages/PerfilPage.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import "./App.css";
 
 const RutaAdmin = ({ children }) => {
@@ -30,6 +31,8 @@ const RutaPrivada = ({ children }) => {
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen">
+     
+        <ScrollToTop />
       <Navbar />
       <main className="flex-1 pt-16">{/* padding obrigatorio por nabvar fixed */}
         <Routes>
@@ -76,6 +79,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      
     </div>
   );
 }

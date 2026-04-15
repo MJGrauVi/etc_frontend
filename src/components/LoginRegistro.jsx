@@ -20,7 +20,9 @@ const LoginRegistro = () => {
     handleSubmit,
     toggleModoRegistro,
     setMensaje,
-    setModoRegistro
+    setModoRegistro,
+    emailEnUso,
+    validarEmailUnico
   } = useLoginRegistroForm();
 
   //Mostar form registro si viene de "Prueba Gratis" .
@@ -41,6 +43,8 @@ const LoginRegistro = () => {
         onChange={handleChange}
         onSubmit={handleSubmit}
         onToggleModo={toggleModoRegistro}
+        onBlurEmail={validarEmailUnico}
+        emailEnUso={emailEnUso}
       />
           <MensajeTail
         tipo={mensaje?.tipo}

@@ -18,6 +18,12 @@ const authService = {
       body: JSON.stringify(userData ),
     }),
 
+  
+  checkEmail: (email) => 
+    request(`check-email?email=${email}`, {
+      method: "GET",
+    }),
+
   logout: async () => {
     try {
       await request("user/logout", { method: "POST" });

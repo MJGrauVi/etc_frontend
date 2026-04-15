@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TEMA — Colores y tokens del proyecto
+   TEMA — Colores y tokens del proyecto - 14/04/26
    ============================================================ */
 @theme {
   /* Tipografía */
@@ -9,17 +9,17 @@
 
   /* Colores de marca */
   --color-primary:        #f97316;  /* orange-500 */
-  --color-primary-hover:  #ea580c; /* orange-600 */
-  --color-primary-light:  #fff7ed; /* orange-50  */
-  --color-primary-border: #fed7aa; /* orange-200 */
+  --color-primary-hover:  #ea580c;  /* orange-600 */
+  --color-primary-light:  #fff7ed;  /* orange-50  */
+  --color-primary-border: #fed7aa;  /* orange-200 */
 
   /* Colores de texto */
-  --color-text-base:  #1f2937;     /* gray-800 */
-  --color-text-muted: #6b7280;     /* gray-500 */
+  --color-text-base:  #1f2937;      /* gray-800 */
+  --color-text-muted: #6b7280;      /* gray-500 */
 
   /* Fondos */
   --color-bg-base:   #ffffff;
-  --color-bg-subtle: #f9fafb;      /* gray-50 */
+  --color-bg-subtle: #f9fafb;       /* gray-50 */
 }
 
 /* ============================================================
@@ -65,12 +65,18 @@
    ============================================================ */
 
 /* — Botones ————————————————————————————————————————————————— */
+
+/*
+  btn-primary
+  En móvil ocupa todo el ancho para facilitar el toque con el dedo.
+  En md+ recupera su ancho natural según el contenido.
+*/
 @utility btn-primary {
-  @apply px-6 py-3 font-semibold text-white transition bg-orange-500 shadow hover:bg-orange-600;
+  @apply w-full px-6 py-3 font-semibold text-white transition bg-orange-500 shadow hover:bg-orange-600 md:w-auto;
 }
 
 @utility btn-secondary {
-  @apply px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50;
+  @apply w-full px-5 py-2 font-semibold text-orange-500 transition border border-orange-300 hover:bg-orange-50 md:w-auto;
 }
 
 /* — Formularios ————————————————————————————————————————————— */
@@ -78,13 +84,25 @@
   @apply block mb-1 text-sm font-medium text-gray-700;
 }
 
+/*
+  inputClass
+  py-2 en móvil (compacto), py-3 en md+ (más cómodo en desktop).
+  El ancho específico de cada input se añade encima en el JSX
+  (ej: md:w-96 para el buscador de MisPiezasPage).
+*/
 @utility inputClass {
-  @apply w-full px-4 py-2 text-gray-800 transition bg-white border border-gray-300 focus:outline-none focus:border-orange-400;
+  @apply w-full px-4 py-2 text-gray-800 transition bg-white border border-gray-300 focus:outline-none focus:border-orange-400 md:py-3;
 }
 
 /* — Alertas ————————————————————————————————————————————————— */
+
+/*
+  alerta-base
+  En móvil ocupa todo el ancho y reduce padding.
+  En md+ recupera el ancho máximo y el padding generoso.
+*/
 @utility alerta-base {
-  @apply relative z-10 w-full max-w-2xl p-10 text-center transition-all duration-300 border shadow-2xl rounded-3xl;
+  @apply relative z-10 w-full p-6 text-center transition-all duration-300 border shadow-2xl rounded-3xl md:max-w-2xl md:p-10;
 }
 
 @utility alerta-info {
@@ -99,12 +117,87 @@
   @apply border-green-200 bg-green-50 text-green-950;
 }
 
-/* — Cards ——————————————————————————————————————————————————— */
+/* — Cards generales ————————————————————————————————————————— */
 @utility card {
   @apply p-4 transition bg-white rounded-lg shadow-md hover:shadow-lg;
 }
 
 /* — Logo ———————————————————————————————————————————————————— */
 @utility etc {
-  @apply w-20 max-w-37.5 h-auto block duration-300 cursor-pointer hover:drop-shadow-[0_0_0.5em_#e0effb];
+  @apply w-20 max-w-37.5 h-auto block duration-300 cursor-pointer
+         hover:drop-shadow-[0_0_0.5em_#e0effb];
+}
+
+/* ============================================================
+   UTILIDADES ESPECÍFICAS DE INICIO
+   ============================================================ */
+
+/*
+  benefit-card — tarjetas de la sección "por qué elegirnos"
+  (Ahorro, Garantía, Seguridad, Facilidad)
+  En móvil padding reducido, en md+ el generoso original.
+*/
+@utility benefit-card {
+  @apply flex flex-col items-center px-4 py-6 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50 md:px-8;
+}
+
+/*
+  feature-card — tarjetas de la sección final "¿Por qué usar ETC?"
+  (Fácil de usar, Tu escaparate digital, Comparte en redes)
+*/
+@utility feature-card {
+  @apply flex flex-col items-center p-6 transition shadow-sm bg-gray-50 hover:shadow-md md:p-8;
+}
+
+/*
+  icon-circle — contenedor circular del icono en las tarjetas.
+  El color de fondo/texto se aplica encima con clases de Tailwind.
+*/
+@utility icon-circle {
+  @apply flex items-center justify-center w-16 h-16 mx-auto rounded-full;
+}
+
+/*
+  section-title — encabezado h2 reutilizable en secciones.
+  En móvil text-2xl, en md+ text-3xl, en lg text-4xl.
+*/
+@utility section-title {
+  @apply text-2xl font-semibold text-center text-gray-800 md:text-3xl lg:text-4xl;
+}
+
+/*
+  section-subtitle — párrafo de apoyo bajo el título de sección.
+*/
+@utility section-subtitle {
+  @apply max-w-3xl mx-auto mt-4 text-base leading-relaxed text-center text-gray-600 md:mt-6 md:text-lg;
+}
+/* — Footer —————————————————————————————————————————————————— */
+@utility footer-link {
+  /* Usamos un gris claro (gray-400 aprox) para que contraste con el fondo oscuro */
+  @apply text-gray-400 transition-colors duration-200 hover:text-primary;
+}
+
+@utility footer-title {
+  @apply mb-4 text-lg font-bold text-white;
+}
+
+/* ============================================================
+   UTILIDADES DE PÁGINAS INTERIORES
+   ============================================================ */
+
+/*
+  page-header — cabecera de sección reutilizable en páginas interiores
+  (MisPiezasPage, NuevaPiezaPage, etc.)
+  En móvil py-8, en md+ py-12.
+*/
+@utility page-header {
+  @apply py-8 border-b border-gray-200 bg-gray-50 md:py-12;
+}
+
+/*
+  piece-card — tarjeta de pieza en el grid de MisPiezasPage.
+  Incluye group para que los hijos puedan usar group-hover.
+*/
+@utility piece-card {
+  @apply transition border border-gray-200 group hover:border-orange-300 hover:shadow-md;
 }

@@ -7,6 +7,8 @@ const LoginRegistroFormUI = ({
   onChange,
   onSubmit,
   onToggleModo,
+  onBlurEmail,
+  emailEnUso
 }) => {
   return (
     <form
@@ -31,8 +33,10 @@ const LoginRegistroFormUI = ({
           name="email"
           value={form.email}
           onChange={onChange}
+          // --- CLAVE: Disparar validación al salir del campo ---
+          onBlur={() => onBlurEmail(form.email)}
           required
-          className="inputClass"
+          className="inputClass ${emailEnUso ? 'border-red-500 focus:ring-red-500' : ''}"
         />
       </div>
 
@@ -135,7 +139,7 @@ const LoginRegistroFormUI = ({
       <div className="flex flex-col gap-3 mt-6">
         <button
           type="submit"
-          disabled={cargando}
+          disabled={cargando || (modoRegistro && emailEnUso)}
           className="w-full px-6 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {cargando

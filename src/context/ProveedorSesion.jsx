@@ -41,6 +41,15 @@ const ProveedorSesion = ({ children }) => {
       setCargando(false);
     }
   };
+  const comprobarDisponibilidadEmail = async (email) => {
+  try {
+    const respuesta = await authService.checkEmail(email);
+    return respuesta.exists; // El backend devuelve { exists: true/false }
+  } catch (error) {
+    console.error("Error al validar email", error);
+    return false; 
+  }
+};
 
   useEffect(() => {
     const recuperarSesion = async () => {
@@ -86,6 +95,7 @@ const ProveedorSesion = ({ children }) => {
         put,
         remove,
         postForm,
+        comprobarDisponibilidadEmail
       }}
     >
       {children}
