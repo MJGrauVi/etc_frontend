@@ -88,7 +88,7 @@ const MisPiezasPage = () => {
                 <Link
                   key={pieza.id}
                   to={`/pieza/${pieza.id}`}
-                  className="piece-card"
+                  className="piece-card group"
                 >
                   {/* — Imagen de portada ———————————————————————— */}
                   <div className="relative w-full h-48 overflow-hidden bg-gray-100">

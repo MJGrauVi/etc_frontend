@@ -20,6 +20,8 @@
   /* Fondos */
   --color-bg-base:   #ffffff;
   --color-bg-subtle: #f9fafb;       /* gray-50 */
+
+ 
 }
 
 /* ============================================================
@@ -124,7 +126,7 @@
 
 /* — Logo ———————————————————————————————————————————————————— */
 @utility etc {
-  @apply w-20 max-w-37.5 h-auto block duration-300 cursor-pointer
+  @apply w-20 max-w-[150px] h-auto block duration-300 cursor-pointer
          hover:drop-shadow-[0_0_0.5em_#e0effb];
 }
 
@@ -196,8 +198,8 @@
 
 /*
   piece-card — tarjeta de pieza en el grid de MisPiezasPage.
-  Incluye group para que los hijos puedan usar group-hover.
+ 
 */
 @utility piece-card {
-  @apply transition border border-gray-200 group hover:border-orange-300 hover:shadow-md;
+  @apply transition border border-gray-200 hover:border-orange-300 hover:shadow-md;
 }
