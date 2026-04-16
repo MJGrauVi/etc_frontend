@@ -146,7 +146,7 @@ function BenefitCard({ titulo, descripcion, icono }) {
   return (
     <article className="benefit-card">
       <div className="text-orange-600 bg-orange-100 icon-circle">
-        <IconSVG>{ICONOS[icono]}</IconSVG>
+        {<IconSVG>{ICONOS[icono]}</IconSVG>}
       </div>
       <h3 className="mt-6 text-xl font-semibold text-center text-gray-800">
         {titulo}
