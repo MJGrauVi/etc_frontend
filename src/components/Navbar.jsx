@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserIcon } from "@heroicons/react/24/outline";
+
 
 import LogoEtcTail from "../components/logo/LogoEtcTail.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
