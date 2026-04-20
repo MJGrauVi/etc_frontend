@@ -14,7 +14,7 @@ import "./App.css";
 
 const RutaAdmin = ({ children }) => {
   const { usuario, cargando } = useContextoSesion();
-  if(cargando) return null;//Espera a que termine de recuperar la sesión.
+  if (cargando) return null; //Espera a que termine de recuperar la sesión.
 
   if (!usuario) return <Navigate to="/login" />;
   if (usuario.rol.trim() !== "Administrador") return <Navigate to="/" />;
@@ -23,7 +23,7 @@ const RutaAdmin = ({ children }) => {
 
 const RutaPrivada = ({ children }) => {
   const { usuario, cargando } = useContextoSesion();
-  if (cargando) return null; 
+  if (cargando) return null;
   if (!usuario) return <Navigate to="/login" />;
   return children;
 };
@@ -31,10 +31,10 @@ const RutaPrivada = ({ children }) => {
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen">
-     
-        <ScrollToTop />
+      <ScrollToTop />
       <Navbar />
-      <main className="flex-1 pt-16">{/* padding obrigatorio por nabvar fixed */}
+      <main className="flex-1 pt-16">
+        {/* padding obrigatorio por nabvar fixed */}
         <Routes>
           {/* Públicas */}
           <Route path="/" element={<Inicio />} />
@@ -75,11 +75,17 @@ export default function App() {
               </RutaPrivada>
             }
           />
-          <Route path="/mi-perfil" element={<RutaPrivada><PerfilPage/></RutaPrivada>} />
+          <Route
+            path="/mi-perfil"
+            element={
+              <RutaPrivada>
+                <PerfilPage />
+              </RutaPrivada>
+            }
+          />
         </Routes>
       </main>
       <Footer />
-      
     </div>
   );
 }

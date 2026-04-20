@@ -1,8 +1,8 @@
 import {fetchErroresRed} from "../utils/api.js";
 
-//Objeto de configuración, evita repetir petToker y cabeceras.
-//Añade token y cabeceras autómaticamente.
-//AQUI DECIDIMOS QUE DATOS DE AUTENTICACIÓN SE ENVIAN.
+//Objeto de configuración, centraliza la configuración común de todas 
+//las peticiones: la URL base, el token de autenticación y las cabeceras HTTP..
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8095/api";
 
