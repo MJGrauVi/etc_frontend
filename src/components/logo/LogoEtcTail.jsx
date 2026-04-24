@@ -1,9 +1,13 @@
 function LogoEtcTail() {
   return (
     <svg
-      viewBox="0 0 200 200"
+      /* viewBox="0 0 200 200" */
+      viewBox="30 20 105 145"
+      withd="40" height="40"
       xmlns="http://www.w3.org/2000/svg"
-      className="etc"  
+      className="etc"
+      overflow="hidden"
+        
     >
       <defs>
         <radialGradient id="gradNaranja" cx="50%" cy="50%" r="50%">

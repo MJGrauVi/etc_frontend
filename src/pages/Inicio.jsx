@@ -64,7 +64,7 @@ export default function Inicio() {
     <main className="min-h-screen font-sans">
       {/* ── HERO ──────────────────────────────────────────────── */}
       <section
-        className="relative flex items-center justify-center w-full pt-16 overflow-hidden bg-white min-h-150"
+        className="relative flex items-center justify-center w-full min-h-screen overflow-hidden bg-white" pt-16
         aria-label="Sección principal"
       >
         {/* Imagen de fondo decorativa */}
@@ -72,7 +72,7 @@ export default function Inicio() {
           src={fondo}
           alt=""
           role="presentation"
-          className="absolute bottom-0 z-0 object-cover w-full h-full opacity-25"
+          className="absolute inset-0 z-0 object-cover w-full h-full opacity-25"
         />
 
         {/* Contenido principal del hero */}

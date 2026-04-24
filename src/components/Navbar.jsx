@@ -10,12 +10,13 @@ const Navbar = () => {
   const { usuario, cerrarSesion } = useContextoSesion();
 
   return (
-    <nav className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
+    
+    <nav className="fixed top-0 left-0 z-50 w-full bg-white">
       <div className="flex items-center justify-between h-16 px-16 mx-auto max-w-7xl">
         {/* Logo */}
         <div className="flex items-center gap-1 md:gap-1">
           <Link to="/" className="flex items-center gap-2">
-            <LogoEtcTail />
+            <span className="flex items-center p-1"><LogoEtcTail /></span>
             <span className="text-xl font-bold text-gray-800 md:text-2xl">
               Etc Apps
             </span>
@@ -255,6 +256,7 @@ const Navbar = () => {
         </ul>
       )}
     </nav>
+   
   );
 };
 

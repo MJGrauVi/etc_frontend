@@ -120,16 +120,19 @@
 }
 
 /* — Cards generales ————————————————————————————————————————— */
-@utility card {
+/* @utility card {
   @apply p-4 transition bg-white rounded-lg shadow-md hover:shadow-lg;
-}
+} */
 
 /* — Logo ———————————————————————————————————————————————————— */
+/* @utility etc {
+  @apply w-20 max-w-[130px] h-auto block duration-300 cursor-pointer
+         hover:drop-shadow-[0_0_0.5em_#e0effb];
+} */
 @utility etc {
-  @apply w-20 max-w-[150px] h-auto block duration-300 cursor-pointer
+  @apply w-10 h-10  block duration-300 cursor-pointer
          hover:drop-shadow-[0_0_0.5em_#e0effb];
 }
-
 /* ============================================================
    UTILIDADES ESPECÍFICAS DE INICIO
    ============================================================ */
