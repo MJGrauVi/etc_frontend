@@ -8,11 +8,18 @@
   <defs>
     <radialGradient id="gradNaranja" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#ffcc66" />
-      <stop offset="100%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ff9900" />
     </radialGradient>
   </defs>
 
-  <circle cx="70" cy="90" r="60" stroke-width="3.5" stroke="#000" fill="white" />
+  <circle
+    cx="70"
+    cy="90"
+    r="60"
+    stroke-width="3.5"
+    stroke="#000"
+    fill="white"
+  />
 
   <g stroke="#000" stroke-width="2.5" stroke-linecap="round">
     <line x1="50" y1="49" x2="50" y2="131" />

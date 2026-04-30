@@ -125,14 +125,11 @@
 } */
 
 /* — Logo ———————————————————————————————————————————————————— */
-/* @utility etc {
-  @apply w-20 max-w-[130px] h-auto block duration-300 cursor-pointer
+
+ @utility etc {
+  @apply w-14 h-14 block duration-300 cursor-pointer
          hover:drop-shadow-[0_0_0.5em_#e0effb];
-} */
-@utility etc {
-  @apply w-10 h-10  block duration-300 cursor-pointer
-         hover:drop-shadow-[0_0_0.5em_#e0effb];
-}
+} 
 /* ============================================================
    UTILIDADES ESPECÍFICAS DE INICIO
    ============================================================ */

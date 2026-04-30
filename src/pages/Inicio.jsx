@@ -1,4 +1,4 @@
-import fondo from "../assets/escritorioApp2.jpeg";
+import fondo from "../assets/imagenFondo.png";
 import { Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 
@@ -72,7 +72,7 @@ export default function Inicio() {
           src={fondo}
           alt=""
           role="presentation"
-          className="absolute inset-0 z-0 object-cover w-full h-full opacity-25"
+          className="absolute inset-0 z-0 object-cover w-full h-full opacity-20"
         />
 
         {/* Contenido principal del hero */}

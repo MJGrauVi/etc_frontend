@@ -1,8 +1,7 @@
 function LogoEtcTail() {
   return (
     <svg
-      /* viewBox="0 0 200 200" */
-      viewBox="30 20 105 145"
+      viewBox="25 20 105 145"
       withd="40" height="40"
       xmlns="http://www.w3.org/2000/svg"
       className="etc"
@@ -12,7 +11,7 @@ function LogoEtcTail() {
       <defs>
         <radialGradient id="gradNaranja" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#ffcc66" />
-          <stop offset="100%" stopColor="#ff9900" />
+          <stop offset="100%" stopColor="#f97316" />
         </radialGradient>
       </defs>
 
@@ -20,7 +19,7 @@ function LogoEtcTail() {
         cx="70"
         cy="90"
         r="60"
-        strokeWidth="2.5"
+        strokeWidth="3.5"
         stroke="#000"
         fill="white"
       />
