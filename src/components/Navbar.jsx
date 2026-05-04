@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-
-
 import LogoEtcTail from "../components/logo/LogoEtcTail.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
@@ -17,7 +14,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center gap-1 md:gap-1">
           <Link to="/" className="flex items-center gap-2">
-            <span className="flex items-center p-1"><LogoEtcTail /></span>
+            <span className="flex items-center p-1"><LogoEtcTail className="etc" /></span>
             <span className="text-xl font-bold text-gray-800 md:text-2xl">
               Etc Apps
             </span>

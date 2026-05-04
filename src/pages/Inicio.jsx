@@ -1,7 +1,6 @@
 import fondo from "../assets/imagenFondo.png";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import Card from "../components/Card.jsx";
-
 
 const BENEFICIOS = [
   {
@@ -58,13 +57,12 @@ const CARACTERISTICAS = [
   },
 ];
 
-
 export default function Inicio() {
   return (
     <main className="min-h-screen font-sans">
       {/* ── HERO ──────────────────────────────────────────────── */}
       <section
-        className="relative flex items-center justify-center w-full min-h-screen overflow-hidden bg-white" pt-16
+        className="flex items-center justify-center w-full min-h-screen pt-16 "
         aria-label="Sección principal"
       >
         {/* Imagen de fondo decorativa */}
@@ -72,20 +70,19 @@ export default function Inicio() {
           src={fondo}
           alt=""
           role="presentation"
-          className="absolute inset-0 z-0 object-cover w-full h-full opacity-20"
+          className="absolute inset-0 z-0 object-cover object-left w-full h-full"
         />
+        <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-sm" />
 
         {/* Contenido principal del hero */}
-        <div className="relative z-10 max-w-4xl px-6 mx-auto text-center">
-          <h1 className="text-3xl font-bold leading-tight text-black md:text-6xl">
+        <div className="relative z-20 max-w-4xl px-6 mx-auto text-center">
+          <h1 className="text-3xl font-bold leading-tight text-white md:text-6xl">
             Muestra al mundo lo que creas
           </h1>
-
-          <p className="mt-6 text-lg text-gray-800 md:text-xl">
+          <p className="mt-6 text-lg text-gray-200 md:text-xl">
             Con ETC puedes crear publicaciones profesionales y compartir tus
             piezas únicas en redes sociales en solo unos clics.
           </p>
-
           <div className="flex flex-wrap justify-center gap-4 mt-8">
             <Link
               to="/login"

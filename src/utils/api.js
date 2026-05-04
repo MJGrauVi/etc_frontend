@@ -1,26 +1,33 @@
-
 export const fetchErroresRed = async (url, options = {}) => {
   try {
     const res = await fetch(url, options);
 
-// Propaga el status para que los hooks puedan distinguir 403, 422, 429...
-//
-if (!res.ok) {
-    const error = new Error("HTTP_ERROR");
-    //Al añadir .status permite añadir lógica condicinal dependiendo del error.
-    //si 401 redirige a Login, si 404 muestra mensaje 'No encontrado?..
-    error.status = res.status; 
-    error.statusText = res.statusText;
-    throw error;
-    
-}
+    if (!res.ok) {
+      let error;
 
-    return await res.json();
-    
-  } catch (error) {
-    if (error.message === "HTTP_ERROR") {
+      if (res.status === 401) {
+        error = new Error("UNAUTHORIZED");
+      } else {
+        error = new Error("HTTP_ERROR");
+      }
+
+      error.status = res.status;
       throw error;
     }
-    throw new Error("NETWORK_ERROR");//Solo errores reales de red.
+
+    return await res.json();
+
+  } catch (error) {
+
+    // 👉 Si es un error HTTP que yo mismo generé arriba, lo dejo pasar
+    if (
+      error.message === "UNAUTHORIZED" ||
+      error.message === "HTTP_ERROR"
+    ) {
+      throw error;
+    }
+
+    // 👉 Si no es de los nuestros, entonces sí es un error real de red
+    throw new Error("NETWORK_ERROR");
   }
 };

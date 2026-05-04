@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const useLoginRegistroForm = () => {
-  const { iniciarLogin, registrarUsuario, cargando, comprobarDisponibilidadEmail } = useContextoSesion();
+  const {
+    iniciarLogin,
+    registrarUsuario,
+    cargando,
+    comprobarDisponibilidadEmail,
+  } = useContextoSesion();
   const navegar = useNavigate();
 
   // Estado inicial del formulario.
@@ -58,8 +63,8 @@ const useLoginRegistroForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (modoRegistro && emailEnUso) {
-        mostrarMensaje("error", "Corrige el email antes de continuar");
-        return;
+      mostrarMensaje("error", "Corrige el email antes de continuar");
+      return;
     }
     setMensaje(null);
 
@@ -67,7 +72,11 @@ const useLoginRegistroForm = () => {
       if (modoRegistro) {
         // REGISTRO
         await registrarUsuario(form);
-        mostrarMensaje("success", "¡Cuenta creada! Revisa tu correo para verificarla.", 2500);
+        mostrarMensaje(
+          "success",
+          "¡Cuenta creada! Revisa tu correo para verificarla.",
+          2500,
+        );
         setForm(estadoInicial);
         setTimeout(() => navegar("/"), 2500);
       } else {
@@ -85,8 +94,12 @@ const useLoginRegistroForm = () => {
         }, 1500);
       }
     } catch (err) {
+      console.log("ERROR REAL:", err);
       if (err.message === "NETWORK_ERROR") {
-        mostrarMensaje("error", "Servidor no disponible");
+        mostrarMensaje(
+          "error",
+          "Servidor no disponible.\n Disculpe las molestias.",
+        );
       } else if (err.message === "UNAUTHORIZED") {
         mostrarMensaje("error", "Credenciales incorrectas");
       } else {
@@ -106,7 +119,7 @@ const useLoginRegistroForm = () => {
     toggleModoRegistro,
     setMensaje,
     emailEnUso,
-    validarEmailUnico
+    validarEmailUnico,
   };
 };
 

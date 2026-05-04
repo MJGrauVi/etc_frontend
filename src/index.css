@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+#root {
+ 
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  text-align: center;
+}
 /* ============================================================
    TEMA — Colores y tokens del proyecto - 14/04/26
    ============================================================ */
@@ -34,7 +41,7 @@
 
   body {
     margin: 0;
-    min-width: 320px;
+    /* min-width: 320px; */
     min-height: 100vh;
     font-family: var(--font-sans);
     font-weight: 400;
@@ -104,7 +111,7 @@
   En md+ recupera el ancho máximo y el padding generoso.
 */
 @utility alerta-base {
-  @apply relative z-10 w-full p-6 text-center transition-all duration-300 border shadow-2xl rounded-3xl md:max-w-2xl md:p-10;
+  @apply relative z-10 w-full p-6 text-center transition-all duration-300 border shadow-2xl md:max-w-2xl md:p-10;
 }
 
 @utility alerta-info {
@@ -126,8 +133,8 @@
 
 /* — Logo ———————————————————————————————————————————————————— */
 
- @utility etc {
-  @apply w-14 h-14 block duration-300 cursor-pointer
+@utility etc {
+  @apply w-12 h-12 md:w-16 md:h-16 block duration-300 cursor-pointer
          hover:drop-shadow-[0_0_0.5em_#e0effb];
 } 
 /* ============================================================
