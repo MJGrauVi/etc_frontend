@@ -1,35 +1,34 @@
 export const fetchErroresRed = async (url, options = {}) => {
-  
-  //Normaliza errores.
   try {
     const res = await fetch(url, options);
 
     if (!res.ok) {
-      let error;
+      let errorData = null;
 
-      if (res.status === 401) {
-        error = new Error("UNAUTHORIZED");
-      } else {
-        error = new Error("HTTP_ERROR");
+      try {
+        errorData = await res.json();
+      } catch {
+        errorData = null;
       }
 
+      const error = new Error(res.status === 401 ? "UNAUTHORIZED" : "HTTP_ERROR");
       error.status = res.status;
+      error.data = errorData;
+      error.backendMessage =
+        errorData?.message ||
+        errorData?.error ||
+        errorData?.errors?.email?.[0] ||
+        "";
+
       throw error;
     }
 
     return await res.json();
-
   } catch (error) {
-
-    //Si es un error HTTP que yo mismo generé arriba, lo dejo pasar
-    if (
-      error.message === "UNAUTHORIZED" ||
-      error.message === "HTTP_ERROR"
-    ) {
+    if (error.message === "UNAUTHORIZED" || error.message === "HTTP_ERROR") {
       throw error;
     }
 
-    // Si no es de los nuestros, entonces sí es un error real de red
     throw new Error("NETWORK_ERROR");
   }
 };

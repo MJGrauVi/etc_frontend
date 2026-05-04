@@ -2,6 +2,32 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
+const esErrorEmailSinVerificar = (err) => {
+  const textoBackend = `${err.backendMessage || ""} ${err.data?.message || ""}`.toLowerCase();
+  const hablaDeEmail =
+    textoBackend.includes("email") || textoBackend.includes("correo");
+  const hablaDeVerificacion =
+    textoBackend.includes("verific") ||
+    textoBackend.includes("verify") ||
+    textoBackend.includes("verified");
+
+  if (err.status === 403 && !textoBackend) {
+    return true;
+  }
+
+  return (
+    [401, 403, 409, 422].includes(err.status) &&
+    hablaDeEmail &&
+    hablaDeVerificacion
+  );
+};
+
+const esErrorCredencialesInvalidas = (err, modoRegistro) => {
+  if (modoRegistro) return false;
+
+  return err.message === "UNAUTHORIZED" || [400, 401, 422].includes(err.status);
+};
+
 const useLoginRegistroForm = () => {
   const {
     iniciarLogin,
@@ -11,7 +37,6 @@ const useLoginRegistroForm = () => {
   } = useContextoSesion();
   const navegar = useNavigate();
 
-  // Estado inicial del formulario.
   const estadoInicial = {
     nombre: "",
     direccion: "",
@@ -22,36 +47,34 @@ const useLoginRegistroForm = () => {
   };
 
   const [form, setForm] = useState(estadoInicial);
-  const [modoRegistro, setModoRegistro] = useState(false); //Empieza en login.
+  const [modoRegistro, setModoRegistro] = useState(false);
   const [mensaje, setMensaje] = useState(null);
   const [emailEnUso, setEmailEnUso] = useState(true);
 
-  // Delegación de eventos: un solo handler para todos los inputs
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Mostrar mensaje temporal
   const mostrarMensaje = (tipo, texto, tiempo = 2000) => {
     setMensaje({ tipo, texto });
     setTimeout(() => setMensaje(null), tiempo);
   };
 
-  // Cambiar entre login y registro
   const toggleModoRegistro = () => {
     setModoRegistro((prev) => !prev);
     setForm(estadoInicial);
     setMensaje(null);
   };
-  // --- SOLUCIÓN: Definir fuera de handleSubmit ---
+
   const validarEmailUnico = async (email) => {
     if (!email || !modoRegistro) return;
+
     try {
       const existe = await comprobarDisponibilidadEmail(email);
       if (existe) {
         setEmailEnUso(true);
-        mostrarMensaje("error", "Este email ya está registrado.");
+        mostrarMensaje("error", "Este email ya esta registrado.");
       } else {
         setEmailEnUso(false);
       }
@@ -59,7 +82,7 @@ const useLoginRegistroForm = () => {
       console.error("Error validando email", err);
     }
   };
-  // Enviar formulario
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (modoRegistro && emailEnUso) {
@@ -70,20 +93,18 @@ const useLoginRegistroForm = () => {
 
     try {
       if (modoRegistro) {
-        // REGISTRO
         await registrarUsuario(form);
         mostrarMensaje(
           "success",
-          "¡Cuenta creada! Revisa tu correo para verificarla.",
+          "Cuenta creada. Revisa tu correo para verificarla.",
           2500,
         );
         setForm(estadoInicial);
         setTimeout(() => navegar("/"), 2500);
       } else {
-        // LOGIN
         const data = await iniciarLogin(form.email, form.password);
-        console.log("Respuesta login:", data); //
-        mostrarMensaje("success", "¡Has iniciado sesión!", 1500);
+        console.log("Respuesta login:", data);
+        mostrarMensaje("success", "Has iniciado sesion.", 1500);
         setForm(estadoInicial);
         setTimeout(() => {
           if (data?.data?.rol === "Administrador") {
@@ -100,7 +121,14 @@ const useLoginRegistroForm = () => {
           "error",
           "Servidor no disponible.\n Disculpe las molestias.",
         );
-      } else if (err.message === "UNAUTHORIZED") {
+      } else if (esErrorEmailSinVerificar(err)) {
+        mostrarMensaje(
+          "error",
+          "Tu cuenta todavia no esta verificada. Revisa tu correo y confirma el email antes de iniciar sesion.",
+          4500,
+        );
+        setForm(estadoInicial);
+      } else if (esErrorCredencialesInvalidas(err, modoRegistro)) {
         mostrarMensaje("error", "Credenciales incorrectas");
       } else {
         mostrarMensaje("error", "Error inesperado");

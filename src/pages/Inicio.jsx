@@ -1,4 +1,8 @@
 import fondo from "../assets/imagenFondo.png";
+import ahorro from "../assets/ahorro.png";
+import garantia from "../assets/garantia.png";
+import seguridad from "../assets/seguridad.png";
+import facilidad from "../assets/facilidad.png";
 import { Link } from "react-router-dom"
 import Card from "../components/Card.jsx";
 
@@ -9,6 +13,7 @@ const BENEFICIOS = [
     descripcion:
       "El cloud computing es más eficiente que los sistemas tradicionales. Muchas PYMES ya se han pasado y han reducido costes de infraestructura y mantenimiento.",
     icono: "ahorro",
+    imagen: ahorro,
   },
   {
     id: "garantia",
@@ -16,6 +21,7 @@ const BENEFICIOS = [
     descripcion:
       "Garantía incondicional de satisfacción. Para que tomes la mejor decisión, te ofrecemos 1 mes gratis de prueba sin compromiso.",
     icono: "garantia",
+    imagen: garantia,
   },
   {
     id: "seguridad",
@@ -23,6 +29,7 @@ const BENEFICIOS = [
     descripcion:
       "Datos encriptados, accesos seguros y monitorización técnica constante. Tu información y la de tus clientes siempre protegida.",
     icono: "seguridad",
+    imagen: seguridad,
   },
   {
     id: "facilidad",
@@ -30,6 +37,7 @@ const BENEFICIOS = [
     descripcion:
       "Software intuitivo, ágil y productivo. Procesos simples, ayudas integradas y una experiencia pensada para que no pierdas tiempo.",
     icono: "facilidad",
+    imagen: facilidad,
   },
 ];
 

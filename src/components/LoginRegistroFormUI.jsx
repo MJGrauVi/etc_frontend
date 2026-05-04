@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const LoginRegistroFormUI = ({
   form,
@@ -8,27 +9,22 @@ const LoginRegistroFormUI = ({
   onSubmit,
   onToggleModo,
   onBlurEmail,
-  emailEnUso
+  emailEnUso,
 }) => {
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+
   return (
- <form
-  className="w-full max-w-md p-8 border border-gray-200 shadow-xl bg-white/95 shadow-gray-200/70"
-  onSubmit={onSubmit}
->
-     {/* <form
-      className="w-full max-w-md p-8 mx-auto bg-white border border-gray-200 shadow-sm"
+    <form
+      className="w-full max-w-md p-8 border border-gray-200 shadow-xl bg-white/95 shadow-gray-200/70"
       onSubmit={onSubmit}
-    > */} 
+    >
       <h2 className="mb-6 text-2xl font-bold text-gray-800">
-        {modoRegistro ? "Crea tu cuenta" : "Inicia sesión"}
+        {modoRegistro ? "Crea tu cuenta" : "Inicia sesion"}
       </h2>
 
-      {/* EMAIL */}
       <div className="mb-4">
-        <label
-          htmlFor="email"
-          className="labelClass"
-        >
+        <label htmlFor="email" className="labelClass">
           Email
         </label>
         <input
@@ -37,57 +33,72 @@ const LoginRegistroFormUI = ({
           name="email"
           value={form.email}
           onChange={onChange}
-          // --- CLAVE: Disparar validación al salir del campo ---
           onBlur={() => onBlurEmail(form.email)}
           required
-          className="inputClass ${emailEnUso ? 'border-red-500 focus:ring-red-500' : ''}"
+          className={`inputClass ${
+            modoRegistro && emailEnUso ? "border-red-500 focus:border-red-500" : ""
+          }`}
         />
       </div>
 
-      {/* PASSWORD */}
       <div className="mb-4">
-        <label
-          htmlFor="password"
-          className="labelClass"
-        >
-          Contraseña
+        <label htmlFor="password" className="labelClass">
+          Contrasena
         </label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={onChange}
-          required
-          className="inputClass"
-        />
+        <div className="relative">
+          <input
+            id="password"
+            type={mostrarPassword ? "text" : "password"}
+            name="password"
+            value={form.password}
+            onChange={onChange}
+            required
+            className="inputClass pr-12"
+          />
+          <button
+            type="button"
+            onClick={() => setMostrarPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-gray-500 transition hover:text-orange-600"
+            aria-label={mostrarPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+          >
+            {mostrarPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
       </div>
 
-      {/* CAMPOS SOLO PARA REGISTRO */}
       {modoRegistro && (
         <>
           <div className="mb-4">
-            <label
-              htmlFor="password_confirmation"
-              className="labelClass"
-            >
-              Repite la contraseña
+            <label htmlFor="password_confirmation" className="labelClass">
+              Repite la contrasena
             </label>
-            <input
-              id="password_confirmation"
-              type="password"
-              name="password_confirmation"
-              value={form.password_confirmation}
-              onChange={onChange}
-              required
-              className="inputClass"
-            />
+            <div className="relative">
+              <input
+                id="password_confirmation"
+                type={mostrarConfirmacion ? "text" : "password"}
+                name="password_confirmation"
+                value={form.password_confirmation}
+                onChange={onChange}
+                required
+                className="inputClass pr-12"
+              />
+              <button
+                type="button"
+                onClick={() => setMostrarConfirmacion((prev) => !prev)}
+                className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-gray-500 transition hover:text-orange-600"
+                aria-label={
+                  mostrarConfirmacion
+                    ? "Ocultar contrasena repetida"
+                    : "Mostrar contrasena repetida"
+                }
+              >
+                {mostrarConfirmacion ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
+
           <div className="mb-4">
-            <label
-              htmlFor="nombre"
-              className="labelClass"
-            >
+            <label htmlFor="nombre" className="labelClass">
               Nombre
             </label>
             <input
@@ -102,12 +113,8 @@ const LoginRegistroFormUI = ({
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="direccion"
-              className="labelClass"
-            >
-              Dirección{" "}
-              <span className="font-normal text-gray-400">(opcional)</span>
+            <label htmlFor="direccion" className="labelClass">
+              Direccion <span className="font-normal text-gray-400">(opcional)</span>
             </label>
             <input
               id="direccion"
@@ -120,12 +127,8 @@ const LoginRegistroFormUI = ({
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="telefono"
-              className="labelClass"
-            >
-              Teléfono{" "}
-              <span className="font-normal text-gray-400">(opcional)</span>
+            <label htmlFor="telefono" className="labelClass">
+              Telefono <span className="font-normal text-gray-400">(opcional)</span>
             </label>
             <input
               id="telefono"
@@ -139,18 +142,13 @@ const LoginRegistroFormUI = ({
         </>
       )}
 
-      {/* BOTONES */}
       <div className="flex flex-col gap-3 mt-6">
         <button
           type="submit"
           disabled={cargando || (modoRegistro && emailEnUso)}
           className="w-full px-6 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {cargando
-            ? "Cargando..."
-            : modoRegistro
-              ? "Registrarme"
-              : "Iniciar sesión"}
+          {cargando ? "Cargando..." : modoRegistro ? "Registrarme" : "Iniciar sesion"}
         </button>
 
         <button
@@ -161,17 +159,13 @@ const LoginRegistroFormUI = ({
         >
           {modoRegistro ? (
             <>
-              <span className="font-normal text-gray-500">
-                ¿Ya tienes cuenta?
-              </span>{" "}
-              Entra aquí
+              <span className="font-normal text-gray-500">Ya tienes cuenta?</span>{" "}
+              Entra aqui
             </>
           ) : (
             <>
-              <span className="font-normal text-gray-500">
-                ¿No tienes cuenta?
-              </span>{" "}
-              Regístrate
+              <span className="font-normal text-gray-500">No tienes cuenta?</span>{" "}
+              Registrate
             </>
           )}
         </button>

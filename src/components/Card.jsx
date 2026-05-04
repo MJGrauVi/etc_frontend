@@ -14,8 +14,40 @@ const VARIANTS = {
   caracteristicas: { card: "caracteristicas-card", circle: "icon-circle", iconSize: 32 },
 };
 
-export default function Card({ titulo, descripcion, icono, variant = "benefit" }) {
+export default function Card({
+  titulo,
+  descripcion,
+  icono,
+  imagen,
+  variant = "benefit",
+}) {
   const v = VARIANTS[variant];
+
+  if (variant === "beneficios" && imagen) {
+    return (
+      <article className="group relative min-h-[320px] overflow-hidden border border-gray-200 bg-gray-900 text-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+        <img
+          src={imagen}
+          alt=""
+          role="presentation"
+          className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/25 transition duration-300 group-hover:bg-black/65" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+
+        <div className="relative z-10 flex h-full min-h-[320px] flex-col justify-end p-6 text-left">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center bg-white/90 text-orange-600 shadow-sm">
+            {ICONOS[icono](30)}
+          </div>
+
+          <h3 className="text-2xl font-semibold text-white">{titulo}</h3>
+          <p className="mt-3 max-h-40 text-sm leading-relaxed text-gray-100 opacity-100 transition duration-300 md:max-h-0 md:opacity-0 md:group-hover:max-h-40 md:group-hover:opacity-100">
+            {descripcion}
+          </p>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <article className={v.card}>

@@ -9,7 +9,7 @@ const LoginPage = () => {
           {/* Bloque visual */}
           <section className="relative items-center justify-center hidden min-h-130 bg-white/70 lg:flex">
             <LogoEtcTail className="h-88 w-88 opacity-10" />
-            <div className="absolute max-w-md text-left bottom-16 left-10">
+            <div className="absolute max-w-md text-left bottom-16 left-20">
               <h1 className="text-4xl font-bold text-gray-900">
                 Gestiona tus piezas con claridad
               </h1>
@@ -18,11 +18,10 @@ const LoginPage = () => {
                 publicaciones.
               </p>
             </div>
-            zcvb
           </section>
 
           {/* Formulario pisando el bloque */}
-          <section className="relative z-10 flex justify-center lg:-ml-24">
+          <section className="relative z-10 flex justify-center lg:-ml-32">
             <LoginRegistro />
           </section>
         </div>
