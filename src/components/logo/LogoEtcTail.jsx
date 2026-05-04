@@ -1,10 +1,10 @@
-function LogoEtcTail() {
+const LogoEtcTail =({className = "etc"})=> {
   return (
     <svg
      
       viewBox="25 20 105 145"
       xmlns="http://www.w3.org/2000/svg"
-      className="etc"
+      className={className}
       overflow="hidden"
         
     >

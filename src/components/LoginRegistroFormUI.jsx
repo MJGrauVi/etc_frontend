@@ -11,10 +11,14 @@ const LoginRegistroFormUI = ({
   emailEnUso
 }) => {
   return (
-    <form
+ <form
+  className="w-full max-w-md p-8 border border-gray-200 shadow-xl bg-white/95 shadow-gray-200/70"
+  onSubmit={onSubmit}
+>
+     {/* <form
       className="w-full max-w-md p-8 mx-auto bg-white border border-gray-200 shadow-sm"
       onSubmit={onSubmit}
-    >
+    > */} 
       <h2 className="mb-6 text-2xl font-bold text-gray-800">
         {modoRegistro ? "Crea tu cuenta" : "Inicia sesión"}
       </h2>

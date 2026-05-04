@@ -1,4 +1,6 @@
 export const fetchErroresRed = async (url, options = {}) => {
+  
+  //Normaliza errores.
   try {
     const res = await fetch(url, options);
 
@@ -19,7 +21,7 @@ export const fetchErroresRed = async (url, options = {}) => {
 
   } catch (error) {
 
-    // 👉 Si es un error HTTP que yo mismo generé arriba, lo dejo pasar
+    //Si es un error HTTP que yo mismo generé arriba, lo dejo pasar
     if (
       error.message === "UNAUTHORIZED" ||
       error.message === "HTTP_ERROR"
@@ -27,7 +29,7 @@ export const fetchErroresRed = async (url, options = {}) => {
       throw error;
     }
 
-    // 👉 Si no es de los nuestros, entonces sí es un error real de red
+    // Si no es de los nuestros, entonces sí es un error real de red
     throw new Error("NETWORK_ERROR");
   }
 };
