@@ -1,5 +1,6 @@
-import MensajeTail from "./MensajeTail.jsx";
 import { useState } from "react";
+import { Download } from "lucide-react";
+import { exportarPublicacionPng } from "../utils/exportPublicacionImage.js";
 
 const PublicacionPreview = ({
   publicacion,
@@ -9,9 +10,12 @@ const PublicacionPreview = ({
   perfil,
 }) => {
   const [copiado, setCopiado] = useState();
+  const [exportando, setExportando] = useState(false);
+  const [errorExportacion, setErrorExportacion] = useState("");
+  const piezaPublicacion = publicacion.pieza ?? publicacion.piezas;
   const imagenUrl =
-    publicacion.piezas?.medias?.find((m) => m.es_portada)?.url_completa ||
-    publicacion.piezas?.medias?.[0]?.url_completa;
+    piezaPublicacion?.medias?.find((m) => m.es_portada)?.url_completa ||
+    piezaPublicacion?.medias?.[0]?.url_completa;
 
   // Función que copia el contenido formateado
   const copiarContenido = () => {
@@ -29,6 +33,36 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
       setTimeout(() => setCopiado(false), 3000);
     });
   };
+
+  const descargarImagen = async () => {
+    setExportando(true);
+    setErrorExportacion("");
+
+    try {
+      const nombreBase = publicacion.titulo || "publicacion-etc";
+      const slug = nombreBase
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+      await exportarPublicacionPng({
+        imagenUrl,
+        titulo: publicacion.titulo,
+        contenido: publicacion.contenido,
+        hashtags: publicacion.hashtags,
+        perfil,
+        nombreArchivo: `${slug || "publicacion-etc"}.png`,
+      });
+    } catch (error) {
+      console.error("Error exportando publicacion", error);
+      setErrorExportacion(
+        "No se pudo generar la imagen. Revisa que la imagen de la pieza este disponible.",
+      );
+    } finally {
+      setExportando(false);
+    }
+  };
+
   return (
     <div className="mt-10 border border-orange-200 bg-orange-50">
       <div className="px-6 py-4 bg-orange-100 border-b border-orange-200">
@@ -113,7 +147,7 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
                 className="px-4 py-2 font-semibold text-orange-600 transition bg-white border border-orange-300 hover:bg-orange-50 focus:outline-none"
               >
                 <option value="borrador">Borrador</option>
-                <option value="lista">Lista para publicar</option>
+                <option value="pendiente">Lista para publicar</option>
                 <option value="publicado">Publicada</option>
               </select>
             </div>
@@ -129,7 +163,53 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
           </div>
         </div>
         {/* ── Botón Copiar, solo cuando este lista la publicación- Simulamos la publicacion en redes ── */}
-        {(publicacion.estado === "lista" ||
+        <div className="pt-6 mt-6 border-t border-orange-200">
+          <h3 className="mb-3 text-sm font-semibold text-gray-700">
+            Imagen final para redes
+          </h3>
+          <div className="w-full max-w-sm overflow-hidden bg-white border border-gray-200 shadow-sm">
+            <div className="relative aspect-square bg-gray-100">
+              {imagenUrl ? (
+                <img
+                  src={imagenUrl}
+                  alt="Vista previa de la publicacion"
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
+                  Sin imagen
+                </div>
+              )}
+              <div className="absolute inset-x-0 bottom-0 p-4 text-left bg-white/95">
+                <h4 className="text-lg font-bold leading-tight text-gray-900">
+                  {publicacion.titulo}
+                </h4>
+                <p className="mt-1 overflow-hidden text-xs leading-relaxed text-gray-600 max-h-10">
+                  {publicacion.contenido}
+                </p>
+                <p className="mt-2 overflow-hidden text-xs font-semibold text-orange-600 whitespace-nowrap">
+                  {publicacion.hashtags}
+                </p>
+              </div>
+            </div>
+          </div>
+          <p className="mt-2 text-xs text-gray-400">
+            La descarga se genera en formato cuadrado 1080x1080.
+          </p>
+          <button
+            onClick={descargarImagen}
+            disabled={exportando}
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 mt-4 font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
+          >
+            <Download size={18} />
+            {exportando ? "Generando..." : "Descargar imagen PNG"}
+          </button>
+          {errorExportacion && (
+            <p className="mt-2 text-sm text-red-600">{errorExportacion}</p>
+          )}
+        </div>
+
+        {(publicacion.estado === "pendiente" ||
           publicacion.estado === "publicado") && (
           <div className="pt-6 mt-6 border-t border-orange-200">
             <p className="mb-3 text-sm text-gray-600">
@@ -171,8 +251,8 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
               </a>
             </div>
             <p className="mt-2 text-xs text-gray-400">
-              Copia el contenido, abre la red social y pégalo en tu nueva
-              publicación.
+              Copia el contenido, descarga la imagen y sube ambos a tu nueva
+              publicacion.
             </p>
           </div>
         )}

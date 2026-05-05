@@ -133,7 +133,7 @@ const usePiezaDetalle = () => {
       contenido: "",
       hashtags: "",
       estado:   "borrador",
-      piezas:   pieza,
+      pieza,
     });
     setModoManual(true);
   };
@@ -144,9 +144,14 @@ const usePiezaDetalle = () => {
     setMensaje({ tipo: "", texto: "" });
     try {
       const respuesta = await post("publicacion/generar", { pieza_id: id });
-      const pub = respuesta.data;
-      pub.titulo = pub.titulo.replace(/[*:#]/g, "").trim();
-      setPublicacion(pub);
+      const pub = respuesta.data?.data ?? respuesta.data;
+      setPublicacion({
+        ...pub,
+        pieza_id: pub.pieza_id ?? id,
+        pieza: pub.pieza ?? pub.piezas ?? pieza,
+        titulo: (pub.titulo ?? "").replace(/[*:#]/g, "").trim(),
+        estado: pub.estado === "lista" ? "pendiente" : (pub.estado ?? "borrador"),
+      });
       setModoManual(false);
       setMensaje({ tipo: "success", texto: "Publicación generada correctamente." });
     } catch (err) {
@@ -173,37 +178,48 @@ const usePiezaDetalle = () => {
     setPublicacion(prev => ({ ...prev, [name]: value }));
   };
 
+  const normalizarEstado = (estado) =>
+    estado === "lista" ? "pendiente" : estado;
+
   // ── Guardar — funciona para IA (PUT) y manual (POST) ──────────
   const guardarCambios = async () => {
     setGuardando(true);
     try {
       let respuesta;
+      const datosPublicacion = {
+        pieza_id: id,
+        titulo: publicacion.titulo,
+        contenido: publicacion.contenido,
+        hashtags: publicacion.hashtags,
+        estado: normalizarEstado(publicacion.estado),
+      };
 
       if (publicacion.id) {
         // Ya existe en BD → actualizar con PUT
-        respuesta = await put(`publicacion/${publicacion.id}`, {
-          titulo:    publicacion.titulo,
-          contenido: publicacion.contenido,
-          hashtags:  publicacion.hashtags,
-          estado:    publicacion.estado,
-        });
+        respuesta = await put(`publicacion/${publicacion.id}`, datosPublicacion);
       } else {
         // Es manual, no existe → crear con POST
-        respuesta = await post("publicacion", {
-          pieza_id:  id,
-          titulo:    publicacion.titulo,
-          contenido: publicacion.contenido,
-          hashtags:  publicacion.hashtags,
-          estado:    publicacion.estado,
-        });
+        respuesta = await post("publicacion", datosPublicacion);
       }
 
-      setPublicacion(respuesta.data);
+      const pubGuardada = respuesta.data?.data ?? respuesta.data;
+      setPublicacion({
+        ...pubGuardada,
+        pieza: pubGuardada?.pieza ?? pubGuardada?.piezas ?? publicacion.pieza ?? publicacion.piezas ?? pieza,
+        pieza_id: pubGuardada?.pieza_id ?? id,
+        estado: normalizarEstado(pubGuardada?.estado ?? datosPublicacion.estado),
+      });
       setModoManual(false);
       setMensaje({ tipo: "success", texto: "Publicación guardada correctamente." });
 
     } catch (err) {
       if (err.status === 403) {
+        console.error("Error 403 guardando publicacion", {
+          publicacionId: publicacion.id,
+          piezaId: id,
+          backendMessage: err.backendMessage,
+          data: err.data,
+        });
         setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicación." });
       } else if (err.status === 422) {
         setMensaje({ tipo: "error", texto: "Datos incorrectos. Revisa los campos." });
