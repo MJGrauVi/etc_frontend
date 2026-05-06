@@ -63,6 +63,26 @@ const dibujarImagenCover = (ctx, img, x, y, width, height) => {
   ctx.drawImage(img, sx, sy, sw, sh, x, y, width, height);
 };
 
+const dibujarImagenContain = (ctx, img, x, y, width, height) => {
+  const escala = Math.min(width / img.width, height / img.height);
+  const drawWidth = img.width * escala;
+  const drawHeight = img.height * escala;
+  const drawX = x + (width - drawWidth) / 2;
+  const drawY = y + (height - drawHeight) / 2;
+
+  ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+};
+
+const dibujarLogo = (ctx, img, x, y, size) => {
+  ctx.save();
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(x, y, size, size);
+  ctx.strokeStyle = "#e5e7eb";
+  ctx.strokeRect(x, y, size, size);
+  dibujarImagenContain(ctx, img, x + 6, y + 6, size - 12, size - 12);
+  ctx.restore();
+};
+
 const descargarDataUrl = (dataUrl, nombreArchivo) => {
   const enlace = document.createElement("a");
   enlace.href = dataUrl;
@@ -88,52 +108,75 @@ export const exportarPublicacionPng = async ({
 
   if (imagenUrl) {
     const imagen = await cargarImagen(imagenUrl);
-    dibujarImagenCover(ctx, imagen, 0, 0, CANVAS_SIZE, 720);
+    dibujarImagenContain(ctx, imagen, 0, 0, CANVAS_SIZE, 700);
   } else {
     ctx.fillStyle = "#e5e7eb";
-    ctx.fillRect(0, 0, CANVAS_SIZE, 720);
+    ctx.fillRect(0, 0, CANVAS_SIZE, 700);
     ctx.fillStyle = "#9ca3af";
     ctx.font = "600 44px Arial, sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("Sin imagen", CANVAS_SIZE / 2, 360);
+    ctx.fillText("Sin imagen", CANVAS_SIZE / 2, 350);
     ctx.textAlign = "left";
   }
 
-  const degradado = ctx.createLinearGradient(0, 420, 0, 720);
-  degradado.addColorStop(0, "rgba(0, 0, 0, 0)");
-  degradado.addColorStop(1, "rgba(0, 0, 0, 0.58)");
-  ctx.fillStyle = degradado;
-  ctx.fillRect(0, 420, CANVAS_SIZE, 300);
-
   ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 720, CANVAS_SIZE, 360);
+  ctx.fillRect(0, 700, CANVAS_SIZE, 380);
 
   ctx.fillStyle = "#f97316";
-  ctx.fillRect(0, 720, 16, 360);
+  ctx.fillRect(0, 700, 16, 380);
 
   ctx.fillStyle = "#111827";
-  ctx.font = "700 58px Arial, sans-serif";
-  const siguienteY = dibujarTexto(ctx, titulo, 72, 810, 900, 68, 2);
+  ctx.font = "700 46px Arial, sans-serif";
+  const siguienteY = dibujarTexto(ctx, titulo, 72, 770, 920, 54, 2);
 
   ctx.fillStyle = "#4b5563";
-  ctx.font = "400 32px Arial, sans-serif";
-  const textoCorto = recortarTexto(contenido, 170);
-  const hashtagsLimpios = recortarTexto(hashtags, 95);
-  const yTrasContenido = dibujarTexto(ctx, textoCorto, 72, siguienteY + 28, 900, 42, 3);
+  ctx.font = "400 26px Arial, sans-serif";
+  const textoCorto = recortarTexto(contenido, 125);
+  const hashtagsLimpios = recortarTexto(hashtags, 75);
+  const yTrasContenido = dibujarTexto(ctx, textoCorto, 72, siguienteY + 20, 920, 34, 2);
 
   ctx.fillStyle = "#ea580c";
-  ctx.font = "600 28px Arial, sans-serif";
-  dibujarTexto(ctx, hashtagsLimpios, 72, yTrasContenido + 24, 900, 34, 1);
+  ctx.font = "600 24px Arial, sans-serif";
+  dibujarTexto(ctx, hashtagsLimpios, 72, yTrasContenido + 18, 920, 30, 1);
+
+  ctx.strokeStyle = "#f3f4f6";
+  ctx.beginPath();
+  ctx.moveTo(72, 980);
+  ctx.lineTo(1000, 980);
+  ctx.stroke();
+
+  let logo = null;
+  if (perfil?.logoUrl) {
+    try {
+      logo = await cargarImagen(perfil.logoUrl);
+    } catch {
+      logo = null;
+    }
+  }
+
+  if (logo) {
+    dibujarLogo(ctx, logo, 72, 1000, 56);
+  } else {
+    ctx.fillStyle = "#ffedd5";
+    ctx.fillRect(72, 1000, 56, 56);
+    ctx.strokeStyle = "#fed7aa";
+    ctx.strokeRect(72, 1000, 56, 56);
+    ctx.fillStyle = "#f97316";
+    ctx.font = "700 26px Arial, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText((perfil?.nombre || "E").charAt(0).toUpperCase(), 100, 1037);
+    ctx.textAlign = "left";
+  }
 
   ctx.fillStyle = "#111827";
-  ctx.font = "700 28px Arial, sans-serif";
-  ctx.fillText(perfil?.nombre || "ETC Apps", 72, 1030);
+  ctx.font = "700 24px Arial, sans-serif";
+  ctx.fillText(perfil?.nombre || "ETC Apps", 148, 1024);
 
   const contacto = [perfil?.movil, perfil?.web].filter(Boolean).join("  |  ");
   if (contacto) {
     ctx.fillStyle = "#6b7280";
-    ctx.font = "400 24px Arial, sans-serif";
-    ctx.fillText(contacto, 360, 1030);
+    ctx.font = "400 20px Arial, sans-serif";
+    ctx.fillText(contacto, 148, 1050);
   }
 
   const dataUrl = canvas.toDataURL("image/png");

@@ -168,28 +168,57 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
             Imagen final para redes
           </h3>
           <div className="w-full max-w-sm overflow-hidden bg-white border border-gray-200 shadow-sm">
-            <div className="relative aspect-square bg-gray-100">
-              {imagenUrl ? (
-                <img
-                  src={imagenUrl}
-                  alt="Vista previa de la publicacion"
-                  className="object-cover w-full h-full"
-                />
-              ) : (
-                <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
-                  Sin imagen
+            <div className="aspect-square bg-white">
+              <div className="h-[64%] bg-gray-100">
+                {imagenUrl ? (
+                  <img
+                    src={imagenUrl}
+                    alt="Vista previa de la publicacion"
+                    className="object-contain w-full h-full"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
+                    Sin imagen
+                  </div>
+                )}
+              </div>
+
+              <div className="flex h-[36%] flex-col justify-between border-l-4 border-orange-500 p-4 text-left">
+                <div>
+                  <h4 className="text-base font-bold leading-tight text-gray-900 line-clamp-2">
+                    {publicacion.titulo}
+                  </h4>
+                  <p className="mt-1 overflow-hidden text-xs leading-snug text-gray-600 line-clamp-2">
+                    {publicacion.contenido}
+                  </p>
+                  <p className="mt-1 overflow-hidden text-xs font-semibold text-orange-600 line-clamp-1">
+                    {publicacion.hashtags}
+                  </p>
                 </div>
-              )}
-              <div className="absolute inset-x-0 bottom-0 p-4 text-left bg-white/95">
-                <h4 className="text-lg font-bold leading-tight text-gray-900">
-                  {publicacion.titulo}
-                </h4>
-                <p className="mt-1 overflow-hidden text-xs leading-relaxed text-gray-600 max-h-10">
-                  {publicacion.contenido}
-                </p>
-                <p className="mt-2 overflow-hidden text-xs font-semibold text-orange-600 whitespace-nowrap">
-                  {publicacion.hashtags}
-                </p>
+
+                <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+                  {perfil?.logoUrl ? (
+                    <img
+                      src={perfil.logoUrl}
+                      alt="Logo"
+                      className="object-contain w-9 h-9 border border-gray-200"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-9 h-9 bg-orange-100 border border-orange-200">
+                      <span className="text-sm font-bold text-orange-500">
+                        {perfil?.nombre?.charAt(0).toUpperCase() || "E"}
+                      </span>
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold leading-tight text-gray-900 truncate">
+                      {perfil?.nombre || "ETC Apps"}
+                    </p>
+                    <p className="text-[11px] leading-tight text-gray-500 truncate">
+                      {[perfil?.movil, perfil?.web].filter(Boolean).join(" · ")}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

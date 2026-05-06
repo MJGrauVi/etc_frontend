@@ -6,6 +6,7 @@ import Cargando from "../components/Cargando.jsx";
 import MensajeTail from "../components/MensajeTail.jsx";
 import PiezaCabecera from "../components/PiezaDetalle/PiezaCabecera.jsx";
 import PiezaGaleria from "../components/PiezaDetalle/PiezaGaleria.jsx";
+import PiezaDescripcionBotones from "../components/PiezaDetalle/PiezaDescripcionBotones.jsx";
 import ModalEliminar from "../components/PiezaDetalle/ModalEliminar.jsx";
 
 const PiezaDetallePage = () => {
@@ -67,7 +68,7 @@ const PiezaDetallePage = () => {
       {/* Contenido principal */}
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
-          <div className="flex flex-col gap-8 md:flex-row">
+          <div className="grid gap-8 lg:grid-cols-[420px_1fr]">
             {/* Galería */}
             <PiezaGaleria
               pieza={pieza}
@@ -83,28 +84,28 @@ const PiezaDetallePage = () => {
               generando={generando}
               generarPublicacion={generarPublicacion}
               iniciarManual={iniciarManual} />
+          </div>
 
-            {/* Previsualización */}
-            {(publicacion || modoManual) && (
-              <PublicacionPreview
-                publicacion={
-                  publicacion || {
-                    id: null,
-                    titulo: "",
-                    contenido: "",
-                    hashtags: "",
-                    estado: "borrador",
-                    piezas: pieza,
-                  }
+          {/* Previsualización */}
+          {(publicacion || modoManual) && (
+            <PublicacionPreview
+              publicacion={
+                publicacion || {
+                  id: null,
+                  titulo: "",
+                  contenido: "",
+                  hashtags: "",
+                  estado: "borrador",
+                  pieza,
                 }
-                guardando={guardando}
-                onEditar={handleEditar}
-                onGuardar={guardarCambios}
-                perfil={perfil}
-              />
-            )}
-          </div>
-          </div>
+              }
+              guardando={guardando}
+              onEditar={handleEditar}
+              onGuardar={guardarCambios}
+              perfil={perfil}
+            />
+          )}
+        </div>
       </section>
 
       {/* Modal editar */}

@@ -1,5 +1,4 @@
 import React from 'react'
-import PiezaGaleria from "../../components/PiezaDetalle/PiezaGaleria.jsx";
 
 const PiezaDescripcionBotones = ({pieza, generarPublicacion, publicacion, generando, iniciarManual}) => {
   return (
