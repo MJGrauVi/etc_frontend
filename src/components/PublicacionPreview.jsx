@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { Download } from "lucide-react";
-import { exportarPublicacionPng } from "../utils/exportPublicacionImage.js";
+import { Download, Share2 } from "lucide-react";
+import {
+  crearPublicacionPngBlob,
+  exportarPublicacionPng,
+} from "../utils/exportPublicacionImage.js";
 
 const PublicacionPreview = ({
   publicacion,
   guardando,
+  publicandoFacebook,
   onEditar,
   onGuardar,
+  onPublicarFacebook,
   perfil,
 }) => {
   const [copiado, setCopiado] = useState();
@@ -58,6 +63,41 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
       setErrorExportacion(
         "No se pudo generar la imagen. Revisa que la imagen de la pieza este disponible.",
       );
+    } finally {
+      setExportando(false);
+    }
+  };
+
+  const publicarFacebook = async () => {
+    if (!publicacion.id) {
+      setErrorExportacion("Guarda la publicacion antes de publicarla en Facebook.");
+      return;
+    }
+
+    setExportando(true);
+    setErrorExportacion("");
+
+    try {
+      const blob = await crearPublicacionPngBlob({
+        imagenUrl,
+        titulo: publicacion.titulo,
+        contenido: publicacion.contenido,
+        hashtags: publicacion.hashtags,
+        perfil,
+      });
+      const formData = new FormData();
+      formData.append("imagen", blob, `publicacion-${publicacion.id}.png`);
+      formData.append(
+        "mensaje",
+        [publicacion.titulo, publicacion.contenido, publicacion.hashtags]
+          .filter(Boolean)
+          .join("\n\n"),
+      );
+
+      await onPublicarFacebook(formData);
+    } catch (error) {
+      console.error("Error preparando publicacion para Facebook", error);
+      setErrorExportacion("No se pudo preparar la imagen para Facebook.");
     } finally {
       setExportando(false);
     }
@@ -233,6 +273,14 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
             <Download size={18} />
             {exportando ? "Generando..." : "Descargar imagen PNG"}
           </button>
+          <button
+            onClick={publicarFacebook}
+            disabled={exportando || publicandoFacebook || !publicacion.id}
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 mt-3 font-semibold text-white transition bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
+          >
+            <Share2 size={18} />
+            {publicandoFacebook ? "Publicando..." : "Publicar en Facebook"}
+          </button>
           {errorExportacion && (
             <p className="mt-2 text-sm text-red-600">{errorExportacion}</p>
           )}
@@ -256,17 +304,6 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
               >
                 {copiado ? "Copiado" : "Copiar contenido"}
               </button>
-
-              {/* Abrir Facebook */}
-
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white transition bg-blue-600 hover:bg-blue-700"
-              >
-                Abrir Facebook
-              </a>
 
               {/* Abrir Instagram */}
 

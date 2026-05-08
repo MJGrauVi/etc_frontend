@@ -16,12 +16,14 @@ const PiezaDetallePage = () => {
     cargando,
     generando,
     guardando,
+    publicandoFacebook,
     error,
     mensaje,
     setMensaje,
     generarPublicacion,
     handleEditar,
     guardarCambios,
+    publicarEnFacebook,
     modalEditar,
     piezaEdit,
     guardandoPieza,
@@ -100,8 +102,10 @@ const PiezaDetallePage = () => {
                 }
               }
               guardando={guardando}
+              publicandoFacebook={publicandoFacebook}
               onEditar={handleEditar}
               onGuardar={guardarCambios}
+              onPublicarFacebook={publicarEnFacebook}
               perfil={perfil}
             />
           )}

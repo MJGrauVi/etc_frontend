@@ -14,6 +14,7 @@ const usePiezaDetalle = () => {
   const [cargando, setCargando]       = useState(true);
   const [generando, setGenerando]     = useState(false);
   const [guardando, setGuardando]     = useState(false);
+  const [publicandoFacebook, setPublicandoFacebook] = useState(false);
   const [error, setError]             = useState(null);
   const [mensaje, setMensaje]         = useState({ tipo: "", texto: "" });
   const [modoManual, setModoManual]   = useState(false);
@@ -233,18 +234,50 @@ const usePiezaDetalle = () => {
     }
   };
 
+  const publicarEnFacebook = async (formData) => {
+    if (!publicacion?.id) {
+      setMensaje({
+        tipo: "error",
+        texto: "Guarda la publicacion antes de publicarla en Facebook.",
+      });
+      return;
+    }
+
+    setPublicandoFacebook(true);
+    try {
+      const respuesta = await postForm(`publicacion/${publicacion.id}/facebook`, formData);
+      const pubActualizada = respuesta.data?.data ?? respuesta.data;
+
+      setPublicacion({
+        ...pubActualizada,
+        pieza: pubActualizada?.pieza ?? pubActualizada?.piezas ?? publicacion.pieza ?? pieza,
+        pieza_id: pubActualizada?.pieza_id ?? id,
+      });
+      setMensaje({ tipo: "success", texto: "Publicacion publicada en Facebook correctamente." });
+    } catch (err) {
+      setMensaje({
+        tipo: "error",
+        texto: err.backendMessage || err.message || "No se pudo publicar en Facebook.",
+      });
+    } finally {
+      setPublicandoFacebook(false);
+    }
+  };
+
   return {
     pieza,
     publicacion,
     cargando,
     generando,
     guardando,
+    publicandoFacebook,
     error,
     mensaje,
     setMensaje,
     generarPublicacion,
     handleEditar,
     guardarCambios,
+    publicarEnFacebook,
     modalEditar,
     piezaEdit,
     guardandoPieza,

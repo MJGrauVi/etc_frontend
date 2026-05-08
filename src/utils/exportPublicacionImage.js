@@ -43,26 +43,6 @@ const dibujarTexto = (ctx, texto, x, y, maxWidth, lineHeight, maxLines) => {
   return y + visibles.length * lineHeight;
 };
 
-const dibujarImagenCover = (ctx, img, x, y, width, height) => {
-  const ratioDestino = width / height;
-  const ratioImagen = img.width / img.height;
-
-  let sx = 0;
-  let sy = 0;
-  let sw = img.width;
-  let sh = img.height;
-
-  if (ratioImagen > ratioDestino) {
-    sw = img.height * ratioDestino;
-    sx = (img.width - sw) / 2;
-  } else {
-    sh = img.width / ratioDestino;
-    sy = (img.height - sh) / 2;
-  }
-
-  ctx.drawImage(img, sx, sy, sw, sh, x, y, width, height);
-};
-
 const dibujarImagenContain = (ctx, img, x, y, width, height) => {
   const escala = Math.min(width / img.width, height / img.height);
   const drawWidth = img.width * escala;
@@ -83,20 +63,32 @@ const dibujarLogo = (ctx, img, x, y, size) => {
   ctx.restore();
 };
 
-const descargarDataUrl = (dataUrl, nombreArchivo) => {
+const descargarBlob = (blob, nombreArchivo) => {
+  const dataUrl = URL.createObjectURL(blob);
   const enlace = document.createElement("a");
   enlace.href = dataUrl;
   enlace.download = nombreArchivo;
   enlace.click();
+  URL.revokeObjectURL(dataUrl);
 };
 
-export const exportarPublicacionPng = async ({
+const canvasToBlob = (canvas) =>
+  new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(blob);
+      } else {
+        reject(new Error("CANVAS_BLOB_ERROR"));
+      }
+    }, "image/png");
+  });
+
+const crearCanvasPublicacion = async ({
   imagenUrl,
   titulo,
   contenido,
   hashtags,
   perfil,
-  nombreArchivo = "publicacion-etc.png",
 }) => {
   const canvas = document.createElement("canvas");
   canvas.width = CANVAS_SIZE;
@@ -179,6 +171,18 @@ export const exportarPublicacionPng = async ({
     ctx.fillText(contacto, 148, 1050);
   }
 
-  const dataUrl = canvas.toDataURL("image/png");
-  descargarDataUrl(dataUrl, nombreArchivo);
+  return canvas;
+};
+
+export const crearPublicacionPngBlob = async (datosPublicacion) => {
+  const canvas = await crearCanvasPublicacion(datosPublicacion);
+  return canvasToBlob(canvas);
+};
+
+export const exportarPublicacionPng = async ({
+  nombreArchivo = "publicacion-etc.png",
+  ...datosPublicacion
+}) => {
+  const blob = await crearPublicacionPngBlob(datosPublicacion);
+  descargarBlob(blob, nombreArchivo);
 };
