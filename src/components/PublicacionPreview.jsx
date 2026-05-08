@@ -18,9 +18,39 @@ const PublicacionPreview = ({
   const [exportando, setExportando] = useState(false);
   const [errorExportacion, setErrorExportacion] = useState("");
   const piezaPublicacion = publicacion.pieza ?? publicacion.piezas;
-  const imagenUrl =
-    piezaPublicacion?.medias?.find((m) => m.es_portada)?.url_completa ||
-    piezaPublicacion?.medias?.[0]?.url_completa;
+  const mediaPublicacion =
+    piezaPublicacion?.medias?.find((m) => m.es_portada) ||
+    piezaPublicacion?.medias?.[0];
+  const imagenUrl = mediaPublicacion?.url_completa;
+
+  const crearBlobUrlAutenticada = async (endpoint, accept = "image/*") => {
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8095/api";
+    const token = localStorage.getItem("token");
+
+    const respuesta = await fetch(`${apiUrl}/${endpoint}`, {
+      headers: {
+        Accept: accept,
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+    });
+
+    if (!respuesta.ok) {
+      throw new Error("IMAGE_FETCH_ERROR");
+    }
+
+    const blob = await respuesta.blob();
+    return URL.createObjectURL(blob);
+  };
+
+  const crearImagenBlobUrl = async () => {
+    if (!mediaPublicacion?.id) return null;
+    return crearBlobUrlAutenticada(`media/${mediaPublicacion.id}/archivo`);
+  };
+
+  const crearLogoBlobUrl = async () => {
+    if (!perfil?.logoUrl) return null;
+    return crearBlobUrlAutenticada("perfil/logo/archivo");
+  };
 
   // Función que copia el contenido formateado
   const copiarContenido = () => {
@@ -42,8 +72,13 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
   const descargarImagen = async () => {
     setExportando(true);
     setErrorExportacion("");
+    let imagenBlobUrl = null;
+    let logoBlobUrl = null;
 
     try {
+      imagenBlobUrl = await crearImagenBlobUrl();
+      logoBlobUrl = await crearLogoBlobUrl();
+      const perfilCanvas = logoBlobUrl ? { ...perfil, logoUrl: logoBlobUrl } : perfil;
       const nombreBase = publicacion.titulo || "publicacion-etc";
       const slug = nombreBase
         .toLowerCase()
@@ -52,10 +87,11 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
 
       await exportarPublicacionPng({
         imagenUrl,
+        imagenBlobUrl,
         titulo: publicacion.titulo,
         contenido: publicacion.contenido,
         hashtags: publicacion.hashtags,
-        perfil,
+        perfil: perfilCanvas,
         nombreArchivo: `${slug || "publicacion-etc"}.png`,
       });
     } catch (error) {
@@ -64,6 +100,8 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
         "No se pudo generar la imagen. Revisa que la imagen de la pieza este disponible.",
       );
     } finally {
+      if (imagenBlobUrl) URL.revokeObjectURL(imagenBlobUrl);
+      if (logoBlobUrl) URL.revokeObjectURL(logoBlobUrl);
       setExportando(false);
     }
   };
@@ -76,14 +114,20 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
 
     setExportando(true);
     setErrorExportacion("");
+    let imagenBlobUrl = null;
+    let logoBlobUrl = null;
 
     try {
+      imagenBlobUrl = await crearImagenBlobUrl();
+      logoBlobUrl = await crearLogoBlobUrl();
+      const perfilCanvas = logoBlobUrl ? { ...perfil, logoUrl: logoBlobUrl } : perfil;
       const blob = await crearPublicacionPngBlob({
         imagenUrl,
+        imagenBlobUrl,
         titulo: publicacion.titulo,
         contenido: publicacion.contenido,
         hashtags: publicacion.hashtags,
-        perfil,
+        perfil: perfilCanvas,
       });
       const formData = new FormData();
       formData.append("imagen", blob, `publicacion-${publicacion.id}.png`);
@@ -99,6 +143,8 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
       console.error("Error preparando publicacion para Facebook", error);
       setErrorExportacion("No se pudo preparar la imagen para Facebook.");
     } finally {
+      if (imagenBlobUrl) URL.revokeObjectURL(imagenBlobUrl);
+      if (logoBlobUrl) URL.revokeObjectURL(logoBlobUrl);
       setExportando(false);
     }
   };

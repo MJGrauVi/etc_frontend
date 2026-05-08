@@ -85,6 +85,7 @@ const canvasToBlob = (canvas) =>
 
 const crearCanvasPublicacion = async ({
   imagenUrl,
+  imagenBlobUrl,
   titulo,
   contenido,
   hashtags,
@@ -98,8 +99,10 @@ const crearCanvasPublicacion = async ({
   ctx.fillStyle = "#f9fafb";
   ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-  if (imagenUrl) {
-    const imagen = await cargarImagen(imagenUrl);
+  const imagenCanvasUrl = imagenBlobUrl || imagenUrl;
+
+  if (imagenCanvasUrl) {
+    const imagen = await cargarImagen(imagenCanvasUrl);
     dibujarImagenContain(ctx, imagen, 0, 0, CANVAS_SIZE, 700);
   } else {
     ctx.fillStyle = "#e5e7eb";
