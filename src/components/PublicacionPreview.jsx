@@ -253,54 +253,63 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
           <h3 className="mb-3 text-sm font-semibold text-gray-700">
             Imagen final para redes
           </h3>
-          <div className="w-full max-w-sm overflow-hidden bg-white border border-gray-200 shadow-sm">
-            <div className="aspect-square bg-white">
-              <div className="h-[64%] bg-gray-100">
+          <div className="w-full max-w-sm overflow-hidden bg-gray-900 border border-gray-200 shadow-sm">
+            <div className="relative overflow-hidden aspect-square bg-gray-900">
+              {imagenUrl && (
+                <img
+                  src={imagenUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 object-cover w-full h-full scale-110 blur-md opacity-70"
+                />
+              )}
+              <div className="absolute inset-0 bg-black/25" />
+              <div className="absolute inset-x-0 top-0 flex h-[67%] items-center justify-center p-5">
                 {imagenUrl ? (
                   <img
                     src={imagenUrl}
                     alt="Vista previa de la publicacion"
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full drop-shadow-2xl"
                   />
                 ) : (
-                  <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
+                  <div className="flex items-center justify-center w-full h-full text-sm text-white/70">
                     Sin imagen
                   </div>
                 )}
               </div>
 
-              <div className="flex h-[36%] flex-col justify-between border-l-4 border-orange-500 p-4 text-left">
+              <div className="absolute inset-x-0 bottom-0 flex h-[42%] flex-col justify-between bg-gradient-to-t from-black via-black/85 to-transparent px-5 pb-4 pt-12 text-left">
                 <div>
-                  <h4 className="text-base font-bold leading-tight text-gray-900 line-clamp-2">
+                  <h4 className="text-lg font-bold leading-tight text-white line-clamp-2">
                     {publicacion.titulo}
                   </h4>
-                  <p className="mt-1 overflow-hidden text-xs leading-snug text-gray-600 line-clamp-2">
+                  <p className="mt-1 overflow-hidden text-xs leading-snug text-white/85 line-clamp-2">
                     {publicacion.contenido}
                   </p>
-                  <p className="mt-1 overflow-hidden text-xs font-semibold text-orange-600 line-clamp-1">
+                  <p className="mt-1 overflow-hidden text-xs font-semibold text-orange-300 line-clamp-1">
                     {publicacion.hashtags}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+                <div className="flex items-center gap-3 pt-2 border-t border-white/15">
                   {perfil?.logoUrl ? (
                     <img
                       src={perfil.logoUrl}
                       alt="Logo"
-                      className="object-contain w-9 h-9 border border-gray-200"
+                      className="object-contain w-9 h-9 bg-white border border-white/40"
                     />
                   ) : (
-                    <div className="flex items-center justify-center w-9 h-9 bg-orange-100 border border-orange-200">
-                      <span className="text-sm font-bold text-orange-500">
+                    <div className="flex items-center justify-center w-9 h-9 bg-white/15 border border-white/30">
+                      <span className="text-sm font-bold text-white">
                         {perfil?.nombre?.charAt(0).toUpperCase() || "E"}
                       </span>
                     </div>
                   )}
                   <div className="min-w-0">
-                    <p className="text-xs font-bold leading-tight text-gray-900 truncate">
+                    <p className="text-xs font-bold leading-tight text-white truncate">
                       {perfil?.nombre || "ETC Apps"}
                     </p>
-                    <p className="text-[11px] leading-tight text-gray-500 truncate">
+                    <p className="text-[11px] leading-tight text-white/70 truncate">
                       {[perfil?.movil, perfil?.web].filter(Boolean).join(" · ")}
                     </p>
                   </div>
