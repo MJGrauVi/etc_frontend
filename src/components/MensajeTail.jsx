@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createPortal } from "react-dom"; // Importante
+import { createPortal } from "react-dom"; 
 
 const estilosPorTipo = {
   info: "alerta-info",

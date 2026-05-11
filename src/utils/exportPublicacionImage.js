@@ -11,12 +11,6 @@ const cargarImagen = (src) =>
 
 const limpiarTexto = (texto = "") => texto.replace(/\s+/g, " ").trim();
 
-const recortarTexto = (texto = "", max = 180) => {
-  const limpio = limpiarTexto(texto);
-  if (limpio.length <= max) return limpio;
-  return `${limpio.slice(0, max).trim()}...`;
-};
-
 const dibujarTexto = (ctx, texto, x, y, maxWidth, lineHeight, maxLines) => {
   const palabras = limpiarTexto(texto).split(" ");
   const lineas = [];
@@ -107,8 +101,6 @@ const crearCanvasPublicacion = async ({
   imagenUrl,
   imagenBlobUrl,
   titulo,
-  contenido,
-  hashtags,
   perfil,
 }) => {
   const canvas = document.createElement("canvas");
@@ -136,7 +128,7 @@ const crearCanvasPublicacion = async ({
     ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
     ctx.shadowBlur = 38;
     ctx.shadowOffsetY = 18;
-    dibujarImagenContain(ctx, imagen, 70, 60, 940, 650);
+    dibujarImagenContain(ctx, imagen, 28, 24, 1024, 890);
     ctx.restore();
   } else {
     ctx.fillStyle = "#1f2937";
@@ -148,31 +140,21 @@ const crearCanvasPublicacion = async ({
     ctx.textAlign = "left";
   }
 
-  const degradado = ctx.createLinearGradient(0, 560, 0, CANVAS_SIZE);
+  const degradado = ctx.createLinearGradient(0, 720, 0, CANVAS_SIZE);
   degradado.addColorStop(0, "rgba(0, 0, 0, 0)");
   degradado.addColorStop(0.34, "rgba(0, 0, 0, 0.78)");
   degradado.addColorStop(1, "rgba(0, 0, 0, 0.96)");
   ctx.fillStyle = degradado;
-  ctx.fillRect(0, 560, CANVAS_SIZE, 520);
+  ctx.fillRect(0, 720, CANVAS_SIZE, 360);
 
   ctx.fillStyle = "#ffffff";
   ctx.font = "700 46px Arial, sans-serif";
-  const siguienteY = dibujarTexto(ctx, titulo, 72, 750, 920, 54, 2);
-
-  ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
-  ctx.font = "400 26px Arial, sans-serif";
-  const textoCorto = recortarTexto(contenido, 125);
-  const hashtagsLimpios = recortarTexto(hashtags, 75);
-  const yTrasContenido = dibujarTexto(ctx, textoCorto, 72, siguienteY + 20, 920, 34, 2);
-
-  ctx.fillStyle = "#fdba74";
-  ctx.font = "600 24px Arial, sans-serif";
-  dibujarTexto(ctx, hashtagsLimpios, 72, yTrasContenido + 18, 920, 30, 1);
+  dibujarTexto(ctx, titulo, 72, 835, 920, 54, 2);
 
   ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
   ctx.beginPath();
-  ctx.moveTo(72, 980);
-  ctx.lineTo(1000, 980);
+  ctx.moveTo(72, 970);
+  ctx.lineTo(1000, 970);
   ctx.stroke();
 
   let logo = null;
@@ -185,28 +167,28 @@ const crearCanvasPublicacion = async ({
   }
 
   if (logo) {
-    dibujarLogo(ctx, logo, 72, 1000, 56);
+    dibujarLogo(ctx, logo, 72, 990, 54);
   } else {
     ctx.fillStyle = "rgba(255, 255, 255, 0.14)";
-    ctx.fillRect(72, 1000, 56, 56);
+    ctx.fillRect(72, 990, 54, 54);
     ctx.strokeStyle = "rgba(255, 255, 255, 0.34)";
-    ctx.strokeRect(72, 1000, 56, 56);
+    ctx.strokeRect(72, 990, 54, 54);
     ctx.fillStyle = "#ffffff";
     ctx.font = "700 26px Arial, sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText((perfil?.nombre || "E").charAt(0).toUpperCase(), 100, 1037);
+    ctx.fillText((perfil?.nombre || "E").charAt(0).toUpperCase(), 99, 1025);
     ctx.textAlign = "left";
   }
 
   ctx.fillStyle = "#ffffff";
   ctx.font = "700 24px Arial, sans-serif";
-  ctx.fillText(perfil?.nombre || "ETC Apps", 148, 1024);
+  ctx.fillText(perfil?.nombre || "ETC Apps", 146, 1012);
 
   const contacto = [perfil?.movil, perfil?.web].filter(Boolean).join("  |  ");
   if (contacto) {
     ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
     ctx.font = "400 20px Arial, sans-serif";
-    ctx.fillText(contacto, 148, 1050);
+    ctx.fillText(contacto, 146, 1038);
   }
 
   return canvas;

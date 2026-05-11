@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Download, Share2 } from "lucide-react";
 import {
   crearPublicacionPngBlob,
@@ -17,12 +17,18 @@ const PublicacionPreview = ({
   const [copiado, setCopiado] = useState();
   const [exportando, setExportando] = useState(false);
   const [errorExportacion, setErrorExportacion] = useState("");
+  const [previewPngUrl, setPreviewPngUrl] = useState(null);
   const piezaPublicacion = publicacion.pieza ?? publicacion.piezas;
+
+  //Utilizamos la imagen marcada como portada o la primera imagen.
   const mediaPublicacion =
     piezaPublicacion?.medias?.find((m) => m.es_portada) ||
     piezaPublicacion?.medias?.[0];
+
   const imagenUrl = mediaPublicacion?.url_completa;
 
+  //Canvas no puede leer directamente la imagen del backend por CORS.
+  //Pedimos las imagenes al backend, convertimos a blob y creamos URL temporal que sí podemos usar dentro del canvas.
   const crearBlobUrlAutenticada = async (endpoint, accept = "image/*") => {
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8095/api";
     const token = localStorage.getItem("token");
@@ -52,7 +58,55 @@ const PublicacionPreview = ({
     return crearBlobUrlAutenticada("perfil/logo/archivo");
   };
 
-  // Función que copia el contenido formateado
+  // La previsualizacion debe salir del mismo canvas que se descarga y se envia a Facebook.
+  // Asi evitamos que el usuario vea una composicion en pantalla y Facebook reciba otra distinta.
+  useEffect(() => {
+    let cancelado = false;
+    let imagenBlobUrl = null;
+    let logoBlobUrl = null;
+    let previewTemporalUrl = null;
+
+    const generarPreviewReal = async () => {
+      if (!publicacion?.titulo && !imagenUrl) {
+        setPreviewPngUrl(null);
+        return;
+      }
+
+      try {
+        imagenBlobUrl = await crearImagenBlobUrl();
+        logoBlobUrl = await crearLogoBlobUrl();
+        const perfilCanvas = logoBlobUrl ? { ...perfil, logoUrl: logoBlobUrl } : perfil;
+        const blob = await crearPublicacionPngBlob({
+          imagenUrl,
+          imagenBlobUrl,
+          titulo: publicacion.titulo,
+          perfil: perfilCanvas,
+        });
+
+        if (cancelado) return;
+        previewTemporalUrl = URL.createObjectURL(blob);
+        setPreviewPngUrl((anterior) => {
+          if (anterior) URL.revokeObjectURL(anterior);
+          return previewTemporalUrl;
+        });
+      } catch (error) {
+        console.error("Error generando previsualizacion real", error);
+      } finally {
+        if (imagenBlobUrl) URL.revokeObjectURL(imagenBlobUrl);
+        if (logoBlobUrl) URL.revokeObjectURL(logoBlobUrl);
+      }
+    };
+
+    const temporizador = setTimeout(generarPreviewReal, 250);
+
+    return () => {
+      cancelado = true;
+      clearTimeout(temporizador);
+      if (previewTemporalUrl) URL.revokeObjectURL(previewTemporalUrl);
+    };
+  }, [imagenUrl, mediaPublicacion?.id, publicacion?.titulo, perfil?.logoUrl, perfil?.nombre, perfil?.movil, perfil?.web]);
+
+  // Funcion que copia el contenido formateado
   const copiarContenido = () => {
     const texto = `${publicacion.titulo}
 
@@ -60,8 +114,8 @@ ${publicacion.contenido}
 
 ${publicacion.hashtags}
 
-${perfil?.movil ? `📞 ${perfil.movil}` : ""}
-${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
+${perfil?.movil ? `Tel: ${perfil.movil}` : ""}
+${perfil?.web ? `Web: ${perfil.web}` : ""}`.trim();
 
     navigator.clipboard.writeText(texto).then(() => {
       setCopiado(true);
@@ -89,8 +143,6 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
         imagenUrl,
         imagenBlobUrl,
         titulo: publicacion.titulo,
-        contenido: publicacion.contenido,
-        hashtags: publicacion.hashtags,
         perfil: perfilCanvas,
         nombreArchivo: `${slug || "publicacion-etc"}.png`,
       });
@@ -125,8 +177,6 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
         imagenUrl,
         imagenBlobUrl,
         titulo: publicacion.titulo,
-        contenido: publicacion.contenido,
-        hashtags: publicacion.hashtags,
         perfil: perfilCanvas,
       });
       const formData = new FormData();
@@ -248,73 +298,24 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
             </button>
           </div>
         </div>
-        {/* ── Botón Copiar, solo cuando este lista la publicación- Simulamos la publicacion en redes ── */}
+        {/* Acciones para copiar o publicar en redes */}
         <div className="pt-6 mt-6 border-t border-orange-200">
           <h3 className="mb-3 text-sm font-semibold text-gray-700">
             Imagen final para redes
           </h3>
           <div className="w-full max-w-sm overflow-hidden bg-gray-900 border border-gray-200 shadow-sm">
-            <div className="relative overflow-hidden aspect-square bg-gray-900">
-              {imagenUrl && (
+            <div className="relative overflow-hidden bg-gray-900 aspect-square">
+              {previewPngUrl ? (
                 <img
-                  src={imagenUrl}
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 object-cover w-full h-full scale-110 blur-md opacity-70"
+                  src={previewPngUrl}
+                  alt="Vista previa de la publicacion"
+                  className="object-cover w-full h-full"
                 />
+              ) : (
+                <div className="flex items-center justify-center w-full h-full text-sm text-white/70">
+                  Generando vista previa...
+                </div>
               )}
-              <div className="absolute inset-0 bg-black/25" />
-              <div className="absolute inset-x-0 top-0 flex h-[67%] items-center justify-center p-5">
-                {imagenUrl ? (
-                  <img
-                    src={imagenUrl}
-                    alt="Vista previa de la publicacion"
-                    className="object-contain w-full h-full drop-shadow-2xl"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center w-full h-full text-sm text-white/70">
-                    Sin imagen
-                  </div>
-                )}
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 flex h-[42%] flex-col justify-between bg-gradient-to-t from-black via-black/85 to-transparent px-5 pb-4 pt-12 text-left">
-                <div>
-                  <h4 className="text-lg font-bold leading-tight text-white line-clamp-2">
-                    {publicacion.titulo}
-                  </h4>
-                  <p className="mt-1 overflow-hidden text-xs leading-snug text-white/85 line-clamp-2">
-                    {publicacion.contenido}
-                  </p>
-                  <p className="mt-1 overflow-hidden text-xs font-semibold text-orange-300 line-clamp-1">
-                    {publicacion.hashtags}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2 border-t border-white/15">
-                  {perfil?.logoUrl ? (
-                    <img
-                      src={perfil.logoUrl}
-                      alt="Logo"
-                      className="object-contain w-9 h-9 bg-white border border-white/40"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center w-9 h-9 bg-white/15 border border-white/30">
-                      <span className="text-sm font-bold text-white">
-                        {perfil?.nombre?.charAt(0).toUpperCase() || "E"}
-                      </span>
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold leading-tight text-white truncate">
-                      {perfil?.nombre || "ETC Apps"}
-                    </p>
-                    <p className="text-[11px] leading-tight text-white/70 truncate">
-                      {[perfil?.movil, perfil?.web].filter(Boolean).join(" · ")}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <p className="mt-2 text-xs text-gray-400">
@@ -343,42 +344,41 @@ ${perfil?.web ? `🌐 ${perfil.web}` : ""}`.trim();
 
         {(publicacion.estado === "pendiente" ||
           publicacion.estado === "publicado") && (
-          <div className="pt-6 mt-6 border-t border-orange-200">
-            <p className="mb-3 text-sm text-gray-600">
-              Copia el contenido y pégalo directamente en tus redes sociales:
-            </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              {/* Copiar contenido */}
-              <button
-                onClick={copiarContenido}
-                className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold transition border ${
-                  copiado
-                    ? "text-green-700 bg-green-50 border-green-300"
-                    : "text-orange-600 bg-white border-orange-300 hover:bg-orange-50"
-                }`}
-              >
-                {copiado ? "Copiado" : "Copiar contenido"}
-              </button>
+            <div className="pt-6 mt-6 border-t border-orange-200">
+              <p className="mb-3 text-sm text-gray-600">
+                Copia el contenido y pégalo directamente en tus redes sociales:
+              </p>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                {/* Copiar contenido */}
+                <button
+                  onClick={copiarContenido}
+                  className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold transition border ${copiado
+                      ? "text-green-700 bg-green-50 border-green-300"
+                      : "text-orange-600 bg-white border-orange-300 hover:bg-orange-50"
+                    }`}
+                >
+                  {copiado ? "Copiado" : "Copiar contenido"}
+                </button>
 
-              {/* Abrir Instagram */}
+                {/* Abrir Instagram */}
 
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white transition bg-pink-500 hover:bg-pink-600"
-              >
-                Abrir Instagram
-              </a>
+                <a
+                  href="https://www.instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white transition bg-pink-500 hover:bg-pink-600"
+                >
+                  Abrir Instagram
+                </a>
+              </div>
+              <p className="mt-2 text-xs text-gray-400">
+                Copia el contenido, descarga la imagen y sube ambos a tu nueva
+                publicacion.
+              </p>
             </div>
-            <p className="mt-2 text-xs text-gray-400">
-              Copia el contenido, descarga la imagen y sube ambos a tu nueva
-              publicacion.
-            </p>
-          </div>
-        )}
+          )}
 
-        {/* ── PIE DE PÁGINA DEL ARTESANO ── */}
+        {/* Pie de pagina del artesano */}
         {perfil && (
           <div className="flex items-center gap-4 pt-6 mt-6 border-t border-orange-200">
             {/* Logo */}

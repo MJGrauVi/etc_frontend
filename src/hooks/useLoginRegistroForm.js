@@ -104,7 +104,7 @@ const useLoginRegistroForm = () => {
       } else {
         const data = await iniciarLogin(form.email, form.password);
         console.log("Respuesta login:", data);
-        mostrarMensaje("success", "Has iniciado sesion.", 1500);
+        //mostrarMensaje("success", "Has iniciado sesion.", 1500);
         setForm(estadoInicial);
         setTimeout(() => {
           if (data?.data?.rol === "Administrador") {
