@@ -1,66 +1,8 @@
 import { Link } from "react-router-dom";
+import { Globe, Mail, MapPin } from "lucide-react";
+import LogoEtcFondoNegro from "../assets/LogoEtcFondoNegro.svg";
 
-/* ============================================================
-   COMPONENTE ICON — Fuera del componente padre (correcto)
-   Se crea una sola vez cuando el módulo se importa.
-   aria-hidden="true" para que los lectores de pantalla lo ignoren.
-   ============================================================ */
-const Icon = ({ children, className = "w-5 h-5" }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className={className}
-    aria-hidden="true" // ✅ CORRECCIÓN: accesibilidad — el SVG es decorativo
-  >
-    {children}
-  </svg>
-);
-
-/* ============================================================
-   ICONOS — Fuera del componente (correcto)
-   ✅ CORRECCIÓN: estaban dentro de Footer, lo que los recreaba
-   en cada render aunque su contenido nunca cambie.
-   Al estar fuera, se crean una sola vez en memoria.
-   ============================================================ */
-const ICONOS = {
-  email: (
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-    />
-  ),
-  web: (
-    <>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 3a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582"
-      />
-    </>
-  ),
-  ubicacion: (
-    <>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-      />
-    </>
-  ),
+const ICONOS_REDES = {
   facebook: (
     <path d="M22 12a10 10 0 10-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0022 12z" />
   ),
@@ -79,17 +21,11 @@ const ICONOS = {
   ),
 };
 
-/* ============================================================
-   REDES SOCIALES — Datos fuera del componente
-   ✅ CORRECCIÓN: array de objetos para no repetir estructura JSX.
-   Añadido ariaLabel en cada red para accesibilidad (WCAG 2.1).
-   ============================================================ */
 const REDES = [
   {
     nombre: "Facebook",
     href: "https://facebook.com/etc_apps",
     icono: "facebook",
-    // fill="currentColor" porque este icono usa relleno, no trazo
     svgProps: { fill: "currentColor", stroke: "none", viewBox: "0 0 24 24" },
   },
   {
@@ -112,77 +48,56 @@ const REDES = [
   },
 ];
 
-/* ============================================================
-   scrollTop — Fuera del componente
-   ✅ CORRECCIÓN: antes era una arrow function anónima inline en
-   el onClick, lo que creaba una función nueva en cada render.
-   Así se crea una sola vez.
-   ============================================================ */
 const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-/* ============================================================
-   FOOTER — Componente principal
-   ============================================================ */
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="text-gray-400 bg-gray-900 border-t border-gray-800">
       <div className="px-6 py-16 mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
-
-          {/* ── Columna 1: Marca + Contacto ── */}
-          <div className="flex flex-col">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_0.8fr_0.8fr_1fr] lg:gap-16">
+          <div className="flex flex-col items-center text-center md:items-start md:text-left md:pl-4 lg:pl-6">
             <Link
               to="/"
-              className="mb-6 text-2xl font-black tracking-tighter text-white"
+              className="inline-flex items-center justify-center gap-2 mb-6 md:justify-start"
+              aria-label="Ir al inicio de ETC Apps"
             >
-              ETC<span className="text-primary">.</span>
+              <img
+                src={LogoEtcFondoNegro}
+                alt=""
+                className="w-auto h-9 md:h-10"
+                aria-hidden="true"
+              />
+              <span className="text-xl font-bold text-white md:text-2xl">Etc Apps</span>
             </Link>
 
             <div className="space-y-4 text-sm">
-              <a
-                href="mailto:etc-apps@proton.me"
-                className="flex items-center gap-3 hover:text-white"
-              >
-                {/* ✅ span con texto oculto visualmente pero legible por lectores de pantalla */}
-                <span className="sr-only">Correo electrónico</span>
-                <span className="text-primary">
-                  <Icon>{ICONOS.email}</Icon>
-                </span>
-                etc-apps@proton.me
+              <a href="mailto:etc-apps@proton.me" className="flex items-center justify-center gap-3 hover:text-white md:justify-start">
+                <Mail size={20} className="text-primary" aria-hidden="true" />
+                <span>etc-apps@proton.me</span>
               </a>
 
               <a
                 href="https://etc-apps.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 hover:text-white"
+                className="flex items-center justify-center gap-3 hover:text-white md:justify-start"
               >
-                <span className="sr-only">Sitio web</span>
-                <span className="text-primary">
-                  <Icon>{ICONOS.web}</Icon>
-                </span>
-                etc-apps.com
+                <Globe size={20} className="text-primary" aria-hidden="true" />
+                <span>etc-apps.com</span>
               </a>
 
-              {/* Es un párrafo informativo, no un enlace, correcto usar <p> */}
-              <p className="flex items-center gap-3">
-                <span className="sr-only">Ubicación</span>
-                <span className="text-primary">
-                  <Icon>{ICONOS.ubicacion}</Icon>
-                </span>
-                Alicante, España
+              <p className="flex items-center justify-center gap-3 md:justify-start">
+                <MapPin size={20} className="text-primary" aria-hidden="true" />
+                <span>Alicante, España</span>
               </p>
             </div>
           </div>
 
-          {/* ── Columna 2: Navegación ── */}
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="mb-6 text-lg font-bold text-white">Explorar</h4>
-            {/* ✅ CORRECCIÓN: aria-label para distinguir navs en lectores de pantalla */}
-            <nav aria-label="Explorar" className="flex flex-col space-y-3 text-sm">
-              {/* ✅ CORRECCIÓN: scrollTop extraída fuera, no se crea nueva función cada render */}
+            <nav aria-label="Explorar" className="flex flex-col items-center space-y-3 text-sm md:items-start">
               <Link to="/" onClick={scrollTop} className="hover:text-primary">
                 Inicio
               </Link>
@@ -195,11 +110,9 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* ── Columna 3: Legal ── */}
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="mb-6 text-lg font-bold text-white">Legal</h4>
-            {/* ✅ CORRECCIÓN: aria-label diferente al nav anterior */}
-            <nav aria-label="Legal" className="flex flex-col space-y-3 text-sm">
+            <nav aria-label="Legal" className="flex flex-col items-center space-y-3 text-sm md:items-start">
               <Link to="/privacidad" className="hover:text-primary">
                 Privacidad
               </Link>
@@ -212,44 +125,33 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* ── Columna 4: Redes Sociales ── */}
-          <div>
+          <div className="md:text-center">
             <h4 className="mb-6 text-lg font-bold text-white">Síguenos</h4>
-            <div className="flex flex-wrap gap-4">
-              {/*
-                ✅ CORRECCIONES aplicadas aquí:
-                1. Se itera sobre el array REDES en lugar de repetir JSX para cada red.
-                2. Cada enlace tiene aria-label descriptivo (WCAG 2.1).
-                3. Los SVG usan aria-hidden="true" porque el aria-label del <a> ya describe la acción.
-                4. Se reutiliza el objeto ICONOS en lugar de duplicar SVGs inline.
-              */}
+            <div className="flex flex-wrap justify-center gap-4">
               {REDES.map(({ nombre, href, icono, svgProps }) => (
                 <a
                   key={nombre}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Síguenos en ${nombre}`} // ✅ accesibilidad
+                  aria-label={`Síguenos en ${nombre}`}
                   className="p-2 transition-colors bg-gray-800 rounded-full hover:bg-primary hover:text-white"
                 >
                   <svg
                     className="w-5 h-5"
-                    aria-hidden="true" // ✅ el <a> ya tiene aria-label, el SVG es decorativo
+                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     {...svgProps}
                   >
-                    {ICONOS[icono]}
+                    {ICONOS_REDES[icono]}
                   </svg>
                 </a>
               ))}
             </div>
           </div>
-
         </div>
 
-        {/* ── Copyright ── */}
         <div className="pt-8 mt-12 text-xs tracking-wide text-center border-t border-gray-800">
-          {/* currentYear sigue dentro del componente porque depende del momento del render */}
           <p>© {currentYear} EXPÓN TU CREACIÓN. Todos los derechos reservados.</p>
         </div>
       </div>
@@ -258,3 +160,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
