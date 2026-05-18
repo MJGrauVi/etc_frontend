@@ -55,6 +55,16 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+          {usuario && (
+            <li className="flex items-center h-full">
+              <Link
+                to="/publicaciones"
+                className="flex items-center h-full px-4 transition hover:bg-orange-50"
+              >
+                Publicaciones
+              </Link>
+            </li>
+          )}
           {/* perfil */}
           {usuario && (
             <li className="relative h-full">
@@ -206,6 +216,17 @@ const Navbar = () => {
             </li>
           )}
 
+          {usuario && (
+            <li className="w-full">
+              <Link
+                to="/publicaciones"
+                onClick={() => setOpen(false)}
+                className="block w-full px-4 py-2 transition hover:bg-orange-50"
+              >
+                Publicaciones
+              </Link>
+            </li>
+          )}
           {/* Si hay usuario */}
           {usuario ? (
             <>

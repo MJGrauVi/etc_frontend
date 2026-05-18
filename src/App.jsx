@@ -9,6 +9,7 @@ import MisPiezasPage from "./pages/MisPiezasPage.jsx";
 import PiezaDetallePage from "./pages/PiezaDetallePage.jsx";
 import useContextoSesion from "./hooks/useContextoSesion.js";
 import PerfilPage from "./pages/PerfilPage.jsx";
+import PublicacionesPage from "./pages/PublicacionesPage.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import "./App.css";
 
@@ -64,6 +65,14 @@ export default function App() {
             element={
               <RutaPrivada>
                 <MisPiezasPage />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/publicaciones"
+            element={
+              <RutaPrivada>
+                <PublicacionesPage />
               </RutaPrivada>
             }
           />
