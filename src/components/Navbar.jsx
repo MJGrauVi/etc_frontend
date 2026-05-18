@@ -89,7 +89,7 @@ const Navbar = () => {
                   </svg>
                 </div>
                 {/* Tooltip */}
-                <span className="absolute px-2 py-1 text-xs text-gray-500 transition-opacity -translate-x-1/2 rounded opacity-0 bg-gray-50 left-1/2 -bottom-8 group-hover:opacity-100 whitespace-nowrap">
+                <span className="absolute z-50 px-2 py-1 text-xs text-gray-600 transition-opacity -translate-x-1/2 rounded shadow-sm opacity-0 pointer-events-none bg-gray-50 left-1/2 top-full group-hover:opacity-100 whitespace-nowrap">
                   Perfil
                 </span>
               </Link>
@@ -224,6 +224,18 @@ const Navbar = () => {
                 className="block w-full px-4 py-2 transition hover:bg-orange-50"
               >
                 Publicaciones
+              </Link>
+            </li>
+          )}
+
+          {usuario && (
+            <li className="w-full">
+              <Link
+                to="/mi-perfil"
+                onClick={() => setOpen(false)}
+                className="block w-full px-4 py-2 transition hover:bg-orange-50"
+              >
+                Perfil
               </Link>
             </li>
           )}
