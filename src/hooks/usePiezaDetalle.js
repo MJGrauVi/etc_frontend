@@ -234,7 +234,7 @@ const usePiezaDetalle = () => {
     }
   };
 
-  const publicarEnFacebook = async (formData) => {
+  const publicarEnFacebook = async (datosPublicacion = {}) => {
     if (!publicacion?.id) {
       setMensaje({
         tipo: "error",
@@ -245,7 +245,7 @@ const usePiezaDetalle = () => {
 
     setPublicandoFacebook(true);
     try {
-      const respuesta = await postForm(`publicacion/${publicacion.id}/facebook`, formData);
+      const respuesta = await post(`publicacion/${publicacion.id}/facebook`, datosPublicacion);
       const pubActualizada = respuesta.data?.data ?? respuesta.data;
 
       setPublicacion({
@@ -257,7 +257,7 @@ const usePiezaDetalle = () => {
     } catch (err) {
       setMensaje({
         tipo: "error",
-        texto: err.backendMessage || err.message || "No se pudo publicar en Facebook.",
+        texto: err.data?.error || err.backendMessage || err.message || "No se pudo publicar en Facebook.",
       });
     } finally {
       setPublicandoFacebook(false);

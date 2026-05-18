@@ -11,7 +11,7 @@ const LoginPage = () => {
             <LogoEtcTail className="h-88 w-88 opacity-10" />
             <div className="absolute max-w-md text-left bottom-16 left-20">
               <h1 className="text-4xl font-bold text-gray-900">
-                Gestiona tus piezas con claridad
+                Gestiona tu contenido con claridad
               </h1>
               <p className="mt-4 text-lg leading-relaxed text-gray-600">
                 Accede a tu espacio para crear, organizar y preparar tus

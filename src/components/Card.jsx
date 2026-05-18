@@ -25,23 +25,23 @@ export default function Card({
 
   if (variant === "beneficios" && imagen) {
     return (
-      <article className="group relative min-h-[320px] overflow-hidden border border-gray-200 bg-gray-900 text-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+      <article className="relative overflow-hidden text-white transition duration-300 bg-gray-900 border border-gray-200 shadow-sm group min-h- hover:-translate-y-1 hover:shadow-xl">
         <img
           src={imagen}
           alt=""
           role="presentation"
-          className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          className="absolute inset-0 object-cover w-full h-full transition duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-black/25 transition duration-300 group-hover:bg-black/65" />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+        <div className="absolute inset-0 transition duration-300 bg-black/25 group-hover:bg-black/65" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/80 to-transparent" />
 
-        <div className="relative z-10 flex h-full min-h-[320px] flex-col justify-end p-6 text-left">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center bg-white/90 text-orange-600 shadow-sm">
+        <div className="relative z-10 flex flex-col justify-end h-full p-6 text-left min-h-">
+          <div className="flex items-center justify-center w-12 h-12 mb-4 text-orange-600 shadow-sm bg-white/90">
             {ICONOS[icono](30)}
           </div>
 
           <h3 className="text-2xl font-semibold text-white">{titulo}</h3>
-          <p className="mt-3 max-h-40 text-sm leading-relaxed text-gray-100 opacity-100 transition duration-300 md:max-h-0 md:opacity-0 md:group-hover:max-h-40 md:group-hover:opacity-100">
+          <p className="mt-3 text-sm leading-relaxed text-gray-100 transition duration-300 opacity-100 max-h-40 md:max-h-0 md:opacity-0 md:group-hover:max-h-40 md:group-hover:opacity-100">
             {descripcion}
           </p>
         </div>

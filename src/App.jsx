@@ -10,6 +10,7 @@ import PiezaDetallePage from "./pages/PiezaDetallePage.jsx";
 import useContextoSesion from "./hooks/useContextoSesion.js";
 import PerfilPage from "./pages/PerfilPage.jsx";
 import PublicacionesPage from "./pages/PublicacionesPage.jsx";
+import EditarPublicacionPage from "./pages/EditarPublicacionPage.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import "./App.css";
 
@@ -73,6 +74,14 @@ export default function App() {
             element={
               <RutaPrivada>
                 <PublicacionesPage />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/publicaciones/:id/editar"
+            element={
+              <RutaPrivada>
+                <EditarPublicacionPage />
               </RutaPrivada>
             }
           />

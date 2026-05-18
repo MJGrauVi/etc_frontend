@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CalendarDays, ExternalLink, Search, Trash2, X } from "lucide-react";
+import { CalendarDays, Edit3, ExternalLink, Search, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import Cargando from "../components/Cargando.jsx";
 import usePublicaciones from "../hooks/usePublicaciones.js";
@@ -177,6 +177,11 @@ const PublicacionesPage = () => {
                       <Link to={pieza?.id ? `/pieza/${pieza.id}` : "/mis-piezas"} className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-orange-600 transition border border-orange-300 hover:bg-orange-50 md:w-auto">
                         Ver pieza
                         <ExternalLink size={16} />
+                      </Link>
+
+                      <Link to={`/publicaciones/${publicacion.id}/editar`} className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-blue-600 transition border border-blue-200 hover:bg-blue-50 md:w-auto">
+                        Editar
+                        <Edit3 size={16} />
                       </Link>
 
                       {confirmando ? (

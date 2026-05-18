@@ -1,0 +1,93 @@
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import Cargando from "../components/Cargando.jsx";
+import MensajeTail from "../components/MensajeTail.jsx";
+import PublicacionPreview from "../components/PublicacionPreview.jsx";
+import useEditarPublicacion from "../hooks/useEditarPublicacion.js";
+
+const EditarPublicacionPage = () => {
+  const {
+    publicacion,
+    cargando,
+    guardando,
+    publicandoFacebook,
+    error,
+    mensaje,
+    setMensaje,
+    handleEditar,
+    guardarCambios,
+    publicarEnFacebook,
+    perfil,
+  } = useEditarPublicacion();
+
+  if (cargando) return <Cargando />;
+
+  if (error) {
+    return (
+      <main className="min-h-screen px-6 py-12 bg-white">
+        <div className="max-w-4xl mx-auto alerta-base alerta-error">
+          Error: {error}
+        </div>
+      </main>
+    );
+  }
+
+  if (!publicacion) {
+    return (
+      <main className="min-h-screen px-6 py-12 bg-white">
+        <div className="max-w-4xl mx-auto text-center border border-gray-200 bg-gray-50 p-8">
+          <p className="mb-6 text-gray-600">No se ha encontrado la publicacion.</p>
+          <Link to="/publicaciones" className="btn-secondary">
+            Volver a publicaciones
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  const pieza = publicacion.pieza ?? publicacion.piezas;
+
+  return (
+    <main className="min-h-screen font-sans bg-white">
+      <section className="page-header">
+        <div className="px-6 mx-auto text-left max-w-7xl">
+          <Link
+            to="/publicaciones"
+            className="inline-flex items-center gap-2 mb-5 text-sm font-semibold text-orange-600 hover:text-orange-700"
+          >
+            <ArrowLeft size={16} />
+            Volver a publicaciones
+          </Link>
+          <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
+            Editar publicacion
+          </h1>
+          <p className="mt-2 text-gray-600">
+            {pieza?.nombre ? `Pieza asociada: ${pieza.nombre}` : "Actualiza el contenido antes de publicarlo."}
+          </p>
+        </div>
+      </section>
+
+      <MensajeTail
+        tipo={mensaje.tipo}
+        texto={mensaje.texto}
+        onClose={() => setMensaje({ tipo: "", texto: "" })}
+      />
+
+      <section className="py-10">
+        <div className="px-6 mx-auto max-w-7xl">
+          <PublicacionPreview
+            publicacion={publicacion}
+            guardando={guardando}
+            publicandoFacebook={publicandoFacebook}
+            onEditar={handleEditar}
+            onGuardar={guardarCambios}
+            onPublicarFacebook={publicarEnFacebook}
+            perfil={perfil}
+          />
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default EditarPublicacionPage;
