@@ -53,25 +53,25 @@ const PiezaDetallePage = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      {/* Cabecera */}
+      {/* Muestro la cabecera */}
       <PiezaCabecera
         pieza={pieza}
         onAbrirModalEditar={abrirModalEditar}
         onEliminar={() => setConfirmarEliminar(true)}
       />
 
-      {/* Mensaje */}
+      {/* Muestro el mensaje */}
       <MensajeTail
         tipo={mensaje.tipo}
         texto={mensaje.texto}
         onClose={() => setMensaje({ tipo: "", texto: "" })}
       />
 
-      {/* Contenido principal */}
+      {/* Muestro el contenido principal */}
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[420px_1fr]">
-            {/* Galería */}
+            {/* Muestro la galería */}
             <PiezaGaleria
               pieza={pieza}
               subiendoImagen={subiendoImagen}
@@ -80,7 +80,7 @@ const PiezaDetallePage = () => {
               onMarcarPortada={marcarPortada}
             />
 
-            {/* Descripción + botones */}
+            {/* Muestro la descripción y los botones */}
             <PiezaDescripcionBotones pieza={pieza}
               publicacion={publicacion}
               generando={generando}
@@ -88,7 +88,7 @@ const PiezaDetallePage = () => {
               iniciarManual={iniciarManual} />
           </div>
 
-          {/* Previsualización */}
+          {/* Muestro la previsualización */}
           {(publicacion || modoManual) && (
             <PublicacionPreview
               publicacion={
@@ -112,7 +112,7 @@ const PiezaDetallePage = () => {
         </div>
       </section>
 
-      {/* Modal editar */}
+      {/* Muestro el modal de edición */}
       {modalEditar && (
         <ModalEditarPieza
           piezaEdit={piezaEdit}
@@ -123,7 +123,7 @@ const PiezaDetallePage = () => {
         />
       )}
 
-      {/* Confirmación eliminar */}
+      {/* Muestro la confirmación de eliminación */}
       <ModalEliminar
         visible={confirmarEliminar}
         onCancelar={() => setConfirmarEliminar(false)}

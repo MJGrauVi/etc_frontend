@@ -18,7 +18,7 @@ const GestorImagenes = ({
   return (
     <div className="mt-6">
 
-      {/* Cabecera con botón subir */}
+      {/* Muestro la cabecera con el botón de subida */}
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-semibold tracking-wide text-gray-700 uppercase">
           Imágenes
@@ -46,7 +46,7 @@ const GestorImagenes = ({
         />
       </div>
 
-      {/* Sin imágenes — zona de drop */}
+      {/* Muestro la zona de subida cuando no hay imágenes */}
       {medias.length === 0 ? (
         <div
           onClick={() => inputRef.current.click()}
@@ -56,7 +56,7 @@ const GestorImagenes = ({
           <span className="text-sm">Sin imágenes — haz clic para subir</span>
         </div>
       ) : (
-        /* Grid de miniaturas con controles */
+        /* Muestro el grid de miniaturas con controles */
         <div className="flex flex-wrap gap-3">
           {medias.map((media) => (
             <div
@@ -73,14 +73,14 @@ const GestorImagenes = ({
                 className="object-cover w-full h-full"
               />
 
-              {/* Badge portada */}
+              {/* Muestro la marca de portada */}
               {media.es_portada && (
                 <span className="absolute top-1 left-1 bg-orange-500 text-white text-[10px] font-bold px-1 py-0.5 leading-none">
                   PORTADA
                 </span>
               )}
 
-              {/* Controles visibles al hacer hover */}
+              {/* Muestro los controles al pasar el cursor */}
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 transition opacity-0 bg-black/50 group-hover:opacity-100">
                 {!media.es_portada && (
                   <button

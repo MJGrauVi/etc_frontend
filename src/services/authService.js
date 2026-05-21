@@ -1,6 +1,6 @@
 import  request  from "../services/apiClient.js";
 
-/* Operaciones de autenticación(login, register, logout, me).Objeto ya que no usa react. */
+/* Centralizo las operaciones de autenticación porque no dependen de React. */
 const authService = {
 
   login: (email, password) =>
@@ -11,7 +11,7 @@ const authService = {
 
   me: () => request("me"),
 
-  // Añadimos el registro aquí
+  // Añado aquí la operación de registro.
   register: (userData) =>
     request("register", {
       method: "POST",

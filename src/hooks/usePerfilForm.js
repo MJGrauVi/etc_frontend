@@ -58,7 +58,7 @@ const usePerfilForm = () => {
       }
     };
     cargar();
-  }, [get]); //get en las dependencias.
+  }, [get]); // Mantengo get en las dependencias.
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -105,7 +105,7 @@ const usePerfilForm = () => {
     cargando,
     guardando,
     mensaje,
-    setMensaje,  // 👈 para MensajeTail
+    setMensaje,  // Lo expongo para MensajeTail.
     handleChange,
     handleLogo,
     guardarPerfil,

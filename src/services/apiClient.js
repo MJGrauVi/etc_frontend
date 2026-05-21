@@ -1,7 +1,7 @@
 import {fetchErroresRed} from "../utils/api.js";
 
-//Objeto de configuración, centraliza la configuración común de todas 
-//las peticiones: la URL base, el token de autenticación y las cabeceras HTTP..
+// Centralizo la configuración común de todas 
+// las peticiones: URL base, token de autenticación y cabeceras HTTP.
 
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8095/api";
@@ -11,11 +11,11 @@ const request = async (endpoint, options = {})=>{
 
     const headers = {
         "Accept": "application/json",
-        ...(token && {"Authorization": `Bearer ${token}`}),//Inyección dinámica del token.
+        ...(token && {"Authorization": `Bearer ${token}`}),// Inyecto dinámicamente el token.
         ...(!options.isFormData && {"Content-Type": "application/json"}),
         ...options.headers,
     };
-    //Si es FormData dejamos que el navegador gestione el Content-Type.
+    // Si uso FormData, dejo que el navegador gestione el Content-Type.
     if(options.isFormData) delete headers["Content-Type"];
     
 

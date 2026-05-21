@@ -11,7 +11,7 @@ const Navbar = () => {
     
     <nav className="fixed top-0 left-0 z-50 w-full text-lg bg-white">
       <div className="flex items-center justify-between px-16 mx-auto h-22 max-w-7xl">
-        {/* Logo */}
+        {/* Muestro el logo */}
         <div className="flex items-center gap-1 md:gap-1">
           <Link to="/" className="flex items-center gap-2">
             <span className="flex items-center p-1"><LogoEtcTail className="etc" /></span>
@@ -21,7 +21,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Menu desktop */}
+        {/* Muestro el menú de escritorio */}
         <ul className="items-center hidden h-full font-medium text-gray-700 md:flex">
           {usuario?.rol === "Administrador" && (
             <li className="flex items-center h-full">
@@ -65,7 +65,7 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-          {/* perfil */}
+          {/* Muestro el acceso al perfil */}
           {usuario && (
             <li className="relative h-full">
               <Link
@@ -88,7 +88,7 @@ const Navbar = () => {
                     />
                   </svg>
                 </div>
-                {/* Tooltip */}
+                {/* Muestro el tooltip */}
                 <span className="absolute z-50 px-2 py-1 text-xs text-gray-600 transition-opacity -translate-x-1/2 rounded shadow-sm opacity-0 pointer-events-none bg-gray-50 left-1/2 top-full group-hover:opacity-100 whitespace-nowrap">
                   Perfil
                 </span>
@@ -135,7 +135,7 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Botón hamburguesa móvil */}
+        {/* Muestro el botón hamburguesa en móvil */}
         <button
           className="text-gray-700 md:hidden"
           onClick={() => setOpen(!open)}
@@ -166,10 +166,10 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Menu móvil */}
+      {/* Muestro el menú móvil */}
       {open && (
         <ul className="px-6 pb-4 space-y-2 font-medium text-gray-700 bg-white shadow-inner md:hidden animate-fadeIn">
-          {/* Enlaces normales */}
+          {/* Muestro los enlaces principales */}
           <li className="w-full">
             <a
               href="mailto:etc-apps@proton.me"
@@ -239,7 +239,7 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-          {/* Si hay usuario */}
+          {/* Muestro estas opciones si hay usuario */}
           {usuario ? (
             <>
               <li className="px-4 text-sm text-gray-500">
@@ -260,7 +260,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              {/* Iniciar sesión */}
+              {/* Muestro el enlace de inicio de sesión */}
               <li className="w-full">
                 <Link
                   to="/login"
@@ -271,7 +271,7 @@ const Navbar = () => {
                 </Link>
               </li>
 
-              {/* Prueba gratis */}
+              {/* Muestro el enlace de prueba gratis */}
               <li className="w-full">
                 <Link
                   to="/login"

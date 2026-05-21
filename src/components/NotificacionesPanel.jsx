@@ -4,10 +4,10 @@ const NotificacionesPanel = () => {
     const [alertas, setAlertas] = useState([]);
     const [cargando, setCargando] = useState(true);
 
-    const token = localStorage.getItem('token'); // Asumiendo que guardas el token aquí
+    const token = localStorage.getItem('token'); // Leo el token desde localStorage.
 
     useEffect(() => {
-        // 1. Realizamos la petición
+        // Realizo la petición.
         fetch('http://localhost:8000/api/notificaciones', {
             method: 'GET',
             headers: {
@@ -21,7 +21,7 @@ const NotificacionesPanel = () => {
             return response.json();
         })
         .then(res => {
-            // Laravel devuelve las notificaciones dentro de res.data
+            // Laravel devuelve las notificaciones dentro de res.data.
             setAlertas(res.data);
             setCargando(false);
         })
@@ -43,7 +43,7 @@ const NotificacionesPanel = () => {
                 <ul style={{ listStyle: 'none', padding: 0 }}>
                     {alertas.map((notif) => (
                         <li key={notif.id} className="alerta-card">
-                            {/* RECUERDA: Los datos que inventamos están en el campo 'data' */}
+                            {/* Leo los datos de la notificación desde el campo data */}
                             <strong>{notif.data.titulo_pieza}</strong>
                             <p>{notif.data.mensaje}</p>
                             <small>Fecha: {notif.data.fecha_vencimiento}</small>

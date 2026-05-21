@@ -56,7 +56,7 @@ const PiezaDetallePageOriginal = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      {/* Cabecera */}
+      {/* Muestro la cabecera */}
       <section className="py-12 border-b border-gray-200 bg-gray-50">
         <div className="px-6 mx-auto max-w-7xl">
           <Link
@@ -107,18 +107,18 @@ const PiezaDetallePageOriginal = () => {
         </div>
       </section>
 
-      {/* Mensaje */}
+      {/* Muestro el mensaje */}
       <MensajeTail
         tipo={mensaje.tipo}
         texto={mensaje.texto}
         onClose={() => setMensaje({ tipo: "", texto: "" })}
       />
 
-      {/* Contenido principal */}
+      {/* Muestro el contenido principal */}
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
           <div className="flex flex-col gap-8 md:flex-row">
-            {/* Galería */}
+            {/* Muestro la galería */}
             <div className="w-full shrink-0 md:w-80">
               {imagenMostrada ? (
                 <img
@@ -159,7 +159,7 @@ const PiezaDetallePageOriginal = () => {
               />
             </div>
 
-            {/* Descripción + botones */}
+            {/* Muestro la descripción y los botones */}
             <div className="flex-1">
               <h2 className="mb-3 text-xl font-semibold text-gray-800">
                 Descripción
@@ -168,7 +168,7 @@ const PiezaDetallePageOriginal = () => {
                 {pieza.descripcion}
               </p>
 
-              {/* 👇 Botones con gap */}
+              {/* Separo los botones con gap */}
               <div className="flex flex-col gap-3 mx-auto mt-8 sm:flex-row">
                 <button
                   onClick={generarPublicacion}
@@ -200,7 +200,7 @@ const PiezaDetallePageOriginal = () => {
             </div>
           </div>
 
-          {/* Previsualización — sin prop mensaje */}
+          {/* Muestro la previsualización sin prop de mensaje */}
           {(publicacion || modoManual) && (
             <PublicacionPreview
               publicacion={
@@ -222,7 +222,7 @@ const PiezaDetallePageOriginal = () => {
         </div>
       </section>
 
-      {/* Modal editar */}
+      {/* Muestro el modal de edición */}
       {modalEditar && (
         <ModalEditarPieza
           piezaEdit={piezaEdit}
@@ -233,7 +233,7 @@ const PiezaDetallePageOriginal = () => {
         />
       )}
 
-      {/* Confirmación eliminar */}
+      {/* Muestro la confirmación de eliminación */}
       {confirmarEliminar && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40">
           <div className="w-full max-w-sm p-6 bg-white border border-gray-200 shadow-xl">

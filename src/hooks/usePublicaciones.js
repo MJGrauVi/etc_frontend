@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import useContextoSesion from "./useContextoSesion.js";
 
-const normalizar = (valor = "") => valor.toString().toLowerCase().trim();
+const normalizar = (valor) => String(valor ?? "").toLowerCase().trim();
 
 const usePublicaciones = () => {
   const { get, remove } = useContextoSesion();

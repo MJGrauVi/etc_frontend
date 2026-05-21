@@ -182,7 +182,7 @@
 }
 /* — Footer —————————————————————————————————————————————————— */
 @utility footer-link {
-  /* Usamos un gris claro (gray-400 aprox) para que contraste con el fondo oscuro */
+  /* Uso un gris claro para contrastar con el fondo oscuro */
   @apply text-gray-400 transition-colors duration-200 hover:text-primary;
 }
 

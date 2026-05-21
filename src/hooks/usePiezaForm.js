@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useContextoSesion from "./useContextoSesion.js";
- //Lógica y llamada a la API.
+ // Gestiono la lógica y la llamada a la API.
 const usePiezaForm = () => {
   const { postForm } = useContextoSesion();
   const navegar = useNavigate();
@@ -14,8 +14,8 @@ const usePiezaForm = () => {
   };
 
   const [form, setForm] = useState(estadoInicial);
-  const [fotos, setFotos] = useState([]); // archivos File[]
-  const [previews, setPreviews] = useState([]); // URLs para previsualizar
+  const [fotos, setFotos] = useState([]); // Guardo los archivos File[]
+  const [previews, setPreviews] = useState([]); // Guardo las URLs para previsualizar
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
@@ -27,7 +27,7 @@ const usePiezaForm = () => {
   const handleFotos = (e) => {
     const archivos = Array.from(e.target.files);
     setFotos(archivos);
-    // Generamos previews para mostrar las miniaturas
+    // Genero previews para mostrar las miniaturas.
     const urls = archivos.map(f => URL.createObjectURL(f));
     setPreviews(urls);
   };
@@ -56,7 +56,7 @@ const usePiezaForm = () => {
       setFotos([]);
       setPreviews([]);
 
-      // Redirigimos al detalle de la pieza creada.
+      // Redirijo al detalle de la pieza creada.
       setTimeout(() => navegar(`/pieza/${data.data.id}`), 1500);
 
     } catch (err) {

@@ -16,7 +16,7 @@ import "./App.css";
 
 const RutaAdmin = ({ children }) => {
   const { usuario, cargando } = useContextoSesion();
-  if (cargando) return null; //Espera a que termine de recuperar la sesión.
+  if (cargando) return null; 
 
   if (!usuario) return <Navigate to="/login" />;
   if (usuario.rol.trim() !== "Administrador") return <Navigate to="/" />;
@@ -36,13 +36,13 @@ export default function App() {
       <ScrollToTop />
       <Navbar />
       <main className="flex-1 pt-16">
-        {/* padding obrigatorio por nabvar fixed */}
+        {/* Dejo padding por navbar fija */}
         <Routes>
-          {/* Públicas */}
+          {/* Defino rutas públicas */}
           <Route path="/" element={<Inicio />} />
           <Route path="/login" element={<LoginPage />} />
 
-          {/* Solo admin */}
+          {/* Defino rutas solo para administración */}
           <Route
             path="/admin/usuarios"
             element={
@@ -52,7 +52,7 @@ export default function App() {
             }
           />
 
-          {/* Usuario autenticado */}
+          {/* Rutas para usuarios autenticados */}
           <Route
             path="/pieza/nueva"
             element={

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import Cargando from "../components/Cargando.jsx";
 import MensajeTail from "../components/MensajeTail.jsx";
 import PublicacionPreview from "../components/PublicacionPreview.jsx";
@@ -51,13 +50,6 @@ const EditarPublicacionPage = () => {
     <main className="min-h-screen font-sans bg-white">
       <section className="page-header">
         <div className="px-6 mx-auto text-left max-w-7xl">
-          <Link
-            to="/publicaciones"
-            className="inline-flex items-center gap-2 mb-5 text-sm font-semibold text-orange-600 hover:text-orange-700"
-          >
-            <ArrowLeft size={16} />
-            Volver a publicaciones
-          </Link>
           <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
             Editar publicacion
           </h1>

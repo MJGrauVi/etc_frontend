@@ -6,24 +6,24 @@ export default function InicioOriginal() {
     <div className="min-h-screen font-sans">
       <section className="relative flex items-center justify-center min-h-[600px] w-full overflow-hidden bg-white pt-16">
         {" "}
-        {/* Fondo blanco para que contraste con el texto negro si la imagen tarda en cargar */}
-        {/* Imagen de fondo ocupando todo el espacio con opacidad */}
+        {/* Uso fondo blanco para mantener contraste si la imagen tarda en cargar */}
+        {/* Muestro la imagen de fondo ocupando todo el espacio */}
         <img
           src={fondo}
           alt="Fondo escritorio"
           className="absolute bottom-0 z-0 object-cover w-full h-full opacity-25"
-          /*  className="absolute inset-0 z-0 object-cover w-full h-full opacity-25" */
+          /* Mantengo esta clase como referencia de fondo con opacidad */
         />
-        {/* Contenido centrado sobre la imagen con z-index mayor */}
+        {/* Centro el contenido sobre la imagen con mayor z-index */}
         <div className="relative z-10 max-w-4xl px-6 mx-auto text-center">
-          {/* H1: Negro (text-black), Responsive (text-3xl en móvil, text-6xl en md+) */}
+          {/* Configuro el H1 con color negro y tamaño responsive */}
           <h1 className="text-3xl font-bold leading-tight text-black md:text-6xl">
             Muestra al mundo lo que creas
           </h1>
 
           <p className="mt-6 text-lg text-gray-800 md:text-xl">
             {" "}
-            {/* Ajustado text-gray-800 para legibilidad sobre el fondo */}
+            {/* Ajusto text-gray-800 para mejorar la legibilidad sobre el fondo */}
             Con ETC puedes crear publicaciones profesionales y compartir tus
             piezas únicas en redes sociales en solo unos clics.
           </p>
@@ -36,7 +36,7 @@ export default function InicioOriginal() {
             >
               Solicita una prueba gratis
             </Link>
-            {/* Botón secundario ajustado para fondo claro */}
+            {/* Ajusto el botón secundario para fondo claro */}
             <button className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50">
               Saber más
             </button>
@@ -44,15 +44,15 @@ export default function InicioOriginal() {
         </div>
       </section>
 
-      {/* <Hero /> */}
+      {/* Mantengo Hero como referencia */}
       <section className="py-20 bg-white">
         <div className="px-6 mx-auto max-w-7xl">
-          {/* Título principal */}
+          {/* Muestro el título principal */}
           <h2 className="text-3xl font-semibold text-center text-gray-800 md:text-4xl">
             Gestión profesional para creadores y pequeñas empresas
           </h2>
 
-          {/* Descripción larga */}
+          {/* Muestro la descripción larga */}
           <p className="max-w-3xl mx-auto mt-6 text-lg leading-relaxed text-center text-gray-600">
             ETC está construido sobre tecnología cloud moderna, diseñada para
             ser rápida, intuitiva y fácil de integrar en tu día a día. Ofrece
@@ -64,13 +64,13 @@ export default function InicioOriginal() {
             asociación,... etc.
           </p>
 
-          {/* Grid de beneficios */}
+          {/* Muestro el grid de beneficios */}
           <div className="grid grid-cols-1 gap-10 mt-16 md:grid-cols-2 lg:grid-cols-4">
-            {/* Ahorro */}
+            {/* Muestro el beneficio de ahorro */}
             <div className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50">
               {/* <div className="p-8 transition shadow-sm bg-gray-50 rounded-xl hover:shadow-md"> */}
               <div className="flex items-center justify-center w-16 h-16 mx-auto text-orange-600 bg-orange-100 rounded-full">
-                {/* Icono de ahorro */}
+                {/* Muestro el icono de ahorro */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-9 w-9"
@@ -97,10 +97,10 @@ export default function InicioOriginal() {
               </p>
             </div>
 
-            {/* Garantía */}
+            {/* Muestro el beneficio de garantía */}
             <div className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50">
               <div className="flex items-center justify-center w-16 h-16 mx-auto text-orange-600 bg-orange-100 rounded-full">
-                {/* Icono de garantía */}
+                {/* Muestro el icono de garantía */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-9 w-9"
@@ -126,10 +126,10 @@ export default function InicioOriginal() {
               </p>
             </div>
 
-            {/* Seguridad */}
+            {/* Muestro el beneficio de seguridad */}
             <div className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50">
               <div className="flex items-center justify-center w-16 h-16 mx-auto text-orange-600 bg-orange-100 rounded-full">
-                {/* Icono de seguridad */}
+                {/* Muestro el icono de seguridad */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-9 w-9"
@@ -156,10 +156,10 @@ export default function InicioOriginal() {
               </p>
             </div>
 
-            {/* Facilidad */}
+            {/* Muestro el beneficio de facilidad */}
             <div className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50">
               <div className="flex items-center justify-center w-16 h-16 mx-auto text-orange-600 bg-orange-100 rounded-full">
-                {/* Icono de facilidad */}
+                {/* Muestro el icono de facilidad */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-9 w-9"
@@ -188,9 +188,9 @@ export default function InicioOriginal() {
         </div>
       </section>
 
-      {/* Sección de beneficios */}
+      {/* Muestro la sección de beneficios */}
 
-      {/* CTA final */}
+      {/* Muestro la llamada a la acción final */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl px-6 mx-auto text-center">
           <h2 className="text-3xl font-semibold text-gray-800 md:text-4xl">
@@ -212,7 +212,7 @@ export default function InicioOriginal() {
       </section>
       <section className="py-20 bg-white">
         <div className="px-6 mx-auto max-w-7xl">
-          {/* SECCION FINAL */}
+          {/* Muestro la sección final */}
           <h2 className="text-3xl font-semibold text-center text-gray-800 md:text-4xl">
             ¿Por qué usar ETC?
           </h2>
@@ -222,13 +222,13 @@ export default function InicioOriginal() {
             empresas que quieren mostrar su trabajo sin complicaciones.
           </p>
 
-          {/* Tarjetas */}
+          {/* Muestro las tarjetas */}
           <div className="grid grid-cols-1 gap-10 mt-16 md:grid-cols-3">
-            {/* Tarjeta 1 */}
+            {/* Muestro la primera tarjeta */}
             {/* <div className="px-8 py-3 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50"></div> */}
             <div className="p-8 transition shadow-sm bg-gray-50 hover:shadow-md">
               <div className="flex items-center justify-center mx-auto text-orange-600 bg-orange-100 rounded-full w-14 h-14">
-                {/* Icono simple */}
+                {/* Muestro un icono simple */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-8 h-8"
@@ -255,7 +255,7 @@ export default function InicioOriginal() {
               </p>
             </div>
 
-            {/* Tarjeta 2 */}
+            {/* Muestro la segunda tarjeta */}
             <div className="p-8 transition shadow-sm bg-gray-50 hover:shadow-md">
               <div className="flex items-center justify-center mx-auto text-orange-600 bg-orange-100 rounded-full w-14 h-14">
                 <svg
@@ -284,7 +284,7 @@ export default function InicioOriginal() {
               </p>
             </div>
 
-            {/* Tarjeta 3 */}
+            {/* Muestro la tercera tarjeta */}
             <div className="p-8 transition shadow-sm bg-gray-50 hover:shadow-md">
               <div className="flex items-center justify-center mx-auto text-orange-600 bg-orange-100 rounded-full w-14 h-14">
                 <svg

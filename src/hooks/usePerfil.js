@@ -17,7 +17,7 @@ const usePerfil = () => {
     cargar();
   }, [get]);
 
-  // Construye la URL completa del logo
+  // Construyo la URL completa del logo.
   const logoUrl = perfil?.logo
     ? `${import.meta.env.VITE_API_URL.replace('/api', '')}/storage/${perfil.logo}`
     : null;

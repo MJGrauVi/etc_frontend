@@ -1,26 +1,22 @@
 import { useEffect, useState } from "react";
-import useContextoSesion from "./useContextoSesion.js";
+import useDatos from "./useDatos.js";
 
 const useMisPiezas = () => {
-  const { get } = useContextoSesion();
+  const { get, cargando, error } = useDatos(true);
   const [piezas, setPiezas] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
   const [filtro, setFiltro] = useState("");
 
   useEffect(() => {
     const cargar = async () => {
       try {
         const respuesta = await get("piezas");
-        setPiezas(respuesta.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setCargando(false);
+        setPiezas(respuesta.data ?? []);
+      } catch {
+        // useDatos ya conserva el error de la comunicacion.
       }
     };
     cargar();
-  }, []);
+  }, [get]);
 
   const piezasFiltradas = piezas.filter(p =>
     p.nombre.toLowerCase().includes(filtro.toLowerCase()) ||

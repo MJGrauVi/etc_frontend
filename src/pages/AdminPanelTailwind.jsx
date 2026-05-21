@@ -5,7 +5,7 @@ import useContextoSesion from "../hooks/useContextoSesion.js";
 const AdminPanelTailwind = () => {
   const { usuariosFiltrados, cargando, error, filtro, setFiltro, cambiarRol } =
     useAdminUsuarios();
-  const { usuario } = useContextoSesion(); //Identificamos al administrador y no pueda cambiarse el rol.
+  const { usuario } = useContextoSesion(); // Identifico al administrador para evitar que cambie su propio rol.
 
   if (cargando) return <Cargando />;
   if (error)
@@ -17,7 +17,7 @@ const AdminPanelTailwind = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      {/* Cabecera — mismo estilo que hero pero más compacto */}
+      {/* Muestro la cabecera con un estilo similar al hero, pero más compacto */}
       <section className="py-12 border-b border-gray-200 bg-gray-50">
         <div className="px-6 mx-auto max-w-7xl">
           <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
@@ -31,7 +31,7 @@ const AdminPanelTailwind = () => {
 
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
-          {/* Buscador — mismo estilo que tus botones secundarios */}
+          {/* Muestro el buscador con el estilo de mis botones secundarios */}
           <div className="mb-8">
             <input
               type="text"
@@ -42,7 +42,7 @@ const AdminPanelTailwind = () => {
             />
           </div>
 
-          {/* Tabla */}
+          {/* Muestro la tabla */}
           <div className="overflow-x-auto border border-gray-200">
             <table className="w-full text-sm text-left text-gray-700">
               <thead className="border-b border-gray-200 bg-gray-50">
@@ -77,7 +77,7 @@ const AdminPanelTailwind = () => {
 
                     <td className="px-6 py-4 text-gray-600">{u.email}</td>
 
-                    {/* Badge verificación — mismo naranja */}
+                    {/* Muestro el badge de verificación con el naranja de la marca */}
                     <td className="px-6 py-4">
                       {u.email_verified_at ? (
                         <span className="inline-block px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 border border-green-200">
@@ -96,10 +96,10 @@ const AdminPanelTailwind = () => {
                       {new Date(u.created_at).toLocaleDateString("es-ES")}
                     </td>
 
-                    {/* Select rol  */}
+                    {/* Muestro el selector de rol */}
                     <td className="px-6 py-4">
                       {u.id === usuario?.id ? (
-                        // 👇 Si es el propio admin muestra solo texto, sin select
+                        // Si es mi propio usuario administrador, muestro solo texto sin selector.
                         <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 border border-orange-200 bg-orange-50">
                           {u.roles?.[0]?.name ?? "Usuario"} (tú)
                         </span>
@@ -120,7 +120,7 @@ const AdminPanelTailwind = () => {
               </tbody>
             </table>
 
-            {/* Vacío */}
+            {/* Muestro el estado vacío */}
             {usuariosFiltrados.length === 0 && (
               <div className="py-16 text-center bg-white">
                 <p className="text-lg text-gray-600">
@@ -130,7 +130,7 @@ const AdminPanelTailwind = () => {
             )}
           </div>
 
-          {/* Contador */}
+          {/* Muestro el contador */}
           <p className="mt-4 text-sm text-gray-500">
             {usuariosFiltrados.length} usuario
             {usuariosFiltrados.length !== 1 ? "s" : ""} encontrado

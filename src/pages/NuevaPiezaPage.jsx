@@ -16,10 +16,10 @@ const NuevaPiezaPage = () => {
   return (
     <main className="min-h-screen font-sans bg-white">
 
-      {/* Cabecera */}
+      {/* Muestro la cabecera */}
       <section className="py-12 border-b border-gray-200 bg-gray-50">
         <div className="px-6 mx-auto max-w-7xl">
-          {/* <h1 className="text-3xl font-bold text-gray-800 md:text-4xl"> */}
+          {/* Mantengo este h1 como referencia */}
           <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
             Nueva pieza
           </h1>

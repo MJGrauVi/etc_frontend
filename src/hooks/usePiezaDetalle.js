@@ -24,7 +24,7 @@ const usePiezaDetalle = () => {
   const [guardandoPieza, setGuardandoPieza] = useState(false);
   const [subiendoImagen, setSubiendoImagen] = useState(false);
 
-  // ── Carga ──────────────────────────────────────────────────────
+  // Cargo los datos principales.
   const cargarPieza = async () => {
     try {
       const respuesta = await get(`pieza/${id}`);
@@ -38,7 +38,7 @@ const usePiezaDetalle = () => {
 
   useEffect(() => { cargarPieza(); }, [id]);
 
-  // ── Editar pieza ───────────────────────────────────────────────
+  // Gestiono la edición de la pieza.
   const abrirModalEditar = () => {
     setPiezaEdit({
       nombre:      pieza.nombre      ?? "",
@@ -70,7 +70,7 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // ── Eliminar pieza ─────────────────────────────────────────────
+  // Gestiono la eliminación de la pieza.
   const eliminarPieza = async () => {
     try {
       await remove(`pieza/${id}`);
@@ -80,7 +80,7 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // ── Imágenes ───────────────────────────────────────────────────
+  // Gestiono las imágenes.
   const subirImagen = async (archivo) => {
     setSubiendoImagen(true);
     try {
@@ -126,7 +126,7 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // ── Modo manual ────────────────────────────────────────────────
+  // Gestiono el modo manual.
   const iniciarManual = () => {
     setPublicacion({
       id:       null,
@@ -139,7 +139,7 @@ const usePiezaDetalle = () => {
     setModoManual(true);
   };
 
-  // ── IA ─────────────────────────────────────────────────────────
+  // Gestiono la generación con IA.
   const generarPublicacion = async () => {
     setGenerando(true);
     setMensaje({ tipo: "", texto: "" });
@@ -182,7 +182,7 @@ const usePiezaDetalle = () => {
   const normalizarEstado = (estado) =>
     estado === "lista" ? "pendiente" : estado;
 
-  // ── Guardar — funciona para IA (PUT) y manual (POST) ──────────
+  // Guardo publicaciones generadas con IA o creadas manualmente.
   const guardarCambios = async () => {
     setGuardando(true);
     try {
@@ -196,10 +196,10 @@ const usePiezaDetalle = () => {
       };
 
       if (publicacion.id) {
-        // Ya existe en BD → actualizar con PUT
+        // Si ya existe en BD, actualizo con PUT.
         respuesta = await put(`publicacion/${publicacion.id}`, datosPublicacion);
       } else {
-        // Es manual, no existe → crear con POST
+        // Si es manual y no existe, creo con POST.
         respuesta = await post("publicacion", datosPublicacion);
       }
 

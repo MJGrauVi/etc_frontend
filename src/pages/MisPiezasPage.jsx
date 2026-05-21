@@ -5,12 +5,12 @@ import Cargando from "../components/Cargando.jsx";
 const MisPiezasPage = () => {
   const { piezasFiltradas, cargando, error, filtro, setFiltro } = useMisPiezas();
 
-  // — Estados de carga y error ————————————————————————————————
+  // Gestiono los estados de carga y error.
 
   if (cargando) return <Cargando />;
 
-  // Antes: clases inline mezcladas sin criterio
-  // Ahora: alerta-base + alerta-error definidas en index.css
+  // Antes tenía clases inline mezcladas sin criterio.
+  // Ahora uso alerta-base y alerta-error definidas en index.css.
   if (error) return (
     <p className="alerta-base alerta-error">
       Error: {error}
@@ -20,9 +20,9 @@ const MisPiezasPage = () => {
   return (
     <main className="min-h-screen font-sans bg-white">
 
-      {/* — Cabecera ——————————————————————————————————————————
-          Antes: py-12 border-b border-gray-200 bg-gray-50 inline
-          Ahora: page-header (py-8 móvil / py-12 md+)
+      {/* Muestro la cabecera
+          Antes tenía py-12 border-b border-gray-200 bg-gray-50 inline
+          Ahora uso page-header (py-8 móvil / py-12 md+)
       */}
       <section className="page-header">
         <div className="flex flex-col gap-4 px-6 mx-auto max-w-7xl sm:flex-row sm:items-center sm:justify-between">
@@ -35,8 +35,8 @@ const MisPiezasPage = () => {
             </p>
           </div>
 
-          {/* Antes: clases de botón escritas a mano
-              Ahora: btn-primary (w-full móvil / w-auto md+) */}
+          {/* Antes escribía las clases del botón a mano
+              Ahora uso btn-primary con ancho responsive */}
           <Link to="/pieza/nueva" className="text-center btn-primary">
             + Nueva pieza
           </Link>
@@ -46,9 +46,9 @@ const MisPiezasPage = () => {
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
 
-          {/* — Buscador ————————————————————————————————————————
-              Antes: todas las clases inline incluyendo focus
-              Ahora: inputClass (estilos base) + md:w-96 (ancho específico)
+          {/* Muestro el buscador
+              Antes tenía todas las clases inline, incluido focus
+              Ahora uso inputClass (estilos base) + md:w-96 (ancho específico)
               El md:w-96 se queda aquí porque es propio de este input,
               no de todos los inputs del proyecto.
           */}
@@ -62,16 +62,16 @@ const MisPiezasPage = () => {
             />
           </div>
 
-          {/* — Grid de piezas o estado vacío ——————————————————— */}
+          {/* Muestro el grid de piezas o el estado vacío */}
           {piezasFiltradas.length === 0 ? (
 
-            // Estado vacío — sin piezas todavía
+            // Muestro el estado vacío cuando todavía no hay piezas.
             <div className="py-20 text-center">
               <p className="mb-6 text-lg text-gray-500">
                 No tienes piezas todavía.
               </p>
-              {/* Antes: clases de botón inline
-                  Ahora: btn-primary */}
+              {/* Antes usaba clases inline para el botón
+                  Ahora uso btn-primary */}
               <Link to="/pieza/nueva" className="btn-primary">
                 Crear mi primera pieza
               </Link>
@@ -79,18 +79,18 @@ const MisPiezasPage = () => {
 
           ) : (
 
-            // Grid responsivo: 1 col móvil / 2 tablet / 3 lg / 4 xl
+            // Configuro el grid responsive: 1 columna en móvil, 2 en tablet, 3 en lg y 4 en xl.
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {piezasFiltradas.map(pieza => (
 
-                // Antes: clases de tarjeta inline + group inline
-                // Ahora: piece-card (incluye group para los hijos)
+                // Antes tenía clases de tarjeta y group inline.
+                // Ahora uso piece-card e incluyo group para los hijos.
                 <Link
                   key={pieza.id}
                   to={`/pieza/${pieza.id}`}
                   className="piece-card group"
                 >
-                  {/* — Imagen de portada ———————————————————————— */}
+                  {/* Muestro la imagen de portada */}
                   <div className="relative w-full h-48 overflow-hidden bg-gray-100">
                     {pieza.medias.length > 0 ? (
                       <img
@@ -99,7 +99,7 @@ const MisPiezasPage = () => {
                         className="object-cover w-full h-full transition duration-300 group-hover:scale-105"
                       />
                     ) : (
-                      // Placeholder cuando no hay imagen
+                      // Muestro un placeholder cuando no hay imagen.
                       <div className="flex items-center justify-center w-full h-full">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ const MisPiezasPage = () => {
                       </div>
                     )}
 
-                    {/* Badge de categoría */}
+                    {/* Muestro el badge de categoría */}
                     {pieza.categoria && (
                       <span className="absolute px-2 py-1 text-xs font-semibold text-orange-700 bg-orange-100 border border-orange-200 top-2 left-2">
                         {pieza.categoria}
@@ -124,7 +124,7 @@ const MisPiezasPage = () => {
                     )}
                   </div>
 
-                  {/* — Información de la pieza ———————————————————— */}
+                  {/* Muestro la información de la pieza */}
                   <div className="p-4">
                     <h3 className="font-semibold text-gray-800 transition group-hover:text-orange-500">
                       {pieza.nombre}

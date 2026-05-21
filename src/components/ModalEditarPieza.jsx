@@ -19,7 +19,7 @@ const ModalEditarPieza = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40">
       <div className="w-full max-w-lg bg-white border border-gray-200 shadow-xl">
 
-        {/* Cabecera */}
+        {/* Muestro la cabecera */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-800">Editar pieza</h2>
           <button
@@ -30,7 +30,7 @@ const ModalEditarPieza = ({
           </button>
         </div>
 
-        {/* Campos */}
+        {/* Muestro los campos */}
         <div className="flex flex-col gap-4 px-6 py-5">
 
           <div>
@@ -89,7 +89,7 @@ const ModalEditarPieza = ({
           </div>
         </div>
 
-        {/* Acciones */}
+        {/* Muestro las acciones */}
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
           <button
             onClick={onCerrar}

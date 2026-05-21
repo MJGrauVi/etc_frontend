@@ -7,7 +7,7 @@ import MensajeTail from "./MensajeTail.jsx";
 
 const LoginRegistro = () => {
 
-  //Mostar form registro si viene de Prueba Gratis.
+  // Muestro el formulario de registro si llega desde Prueba Gratis.
   const location = useLocation();
   const mostrarRegistro = location.state?.mostrarRegistro;
   
@@ -25,7 +25,7 @@ const LoginRegistro = () => {
     validarEmailUnico
   } = useLoginRegistroForm();
 
-  //Mostar form registro si viene de "Prueba Gratis" .
+  // Muestro el formulario de registro si llega desde "Prueba Gratis".
   useEffect(()=>{
     if(mostrarRegistro){
       setModoRegistro(true);

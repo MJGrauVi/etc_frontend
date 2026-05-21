@@ -1,5 +1,5 @@
 import "./Cargando.css";
-//Mostramos al usuario en el periodo de carga de los datos.
+// Muestro un indicador mientras se cargan los datos.
 const Cargando = () => {
   return (
     <div className="contenedor-cargando">

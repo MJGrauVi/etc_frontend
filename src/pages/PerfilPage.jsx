@@ -3,7 +3,7 @@ import Cargando from "../components/Cargando.jsx";
 import MensajeTail from "../components/MensajeTail.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
-// Reutilizamos las clases que usamos en toda la app
+// Reutilizo las clases comunes de la app.
 const inputClase =
   "w-full px-4 py-2 text-gray-800 bg-white border border-gray-300 focus:outline-none focus:border-orange-400 transition";
 const labelClase = "block mb-1 text-sm font-medium text-gray-700";
@@ -26,7 +26,7 @@ const PerfilPage = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      {/* Cabecera — mismo patrón que todas las páginas */}
+      {/* Muestro la cabecera con el patrón común de las páginas */}
       <section className="py-12 border-b border-gray-200 bg-gray-50">
         <div className="px-6 mx-auto max-w-7xl">
           <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
@@ -47,12 +47,12 @@ const PerfilPage = () => {
       <section className="py-10">
         <div className="max-w-3xl px-6 mx-auto">
           <form onSubmit={guardarPerfil}>
-            {/* ── SECCIÓN LOGO + DATOS PRINCIPALES ── */}
-            {/* flex-col en móvil, flex-row en desktop */}
+            {/* Muestro la sección de logo y datos principales */}
+            {/* Uso flex-col en móvil y flex-row en escritorio */}
             <div className="flex flex-col gap-8 mb-8 md:flex-row">
-              {/* Columna del logo */}
+              {/* Muestro la columna del logo */}
               <div className="flex flex-col items-center w-full gap-3 shrink-0 md:w-48">
-                {/* Preview del logo */}
+                {/* Muestro la vista previa del logo */}
                 <div className="flex items-center justify-center w-40 h-40 overflow-hidden border border-gray-200 bg-gray-50">
                   {logoPreview ? (
                     <img
@@ -67,7 +67,7 @@ const PerfilPage = () => {
                   )}
                 </div>
 
-                {/* Botón subir logo — zona clicable */}
+                {/* Muestro el botón para subir el logo */}
                 <label className="w-full px-4 py-2 text-sm font-semibold text-center text-orange-600 transition border border-orange-300 cursor-pointer hover:bg-orange-50">
                   Cambiar logo
                   <input
@@ -82,7 +82,7 @@ const PerfilPage = () => {
                 </p>
               </div>
 
-              {/* Columna de datos principales */}
+              {/* Muestro la columna de datos principales */}
               <div className="flex flex-col flex-1 gap-4">
                 <div>
                   <label className={labelClase}>Descripción del negocio</label>
@@ -122,8 +122,8 @@ const PerfilPage = () => {
               </div>
             </div>
 
-            {/* ── SECCIÓN REDES SOCIALES ── */}
-            {/* Separador visual igual que en la tabla del admin */}
+            {/* Muestro la sección de redes sociales */}
+            {/* Uso el mismo separador visual que en la tabla de administración */}
             <div className="pt-8 mb-8 border-t border-gray-200">
               <h2 className="mb-4 text-lg font-semibold text-gray-800">
                 Redes sociales
@@ -165,7 +165,7 @@ const PerfilPage = () => {
               </div>
             </div>
 
-            {/* ── SECCIÓN DOCUMENTO ── */}
+            {/* Muestro la sección de documento */}
             <div className="pt-8 mb-8 border-t border-gray-200">
               <h2 className="mb-4 text-lg font-semibold text-gray-800">
                 Documento de identidad
@@ -199,7 +199,7 @@ const PerfilPage = () => {
               </div>
             </div>
 
-            {/* ── BOTÓN GUARDAR ── */}
+            {/* Muestro el botón de guardar */}
             <button
               type="submit"
               disabled={guardando}

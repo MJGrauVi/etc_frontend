@@ -5,24 +5,24 @@ import { crudService } from "../services/crudService.js";
 const ContextoSesion = createContext();
 
 const ProveedorSesion = ({ children }) => {
-  // CAMBIO 1: Ya no invocamos con (), usamos el objeto directamente
-  // Si quieres mantener las variables cortas, puedes hacer esto:
+  // Uso el objeto de servicios directamente, sin invocarlo como función.
+  // Mantengo variables cortas desestructurando el servicio.
   const { get, post, put, remove, postForm } = crudService;
 
   const [usuario, setUsuario] = useState(null);
-  const [cargando, setCargando] = useState(true); // Empezamos en true para evitar parpadeos de UI.
+  const [cargando, setCargando] = useState(true); // Empiezo en true para evitar parpadeos de UI.
 
-  // LOGIN
+  // Gestiono el login
   const iniciarLogin = async (email, password) => {
     setCargando(true);
     try {
-      // CAMBIO 2: Usar authService.login directamente
+      // Uso authService.login directamente.
       const respuesta = await authService.login(email, password);
       
-      // Guardamos el token. El apiClient lo leerá automáticamente en la próxima petición
+      // Guardo el token para que apiClient lo lea en la próxima petición.
       localStorage.setItem("token", respuesta.token); 
       
-      // CAMBIO 3: Pedir los datos frescos del usuario tras el login
+      // Pido los datos actualizados del usuario tras el login.
       const datosUser = await authService.me();
       setUsuario(datosUser.data || datosUser); 
       
@@ -32,7 +32,7 @@ const ProveedorSesion = ({ children }) => {
     }
   };
 
-  // REGISTRO
+  // Gestiono el registro
   const registrarUsuario = async (userData) => {
     setCargando(true);
     try {
@@ -44,7 +44,7 @@ const ProveedorSesion = ({ children }) => {
   const comprobarDisponibilidadEmail = async (email) => {
   try {
     const respuesta = await authService.checkEmail(email);
-    return respuesta.exists; // El backend devuelve { exists: true/false }
+    return respuesta.exists; // Leo la respuesta del backend: { exists: true/false }.
   } catch (error) {
     console.error("Error al validar email", error);
     return false; 
@@ -71,12 +71,12 @@ const ProveedorSesion = ({ children }) => {
     recuperarSesion();
   }, []);
 
-  // LOGOUT
+  // Gestiono el logout
   const cerrarSesion = async () => {
     try {
       await authService.logout();
     } finally {
-      // Siempre limpiamos localmente, falle o no la petición al servidor
+      // Limpio la sesión local aunque falle la petición al servidor.
       localStorage.removeItem("token");
       setUsuario(null);
     }

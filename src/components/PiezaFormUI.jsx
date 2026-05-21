@@ -11,7 +11,7 @@ const PiezaFormUI = ({
   return (
     <form onSubmit={onSubmit} className="w-full max-w-2xl mx-auto">
 
-      {/* NOMBRE */}
+      {/* Introduzco el nombre */}
       <div className="mb-4">
         <label htmlFor="nombre" className="labelClass">
           Nombre de la pieza
@@ -28,7 +28,7 @@ const PiezaFormUI = ({
         />
       </div>
 
-      {/* DESCRIPCIÓN */}
+      {/* Introduzco la descripción */}
       <div className="mb-4">
         <label htmlFor="descripcion" className="labelClass">
           Descripción
@@ -45,7 +45,7 @@ const PiezaFormUI = ({
         />
       </div>
 
-      {/* CATEGORÍA Y PRECIO en fila */}
+      {/* Agrupo categoría y precio en una fila */}
       <div className="flex gap-4 mb-4">
         <div className="flex-1">
           <label htmlFor="categoria" className="labelClass">
@@ -79,13 +79,13 @@ const PiezaFormUI = ({
         </div>
       </div>
 
-      {/* FOTOS */}
+      {/* Añado las fotos */}
       <div className="mb-6">
         <label className="labelClass">
           Fotos de la pieza <span className="font-normal text-gray-400">(jpeg, png, jpg · máx 2MB por foto)</span>
         </label>
 
-        {/* Zona de subida */}
+        {/* Muestro la zona de subida */}
         <label className="flex flex-col items-center justify-center w-full h-32 transition border-2 border-orange-300 border-dashed cursor-pointer hover:bg-orange-50">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 mb-2 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -100,7 +100,7 @@ const PiezaFormUI = ({
           />
         </label>
 
-        {/* Previews de las fotos seleccionadas */}
+        {/* Muestro las vistas previas de las fotos seleccionadas */}
         {previews.length > 0 && (
           <div className="flex flex-wrap gap-3 mt-4">
             {previews.map((url, i) => (
@@ -123,7 +123,7 @@ const PiezaFormUI = ({
         )}
       </div>
 
-      {/* BOTÓN SUBMIT */}
+      {/* Muestro el botón de envío */}
       <button
         type="submit"
         disabled={cargando}

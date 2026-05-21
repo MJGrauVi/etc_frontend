@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import useContextoSesion from "./useContextoSesion.js";
+import useDatos from "./useDatos.js";
 
-//Hooks consumen los servicios y gestionan el estado React.
+// Consumo los servicios desde hooks y gestiono el estado de React.
 const useAdminUsuarios = () => {
-  const { get, put } = useContextoSesion();
+  const { get, put, cargando, error } = useDatos(true);
   const [usuarios, setUsuarios] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
   const [filtro, setFiltro] = useState("");
 
   useEffect(() => {
@@ -14,14 +12,12 @@ const useAdminUsuarios = () => {
       try {
         const respuesta = await get("users");
         setUsuarios(respuesta.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setCargando(false);
+      } catch {
+        // useDatos ya conserva el error de la comunicacion.
       }
     };
     cargar();
-  }, []);
+  }, [get]);
 
   const cambiarRol = async (id, nuevoRol) => {
     try {
@@ -29,8 +25,8 @@ const useAdminUsuarios = () => {
       setUsuarios(prev =>
         prev.map(u => u.id === id ? { ...u, roles:[{name: nuevoRol }] } : u)
       );
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      // useDatos ya conserva el error de la comunicacion.
     }
   };
 

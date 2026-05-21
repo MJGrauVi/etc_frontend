@@ -68,12 +68,12 @@ const CARACTERISTICAS = [
 export default function Inicio() {
   return (
     <main className="min-h-screen font-sans">
-      {/* ── HERO ──────────────────────────────────────────────── */}
+      {/* Muestro el hero */}
       <section
         className="flex items-center justify-center w-full min-h-screen pt-16 "
         aria-label="Sección principal"
       >
-        {/* Imagen de fondo decorativa */}
+        {/* Muestro la imagen de fondo decorativa */}
         <img
           src={fondo}
           alt=""
@@ -82,7 +82,7 @@ export default function Inicio() {
         />
         <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-sm" />
 
-        {/* Contenido principal del hero */}
+        {/* Muestro el contenido principal del hero */}
         <div className="relative z-20 max-w-4xl px-6 mx-auto text-center">
           <h1 className="text-3xl font-bold leading-tight text-white md:text-6xl">
             Muestra al mundo lo que creas
@@ -104,7 +104,7 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* ── BENEFICIOS ────────────────────────────────────────── */}
+      {/* Muestro los beneficios */}
       <section className="py-20 bg-white" aria-labelledby="beneficios-titulo">
         <div className="px-6 mx-auto max-w-7xl">
           <h2 id="beneficios-titulo" className="section-title">
@@ -119,7 +119,7 @@ export default function Inicio() {
             gestionar tu actividad y reducir tiempos y costes.
           </p>
 
-          {/* Grid generado desde el array BENEFICIOS */}
+          {/* Genero el grid desde el array BENEFICIOS */}
           <div className="grid grid-cols-1 gap-10 mt-16 sm:grid-cols-2 lg:grid-cols-4">
             {BENEFICIOS.map((item) => (
               <Card variant="beneficios" key={item.id} {...item} />
@@ -128,7 +128,7 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* ── CTA CENTRAL ───────────────────────────────────────── */}
+      {/* Muestro la llamada a la acción central */}
       <section className="py-20 bg-gray-50" aria-labelledby="cta-titulo">
         <div className="max-w-4xl px-6 mx-auto text-center">
           <h2 id="cta-titulo" className="section-title">
@@ -149,7 +149,7 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* ── CARACTERÍSTICAS ───────────────────────────────────── */}
+      {/* Muestro las características */}
       <section
         className="py-20 bg-white"
         aria-labelledby="caracteristicas-titulo"
@@ -164,7 +164,7 @@ export default function Inicio() {
             empresas que quieren mostrar su trabajo sin complicaciones.
           </p>
 
-          {/* Grid generado desde el array CARACTERISTICAS */}
+          {/* Genero el grid desde el array CARACTERISTICAS */}
           <div className="grid grid-cols-1 gap-10 mt-16 md:grid-cols-3">
             {CARACTERISTICAS.map((item) => (
               <Card variant="caracteristicas" key={item.id} {...item} />
