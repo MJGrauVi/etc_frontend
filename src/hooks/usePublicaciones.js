@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import useContextoSesion from "./useContextoSesion.js";
+import useDatos from "./useDatos.js";
 
 const normalizar = (valor) => String(valor ?? "").toLowerCase().trim();
 
 const usePublicaciones = () => {
-  const { get, remove } = useContextoSesion();
+  const { get, cargando, error: errorCarga } = useDatos(true);
+  const { remove, error: errorEliminar } = useDatos();
   const [publicaciones, setPublicaciones] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
   const [filtro, setFiltro] = useState("");
   const [estado, setEstado] = useState("todas");
   const [eliminandoId, setEliminandoId] = useState(null);
@@ -17,10 +16,8 @@ const usePublicaciones = () => {
       try {
         const respuesta = await get("publicaciones");
         setPublicaciones(respuesta.data ?? respuesta ?? []);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setCargando(false);
+      } catch {
+        // useDatos ya conserva el error de la comunicacion.
       }
     };
 
@@ -68,6 +65,8 @@ const usePublicaciones = () => {
       setEliminandoId(null);
     }
   };
+
+  const error = errorCarga || errorEliminar;
 
   return {
     publicacionesFiltradas,

@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useContextoSesion from "./useContextoSesion.js";
-import usePerfil from "./usePerfil.js";
 
 const usePiezaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { get, post, put, remove, postForm } = useContextoSesion();
-  const perfil = usePerfil();
 
   const [pieza, setPieza]             = useState(null);
   const [publicacion, setPublicacion] = useState(null);
@@ -290,7 +288,6 @@ const usePiezaDetalle = () => {
     subirImagen,
     eliminarImagen,
     marcarPortada,
-    perfil,
     modoManual,
     iniciarManual,
   };

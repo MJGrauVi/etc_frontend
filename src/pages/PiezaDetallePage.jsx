@@ -36,7 +36,6 @@ const PiezaDetallePage = () => {
     subirImagen,
     eliminarImagen,
     marcarPortada,
-    perfil,
     modoManual,
     iniciarManual,
   } = usePiezaDetalle();
@@ -106,7 +105,6 @@ const PiezaDetallePage = () => {
               onEditar={handleEditar}
               onGuardar={guardarCambios}
               onPublicarFacebook={publicarEnFacebook}
-              perfil={perfil}
             />
           )}
         </div>

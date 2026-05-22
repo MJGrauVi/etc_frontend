@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useContextoSesion from "./useContextoSesion.js";
-import usePerfil from "./usePerfil.js";
+import useDatos from "./useDatos.js";
 
 const useEditarPublicacion = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { get, put, post } = useContextoSesion();
-  const perfil = usePerfil();
+  const { get, cargando } = useDatos(true);
+  const { put, post } = useDatos();
 
   const [publicacion, setPublicacion] = useState(null);
-  const [cargando, setCargando] = useState(true);
   const [guardando, setGuardando] = useState(false);
   const [publicandoFacebook, setPublicandoFacebook] = useState(false);
   const [error, setError] = useState(null);
@@ -23,8 +21,6 @@ const useEditarPublicacion = () => {
         setPublicacion(respuesta.data ?? respuesta);
       } catch (err) {
         setError(err.backendMessage || err.message);
-      } finally {
-        setCargando(false);
       }
     };
 
@@ -103,7 +99,6 @@ const useEditarPublicacion = () => {
     handleEditar,
     guardarCambios,
     publicarEnFacebook,
-    perfil,
     volverAlPanel,
   };
 };

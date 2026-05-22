@@ -8,7 +8,6 @@ const PublicacionPreview = ({
   onEditar,
   onGuardar,
   onPublicarFacebook,
-  perfil,
 }) => {
   const [errorPublicacion, setErrorPublicacion] = useState("");
   const piezaPublicacion = publicacion.pieza ?? publicacion.piezas;
@@ -171,42 +170,6 @@ const PublicacionPreview = ({
           </p>
         </div>
 
-        {perfil && (
-          <div className="flex items-center gap-4 pt-6 mt-6 border-t border-orange-200">
-            {perfil.logoUrl ? (
-              <img
-                src={perfil.logoUrl}
-                alt="Logo"
-                className="object-contain p-1 bg-white border border-gray-200 w-14 h-14"
-              />
-            ) : (
-              <div className="flex items-center justify-center bg-orange-100 border border-orange-200 w-14 h-14">
-                <span className="text-xl font-bold text-orange-400">
-                  {perfil.nombre?.charAt(0).toUpperCase()}
-                </span>
-              </div>
-            )}
-
-            <div className="flex flex-col gap-1">
-              <span className="font-semibold text-gray-800">
-                {perfil.nombre}
-              </span>
-              {perfil.movil && (
-                <span className="text-sm text-gray-500">{perfil.movil}</span>
-              )}
-              {perfil.web && (
-                <a
-                  href={perfil.web}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm text-orange-500 transition hover:text-orange-600"
-                >
-                  {perfil.web}
-                </a>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

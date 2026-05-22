@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import useContextoSesion from "./useContextoSesion.js";
+import useDatos from "./useDatos.js";
 
 const usePerfilForm = () => {
-  const { get, put, postForm } = useContextoSesion();
+  const { get, cargando } = useDatos(true);
+  const { put, postForm } = useDatos();
 
   const [form, setForm] = useState({
     tipo_documento: "",
@@ -18,7 +19,6 @@ const usePerfilForm = () => {
   });
   const [logoPreview, setLogoPreview] = useState(null);
   const [logoFile, setLogoFile] = useState(null);
-  const [cargando, setCargando] = useState(true);
   const [guardando, setGuardando] = useState(false);
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
@@ -53,8 +53,6 @@ const usePerfilForm = () => {
         }
       } catch (err) {
         mostrarMensaje("error", err.message);
-      } finally {
-        setCargando(false);
       }
     };
     cargar();

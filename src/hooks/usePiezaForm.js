@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useContextoSesion from "./useContextoSesion.js";
+import useDatos from "./useDatos.js";
  // Gestiono la lógica y la llamada a la API.
 const usePiezaForm = () => {
-  const { postForm } = useContextoSesion();
+  const { postForm, cargando } = useDatos();
   const navegar = useNavigate();
 
   const estadoInicial = {
@@ -16,7 +16,6 @@ const usePiezaForm = () => {
   const [form, setForm] = useState(estadoInicial);
   const [fotos, setFotos] = useState([]); // Guardo los archivos File[]
   const [previews, setPreviews] = useState([]); // Guardo las URLs para previsualizar
-  const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
   const handleChange = ({ target }) => {
@@ -39,7 +38,6 @@ const usePiezaForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setCargando(true);
     setMensaje({ tipo: "", texto: "" });
 
     try {
@@ -61,8 +59,6 @@ const usePiezaForm = () => {
 
     } catch (err) {
       setMensaje({ tipo: "error", texto: err.message });
-    } finally {
-      setCargando(false);
     }
   };
 

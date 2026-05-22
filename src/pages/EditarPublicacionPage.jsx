@@ -16,7 +16,6 @@ const EditarPublicacionPage = () => {
     handleEditar,
     guardarCambios,
     publicarEnFacebook,
-    perfil,
   } = useEditarPublicacion();
 
   if (cargando) return <Cargando />;
@@ -74,7 +73,6 @@ const EditarPublicacionPage = () => {
             onEditar={handleEditar}
             onGuardar={guardarCambios}
             onPublicarFacebook={publicarEnFacebook}
-            perfil={perfil}
           />
         </div>
       </section>
