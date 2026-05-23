@@ -10,10 +10,10 @@ export const fetchErroresRed = async (url, options = {}) => {
       } catch {
         errorData = null;
       }
-
+      //Objeto error
       const error = new Error(res.status === 401 ? "UNAUTHORIZED" : "HTTP_ERROR");
-      error.status = res.status;
-      error.data = errorData;
+      error.status = res.status; //Añadimos el código HTTP  al error.
+      error.data = errorData; //Guardo el JSON que devuelve el backend con el mensaje.
       error.backendMessage =
         errorData?.message ||
         errorData?.error ||

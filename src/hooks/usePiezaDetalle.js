@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useContextoSesion from "./useContextoSesion.js";
+import useDatos from "./useDatos.js";
 
 const usePiezaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { get, post, put, remove, postForm } = useContextoSesion();
+  const { get, cargando } = useDatos(true);
+  const { post, put, remove, postForm } = useDatos();
 
   const [pieza, setPieza]             = useState(null);
   const [publicacion, setPublicacion] = useState(null);
-  const [cargando, setCargando]       = useState(true);
   const [generando, setGenerando]     = useState(false);
   const [guardando, setGuardando]     = useState(false);
   const [publicandoFacebook, setPublicandoFacebook] = useState(false);
@@ -29,8 +29,6 @@ const usePiezaDetalle = () => {
       setPieza(respuesta.data);
     } catch (err) {
       setError(err.message);
-    } finally {
-      setCargando(false);
     }
   };
 

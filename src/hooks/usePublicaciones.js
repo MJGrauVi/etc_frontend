@@ -14,7 +14,7 @@ const usePublicaciones = () => {
   useEffect(() => {
     const cargarPublicaciones = async () => {
       try {
-        const respuesta = await get("publicaciones");
+        const respuesta = await get("publicaciones");//Cargamos todas las publicaciones del usuario.
         setPublicaciones(respuesta.data ?? respuesta ?? []);
       } catch {
         // useDatos ya conserva el error de la comunicacion.
