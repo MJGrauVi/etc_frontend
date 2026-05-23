@@ -15,6 +15,34 @@ const AdminPanelTailwind = () => {
       </p>
     );
 
+  const renderRol = (u) =>
+    u.id === usuario?.id ? (
+      <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 border border-orange-200 bg-orange-50">
+        {u.roles?.[0]?.name ?? "Usuario"} (tÃº)
+      </span>
+    ) : (
+      <select
+        value={u.roles?.[0]?.name ?? "Usuario"}
+        onChange={(e) => cambiarRol(u.id, e.target.value)}
+        className="w-full px-3 py-2 font-semibold text-orange-600 transition bg-white border border-orange-300 cursor-pointer hover:bg-orange-50 focus:outline-none focus:border-orange-500 md:w-auto"
+      >
+        <option value="Usuario">Usuario</option>
+        <option value="Administrador">Administrador</option>
+        <option value="Invitado">Invitado</option>
+      </select>
+    );
+
+  const renderVerificacion = (u) =>
+    u.email_verified_at ? (
+      <span className="inline-block px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 border border-green-200">
+        {new Date(u.email_verified_at).toLocaleDateString("es-ES")}
+      </span>
+    ) : (
+      <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 bg-white border border-orange-300">
+        Pendiente
+      </span>
+    );
+
   return (
     <main className="min-h-screen font-sans bg-white">
       {/* Muestro la cabecera con un estilo similar al hero, pero más compacto */}
@@ -42,8 +70,57 @@ const AdminPanelTailwind = () => {
             />
           </div>
 
+          <div className="space-y-4 md:hidden">
+            {usuariosFiltrados.map((u) => (
+              <article
+                key={u.id}
+                className="p-4 text-left bg-white border border-gray-200"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="font-semibold text-gray-800 break-words">
+                      {u.nombre}
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-600 break-all">
+                      {u.email}
+                    </p>
+                  </div>
+                </div>
+
+                <dl className="grid gap-3 mt-4 text-sm">
+                  <div className="flex items-center justify-between gap-3">
+                    <dt className="font-semibold text-gray-500">
+                      Email verificado
+                    </dt>
+                    <dd className="shrink-0">{renderVerificacion(u)}</dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <dt className="font-semibold text-gray-500">
+                      Fecha registro
+                    </dt>
+                    <dd className="text-gray-700 shrink-0">
+                      {new Date(u.created_at).toLocaleDateString("es-ES")}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <dt className="font-semibold text-gray-500">Rol</dt>
+                    <dd className="min-w-40">{renderRol(u)}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+
+            {usuariosFiltrados.length === 0 && (
+              <div className="py-16 text-center bg-white border border-gray-200">
+                <p className="text-lg text-gray-600">
+                  No se encontraron usuarios.
+                </p>
+              </div>
+            )}
+          </div>
+
           {/* Muestro la tabla */}
-          <div className="overflow-x-auto border border-gray-200">
+          <div className="hidden overflow-x-auto border border-gray-200 md:block">
             <table className="w-full text-sm text-left text-gray-700">
               <thead className="border-b border-gray-200 bg-gray-50">
                 <tr>

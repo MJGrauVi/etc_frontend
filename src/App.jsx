@@ -12,6 +12,7 @@ import PerfilPage from "./pages/PerfilPage.jsx";
 import PublicacionesPage from "./pages/PublicacionesPage.jsx";
 import EditarPublicacionPage from "./pages/EditarPublicacionPage.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import Error from "./pages/Error.jsx";
 import "./App.css";
 
 const RutaAdmin = ({ children }) => {
@@ -41,6 +42,7 @@ export default function App() {
           {/* Defino rutas públicas */}
           <Route path="/" element={<Inicio />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/error" element={<Error />} />
 
           {/* Defino rutas solo para administración */}
           <Route
@@ -101,6 +103,7 @@ export default function App() {
               </RutaPrivada>
             }
           />
+          <Route path="*" element={<Error />} />
         </Routes>
       </main>
       <Footer />

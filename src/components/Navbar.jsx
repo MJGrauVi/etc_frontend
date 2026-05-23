@@ -2,143 +2,35 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import LogoEtcTail from "../components/logo/LogoEtcTail.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
+import Menu from "./Menu.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { usuario, cerrarSesion } = useContextoSesion();
 
+  const cerrarMenuMovil = () => setOpen(false);
+
   return (
-    
     <nav className="fixed top-0 left-0 z-50 w-full text-lg bg-white">
       <div className="flex items-center justify-between px-16 mx-auto h-22 max-w-7xl">
-        {/* Muestro el logo */}
         <div className="flex items-center gap-1 md:gap-1">
           <Link to="/" className="flex items-center gap-2">
-            <span className="flex items-center p-1"><LogoEtcTail className="etc" /></span>
+            <span className="flex items-center p-1">
+              <LogoEtcTail className="etc" />
+            </span>
             <span className="text-xl font-bold text-gray-800 md:text-2xl">
               Etc Apps
             </span>
           </Link>
         </div>
 
-        {/* Muestro el menú de escritorio */}
-        <ul className="items-center hidden h-full font-medium text-gray-700 md:flex">
-          {usuario?.rol === "Administrador" && (
-            <li className="flex items-center h-full">
-              <Link
-                to="/admin/usuarios"
-                className="flex items-center h-full px-4 transition hover:bg-orange-50"
-              >
-                Usuarios
-              </Link>
-            </li>
-          )}
+        <Menu usuario={usuario} cerrarSesion={cerrarSesion} />
 
-          {usuario && (
-            <li className="flex items-center h-full">
-              <Link
-                to="/pieza/nueva"
-                className="flex items-center h-full px-4 transition hover:bg-orange-50"
-              >
-                Nueva pieza
-              </Link>
-            </li>
-          )}
-
-          {usuario && (
-            <li className="flex items-center h-full">
-              <Link
-                to="/mis-piezas"
-                className="flex items-center h-full px-4 transition hover:bg-orange-50"
-              >
-                Mis piezas
-              </Link>
-            </li>
-          )}
-          {usuario && (
-            <li className="flex items-center h-full">
-              <Link
-                to="/publicaciones"
-                className="flex items-center h-full px-4 transition hover:bg-orange-50"
-              >
-                Publicaciones
-              </Link>
-            </li>
-          )}
-          {/* Muestro el acceso al perfil */}
-          {usuario && (
-            <li className="relative h-full">
-              <Link
-                to="/mi-perfil"
-                className="flex items-center h-full px-4 transition group hover:bg-orange-50"
-              >
-                <div className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="block w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 13.25c3.1 0 5.5-2.52 5.5-5.75S15.1 1.75 12 1.75 6.5 4.27 6.5 7.5s2.4 5.75 5.5 5.75zm0 2c-4.05 0-7.5 2.48-7.5 5.5v1.5h15v-1.5c0-3.02-3.45-5.5-7.5-5.5z"
-                    />
-                  </svg>
-                </div>
-                {/* Muestro el tooltip */}
-                <span className="absolute z-50 px-2 py-1 text-xs text-gray-600 transition-opacity -translate-x-1/2 rounded shadow-sm opacity-0 pointer-events-none bg-gray-50 left-1/2 top-full group-hover:opacity-100 whitespace-nowrap">
-                  Perfil
-                </span>
-              </Link>
-            </li>
-          )}
-
-          {usuario ? (
-            <>
-              <li className="flex items-center h-full px-4 text-sm text-gray-500">
-                Hola, {usuario.nombre}
-              </li>
-
-              <li className="flex items-center h-full">
-                <button
-                  onClick={cerrarSesion}
-                  className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
-                >
-                  Cerrar sesión
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="flex items-center h-full">
-                <Link
-                  to="/login"
-                  className="flex items-center h-full px-4 transition hover:bg-orange-50"
-                >
-                  Iniciar sesión
-                </Link>
-              </li>
-
-              <li className="flex items-center h-full">
-                <Link
-                  to="/login"
-                  state={{ mostrarRegistro: true }}
-                  className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
-                >
-                  Prueba gratis
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
-
-        {/* Muestro el botón hamburguesa en móvil */}
         <button
+          type="button"
           className="text-gray-700 md:hidden"
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen((abierto) => !abierto)}
+          aria-label="Abrir menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -166,128 +58,15 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Muestro el menú móvil */}
       {open && (
-        <ul className="px-6 pb-4 space-y-2 font-medium text-gray-700 bg-white shadow-inner md:hidden animate-fadeIn">
-          {/* Muestro los enlaces principales */}
-          <li className="w-full">
-            <a
-              href="mailto:etc-apps@proton.me"
-              onClick={() => setOpen(false)}
-              className="block w-full px-4 py-2 transition hover:bg-orange-50"
-            >
-              Soporte
-            </a>
-          </li>
-
-          {usuario?.rol === "Administrador" && (
-            <li className="w-full">
-              <Link
-                to="/admin/usuarios"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:bg-orange-50"
-              >
-                Usuarios
-              </Link>
-            </li>
-          )}
-
-          {usuario && (
-            <li className="w-full">
-              <Link
-                to="/pieza/nueva"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:bg-orange-50"
-              >
-                Nueva pieza
-              </Link>
-            </li>
-          )}
-
-          {usuario && (
-            <li className="w-full">
-              <Link
-                to="/mis-piezas"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:bg-orange-50"
-              >
-                Mis piezas
-              </Link>
-            </li>
-          )}
-
-          {usuario && (
-            <li className="w-full">
-              <Link
-                to="/publicaciones"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:bg-orange-50"
-              >
-                Publicaciones
-              </Link>
-            </li>
-          )}
-
-          {usuario && (
-            <li className="w-full">
-              <Link
-                to="/mi-perfil"
-                onClick={() => setOpen(false)}
-                className="block w-full px-4 py-2 transition hover:bg-orange-50"
-              >
-                Perfil
-              </Link>
-            </li>
-          )}
-          {/* Muestro estas opciones si hay usuario */}
-          {usuario ? (
-            <>
-              <li className="px-4 text-sm text-gray-500">
-                Hola, {usuario.nombre}
-              </li>
-
-              <li className="w-full">
-                <button
-                  onClick={() => {
-                    cerrarSesion();
-                    setOpen(false);
-                  }}
-                  className="block w-full px-4 py-2 font-semibold text-center text-white transition bg-orange-500 hover:bg-orange-600"
-                >
-                  Cerrar sesión
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              {/* Muestro el enlace de inicio de sesión */}
-              <li className="w-full">
-                <Link
-                  to="/login"
-                  onClick={() => setOpen(false)}
-                  className="block w-full px-4 py-2 transition hover:bg-orange-50"
-                >
-                  Iniciar sesión
-                </Link>
-              </li>
-
-              {/* Muestro el enlace de prueba gratis */}
-              <li className="w-full">
-                <Link
-                  to="/login"
-                  state={{ mostrarRegistro: true }}
-                  onClick={() => setOpen(false)}
-                  className="block w-full px-4 py-2 font-semibold text-center text-white transition bg-orange-500 hover:bg-orange-600"
-                >
-                  Prueba gratis
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
+        <Menu
+          usuario={usuario}
+          cerrarSesion={cerrarSesion}
+          mobile
+          onNavigate={cerrarMenuMovil}
+        />
       )}
     </nav>
-   
   );
 };
 
