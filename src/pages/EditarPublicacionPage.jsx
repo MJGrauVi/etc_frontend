@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Cargando from "../components/Cargando.jsx";
+import EstadoError from "../components/EstadoError.jsx";
 import MensajeTail from "../components/MensajeTail.jsx";
 import PublicacionPreview from "../components/PublicacionPreview.jsx";
 import useEditarPublicacion from "../hooks/useEditarPublicacion.js";
@@ -20,15 +21,7 @@ const EditarPublicacionPage = () => {
 
   if (cargando) return <Cargando />;
 
-  if (error) {
-    return (
-      <main className="min-h-screen px-6 py-12 bg-white">
-        <div className="max-w-4xl mx-auto alerta-base alerta-error">
-          Error: {error}
-        </div>
-      </main>
-    );
-  }
+  if (error) return <EstadoError mensaje={error} />;
 
   if (!publicacion) {
     return (

@@ -3,6 +3,7 @@ import usePiezaDetalle from "../hooks/usePiezaDetalle.js";
 import PublicacionPreview from "../components/PublicacionPreview.jsx";
 import ModalEditarPieza from "../components/ModalEditarPieza.jsx";
 import Cargando from "../components/Cargando.jsx";
+import EstadoError from "../components/EstadoError.jsx";
 import MensajeTail from "../components/MensajeTail.jsx";
 import PiezaCabecera from "../components/PiezaDetalle/PiezaCabecera.jsx";
 import PiezaGaleria from "../components/PiezaDetalle/PiezaGaleria.jsx";
@@ -43,12 +44,7 @@ const PiezaDetallePage = () => {
   const [confirmarEliminar, setConfirmarEliminar] = useState(false);
 
   if (cargando) return <Cargando />;
-  if (error)
-    return (
-      <p className="px-6 py-4 text-orange-600 border border-orange-300 bg-orange-50">
-        Error: {error}
-      </p>
-    );
+  if (error) return <EstadoError mensaje={error} />;
 
   return (
     <main className="min-h-screen font-sans bg-white">

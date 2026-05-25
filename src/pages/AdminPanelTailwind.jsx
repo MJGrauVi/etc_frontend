@@ -1,5 +1,6 @@
 import useAdminUsuarios from "../hooks/useAdminUsuarios.js";
 import Cargando from "../components/Cargando";
+import EstadoError from "../components/EstadoError.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const AdminPanelTailwind = () => {
@@ -8,12 +9,7 @@ const AdminPanelTailwind = () => {
   const { usuario } = useContextoSesion(); // Identifico al administrador para evitar que cambie su propio rol.
 
   if (cargando) return <Cargando />;
-  if (error)
-    return (
-      <p className="px-6 py-4 text-orange-600 border border-orange-300 bg-orange-50">
-        Error: {error}
-      </p>
-    );
+  if (error) return <EstadoError mensaje={error} />;
 
   const renderRol = (u) =>
     u.id === usuario?.id ? (

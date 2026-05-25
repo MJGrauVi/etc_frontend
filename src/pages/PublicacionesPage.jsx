@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CalendarDays, Edit3, ExternalLink, Search, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import Cargando from "../components/Cargando.jsx";
+import EstadoError from "../components/EstadoError.jsx";
 import usePublicaciones from "../hooks/usePublicaciones.js";
 
 const ESTADOS = {
@@ -64,9 +65,7 @@ const PublicacionesPage = () => {
 
   if (cargando) return <Cargando />;
 
-  if (error) {
-    return <p className="alerta-base alerta-error">Error: {error}</p>;
-  }
+  if (error) return <EstadoError mensaje={error} />;
 
   return (
     <main className="min-h-screen font-sans bg-white">

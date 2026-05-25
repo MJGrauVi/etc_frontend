@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useMisPiezas from "../hooks/useMisPiezas.js";
 import Cargando from "../components/Cargando.jsx";
+import EstadoError from "../components/EstadoError.jsx";
 
 const MisPiezasPage = () => {
   const { piezasFiltradas, cargando, error, filtro, setFiltro } = useMisPiezas();
@@ -9,21 +10,12 @@ const MisPiezasPage = () => {
 
   if (cargando) return <Cargando />;
 
-  // Antes tenía clases inline mezcladas sin criterio.
-  // Ahora uso alerta-base y alerta-error definidas en index.css.
-  if (error) return (
-    <p className="alerta-base alerta-error">
-      Error: {error}
-    </p>
-  );
-
+  // Uso un componente común para mantener el mismo criterio de error en las páginas.
+  if (error) return <EstadoError mensaje={error} />;
   return (
     <main className="min-h-screen font-sans bg-white">
 
-      {/* Muestro la cabecera
-          Antes tenía py-12 border-b border-gray-200 bg-gray-50 inline
-          Ahora uso page-header (py-8 móvil / py-12 md+)
-      */}
+      {/* Muestro la cabecera - Ahora uso page-header (py-8 móvil / py-12 md+)*/}
       <section className="page-header">
         <div className="flex flex-col gap-4 px-6 mx-auto max-w-7xl sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -35,8 +27,7 @@ const MisPiezasPage = () => {
             </p>
           </div>
 
-          {/* Antes escribía las clases del botón a mano
-              Ahora uso btn-primary con ancho responsive */}
+      
           <Link to="/pieza/nueva" className="text-center btn-primary">
             + Nueva pieza
           </Link>
@@ -46,12 +37,7 @@ const MisPiezasPage = () => {
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
 
-          {/* Muestro el buscador
-              Antes tenía todas las clases inline, incluido focus
-              Ahora uso inputClass (estilos base) + md:w-96 (ancho específico)
-              El md:w-96 se queda aquí porque es propio de este input,
-              no de todos los inputs del proyecto.
-          */}
+          {/* Muestro el buscador*/}
           <div className="mb-8">
             <input
               type="text"
@@ -70,8 +56,7 @@ const MisPiezasPage = () => {
               <p className="mb-6 text-lg text-gray-500">
                 No tienes piezas todavía.
               </p>
-              {/* Antes usaba clases inline para el botón
-                  Ahora uso btn-primary */}
+            
               <Link to="/pieza/nueva" className="btn-primary">
                 Crear mi primera pieza
               </Link>
@@ -79,12 +64,11 @@ const MisPiezasPage = () => {
 
           ) : (
 
-            // Configuro el grid responsive: 1 columna en móvil, 2 en tablet, 3 en lg y 4 en xl.
+            // grid responsive: 1 columna en móvil, 2 en tablet, 3 en lg y 4 en xl.
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {piezasFiltradas.map(pieza => (
 
-                // Antes tenía clases de tarjeta y group inline.
-                // Ahora uso piece-card e incluyo group para los hijos.
+                // Uso piece-card e incluyo group para los hijos.
                 <Link
                   key={pieza.id}
                   to={`/pieza/${pieza.id}`}
