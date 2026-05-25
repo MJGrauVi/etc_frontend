@@ -18,7 +18,7 @@ const AdminPanelTailwind = () => {
   const renderRol = (u) =>
     u.id === usuario?.id ? (
       <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 border border-orange-200 bg-orange-50">
-        {u.roles?.[0]?.name ?? "Usuario"} (tÃº)
+        {u.roles?.[0]?.name ?? "Usuario"} (tú)
       </span>
     ) : (
       <select
@@ -45,7 +45,7 @@ const AdminPanelTailwind = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      {/* Muestro la cabecera con un estilo similar al hero, pero más compacto */}
+      {/* Muestro la cabecera con un estilo similar al hero, pero más compacto. */}
       <section className="py-12 border-b border-gray-200 bg-gray-50">
         <div className="px-6 mx-auto max-w-7xl">
           <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
@@ -59,7 +59,7 @@ const AdminPanelTailwind = () => {
 
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
-          {/* Muestro el buscador con el estilo de mis botones secundarios */}
+          {/* Muestro el buscador con el estilo de mis botones secundarios. */}
           <div className="mb-8">
             <input
               type="text"
@@ -70,6 +70,7 @@ const AdminPanelTailwind = () => {
             />
           </div>
 
+          {/* Vista móvil: uso tarjetas para pantallas pequeñas. */}
           <div className="space-y-4 md:hidden">
             {usuariosFiltrados.map((u) => (
               <article
@@ -117,9 +118,10 @@ const AdminPanelTailwind = () => {
                 </p>
               </div>
             )}
+            
           </div>
 
-          {/* Muestro la tabla */}
+          {/* Tabla para la vista escritorio. */}
           <div className="hidden overflow-x-auto border border-gray-200 md:block">
             <table className="w-full text-sm text-left text-gray-700">
               <thead className="border-b border-gray-200 bg-gray-50">
@@ -151,53 +153,17 @@ const AdminPanelTailwind = () => {
                     <td className="px-6 py-4 font-medium text-gray-800">
                       {u.nombre}
                     </td>
-
                     <td className="px-6 py-4 text-gray-600">{u.email}</td>
-
-                    {/* Muestro el badge de verificación con el naranja de la marca */}
-                    <td className="px-6 py-4">
-                      {u.email_verified_at ? (
-                        <span className="inline-block px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 border border-green-200">
-                          {new Date(u.email_verified_at).toLocaleDateString(
-                            "es-ES",
-                          )}
-                        </span>
-                      ) : (
-                        <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 bg-white border border-orange-300">
-                          Pendiente
-                        </span>
-                      )}
-                    </td>
-
+                    <td className="px-6 py-4">{renderVerificacion(u)}</td>
                     <td className="px-6 py-4 text-gray-600">
                       {new Date(u.created_at).toLocaleDateString("es-ES")}
                     </td>
-
-                    {/* Muestro el selector de rol */}
-                    <td className="px-6 py-4">
-                      {u.id === usuario?.id ? (
-                        // Si es mi propio usuario administrador, muestro solo texto sin selector.
-                        <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 border border-orange-200 bg-orange-50">
-                          {u.roles?.[0]?.name ?? "Usuario"} (tú)
-                        </span>
-                      ) : (
-                        <select
-                          value={u.roles?.[0]?.name ?? "Usuario"}
-                          onChange={(e) => cambiarRol(u.id, e.target.value)}
-                          className="px-3 py-2 font-semibold text-orange-600 transition border border-orange-300 cursor-pointer bg-white/20 backdrop-blur-md hover:bg-orange-50 focus:outline-none focus:border-orange-500"
-                        >
-                          <option value="Usuario">Usuario</option>
-                          <option value="Administrador">Administrador</option>
-                          <option value="Invitado">Invitado</option>
-                        </select>
-                      )}
-                    </td>
+                    <td className="px-6 py-4">{renderRol(u)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            {/* Muestro el estado vacío */}
             {usuariosFiltrados.length === 0 && (
               <div className="py-16 text-center bg-white">
                 <p className="text-lg text-gray-600">
@@ -207,7 +173,7 @@ const AdminPanelTailwind = () => {
             )}
           </div>
 
-          {/* Muestro el contador */}
+          {/* Muestro el contador. */}
           <p className="mt-4 text-sm text-gray-500">
             {usuariosFiltrados.length} usuario
             {usuariosFiltrados.length !== 1 ? "s" : ""} encontrado
