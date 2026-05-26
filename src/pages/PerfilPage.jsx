@@ -53,7 +53,7 @@ const PerfilPage = () => {
               {/* Muestro la columna del logo */}
               <div className="flex flex-col items-center w-full gap-3 shrink-0 md:w-48">
                 {/* Muestro la vista previa del logo */}
-                <div className="flex items-center justify-center w-40 h-40 overflow-hidden border border-gray-200 bg-gray-50">
+                <div className="flex w-40 *:h-40 overflow-hidden border border-gray-200 justify-center items-center bg-gray-50">
                   {logoPreview ? (
                     <img
                       src={logoPreview}
