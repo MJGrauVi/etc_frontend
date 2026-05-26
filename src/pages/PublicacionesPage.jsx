@@ -69,7 +69,7 @@ const PublicacionesPage = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      <section className="page-header">
+      <section className="sticky z-40 page-header top-22">
         <div className="flex flex-col gap-4 px-6 mx-auto max-w-7xl md:flex-row md:items-center md:justify-between">
           <div className="text-left">
             <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
@@ -90,7 +90,7 @@ const PublicacionesPage = () => {
         <div className="px-6 mx-auto max-w-7xl">
           <div className="flex flex-col gap-4 mb-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative w-full lg:max-w-md">
-              <Search size={18} className="absolute text-gray-400 left-3 top-1/2 -translate-y-1/2" />
+              <Search size={18} className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
                 placeholder="Buscar por titulo, pieza o hashtags..."
@@ -131,7 +131,7 @@ const PublicacionesPage = () => {
 
                 return (
                   <article key={publicacion.id} className="grid gap-4 p-4 text-left transition bg-white border border-gray-200 md:grid-cols-[140px_1fr_auto] hover:border-orange-300 hover:shadow-sm">
-                    <div className="h-36 overflow-hidden bg-gray-100 md:h-full">
+                    <div className="overflow-hidden bg-gray-100 h-36 md:h-full">
                       {imagen ? (
                         <img src={imagen} alt={pieza?.nombre || publicacion.titulo} className="object-cover w-full h-full" />
                       ) : (
@@ -184,7 +184,7 @@ const PublicacionesPage = () => {
                       </Link>
 
                       {confirmando ? (
-                        <div className="flex w-full flex-col gap-2 md:w-44">
+                        <div className="flex flex-col w-full gap-2 md:w-44">
                           <button
                             type="button"
                             onClick={() => eliminarPublicacion(publicacion.id)}
