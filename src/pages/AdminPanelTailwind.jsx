@@ -11,17 +11,22 @@ const AdminPanelTailwind = () => {
   if (cargando) return <Cargando />;
   if (error) return <EstadoError mensaje={error} />;
 
+  const obtenerRol = (u) => u.roles?.[0]?.name ?? "";
+
   const renderRol = (u) =>
     u.id === usuario?.id ? (
       <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 border border-orange-200 bg-orange-50">
-        {u.roles?.[0]?.name ?? "Usuario"} (tú)
+        {obtenerRol(u) || "Sin rol"} (tú)
       </span>
     ) : (
       <select
-        value={u.roles?.[0]?.name ?? "Usuario"}
+        value={obtenerRol(u)}
         onChange={(e) => cambiarRol(u.id, e.target.value)}
         className="w-full px-3 py-2 font-semibold text-orange-600 transition bg-white border border-orange-300 cursor-pointer hover:bg-orange-50 focus:outline-none focus:border-orange-500 md:w-auto"
       >
+        <option value="" disabled>
+          Sin rol
+        </option>
         <option value="Usuario">Usuario</option>
         <option value="Administrador">Administrador</option>
         <option value="Invitado">Invitado</option>
