@@ -17,10 +17,16 @@ const PublicacionPreview = ({
     piezaPublicacion?.medias?.[0];
 
   const imagenUrl = mediaPublicacion?.url_completa;
+  const puedePublicarFacebook = publicacion.id && publicacion.estado === "pendiente";
 
   const publicarFacebook = async () => {
     if (!publicacion.id) {
       setErrorPublicacion("Guarda la publicacion antes de publicarla en Facebook.");
+      return;
+    }
+
+    if (publicacion.estado !== "pendiente") {
+      setErrorPublicacion("Revisa la publicacion y cambia su estado a Lista para publicar antes de publicarla en Facebook.");
       return;
     }
 
@@ -132,7 +138,7 @@ const PublicacionPreview = ({
 
               <button
                 onClick={publicarFacebook}
-                disabled={publicandoFacebook || !publicacion.id}
+                disabled={publicandoFacebook || !puedePublicarFacebook}
                 className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold text-white transition bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
               >
                 <Share2 size={18} />
@@ -142,6 +148,11 @@ const PublicacionPreview = ({
 
             {errorPublicacion && (
               <p className="text-sm text-red-600">{errorPublicacion}</p>
+            )}
+            {publicacion.id && publicacion.estado !== "pendiente" && (
+              <p className="text-sm text-gray-600">
+                Cambia el estado a Lista para publicar y guarda los cambios antes de publicarla en Facebook.
+              </p>
             )}
           </div>
         </div>

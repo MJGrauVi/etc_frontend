@@ -68,6 +68,14 @@ const useEditarPublicacion = () => {
       return;
     }
 
+    if (publicacion.estado !== "pendiente") {
+      setMensaje({
+        tipo: "error",
+        texto: "Revisa la publicacion y cambia su estado a Lista para publicar antes de publicarla en Facebook.",
+      });
+      return;
+    }
+
     setPublicandoFacebook(true);
     setMensaje({ tipo: "", texto: "" });
 
