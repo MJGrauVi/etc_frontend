@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useDatos from "./useDatos.js";
 
@@ -23,16 +23,16 @@ const usePiezaDetalle = () => {
   const [subiendoImagen, setSubiendoImagen] = useState(false);
 
   // Cargo los datos principales.
-  const cargarPieza = async () => {
+  const cargarPieza = useCallback(async () => {
     try {
       const respuesta = await get(`pieza/${id}`);
       setPieza(respuesta.data);
     } catch (err) {
       setError(err.message);
     }
-  };
+  }, [get, id]);
 
-  useEffect(() => { cargarPieza(); }, [id]);
+  useEffect(() => { cargarPieza(); }, [cargarPieza]);
 
   // Gestiono la edición de la pieza.
   const abrirModalEditar = () => {
