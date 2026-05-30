@@ -1,8 +1,8 @@
-# ETC Apps - Frontend
+# ETC - Frontend
 
-Aplicacion SPA desarrollada con React, Vite y Tailwind CSS para consumir la API de ETC.
+Aplicación SPA desarrollada con React, Vite y Tailwind CSS para consumir la API de ETC.
 
-El backend esta en un repositorio independiente:
+El backend está en un repositorio independiente:
 
 ```text
 https://github.com/MJGrauVi/etc
@@ -15,7 +15,7 @@ https://github.com/MJGrauVi/etc
 - npm.
 - Backend arrancado y accesible.
 
-## Puesta En Marcha Local
+## Puesta en marcha en local
 
 1. Clonar el repositorio:
 
@@ -56,7 +56,7 @@ http://localhost:5173
 
 Si el puerto `5173` esta ocupado, Vite puede usar otro puerto, por ejemplo `5174`. En ese caso, el backend debe permitir ese origen en `config/cors.php`.
 
-## Conexion Con El Backend
+## Conexión con el backend
 
 El frontend no tiene las credenciales de Gemini, ni Facebook. Solo consume la API Laravel mediante:
 
@@ -70,7 +70,7 @@ En Codespaces debe apuntar a la URL pública del backend:
 VITE_API_URL=https://tu-codespace-8095.app.github.dev/api
 ```
 
-## Scripts Disponibles
+## Scripts disponibles
 
 Arrancar en desarrollo:
 
@@ -90,13 +90,7 @@ Previsualizar la build:
 npm run preview
 ```
 
-Ejecutar ESLint:
-
-```bash
-npm run lint
-```
-
-## Despliegue/Demo En GitHub Codespaces
+## Despliegue/Demo en gitHub Codespaces
 
 Codespaces se usa como entorno remoto de demostración para la presentación.
 
@@ -123,14 +117,14 @@ Ejemplo:
 https://tu-codespace-5173.app.github.dev
 ```
 
-## Flujo De Uso Basico
+## Flujo de uso básico
 
-1. Iniciar sesion con un usuario de prueba.
+1. Iniciar sesión con un usuario de prueba.
 2. Acceder a `Mis piezas`.
 3. Crear o editar una pieza.
 4. Subir una imagen.
-5. Crear una publicacion manual o generarla con IA.
-6. Revisar titulo, contenido y hashtags.
+5. Crear una publicación manual o generarla con IA.
+6. Revisar título, contenido y hashtags.
 7. Cambiar el estado a `Lista para publicar`.
 8. Guardar los cambios.
 9. Publicar en Facebook si el backend tiene configuradas las credenciales.
@@ -142,9 +136,7 @@ Los usuarios de prueba se crean desde los seeders del backend:
 ```text
 Administrador: admin@admin.com
 Administrador ETC: etc-apps@proton.me
-Usuario: usuario@usuario.com
 Titufas: titufas@gmail.com
-Invitado: invitado@invitado.com
 Contrasena: ******
 ```
 
@@ -153,5 +145,5 @@ Contrasena: ******
 - La sesión se gestiona con token Bearer devuelto por el backend.
 - La comunicación HTTP se centraliza en la capa de servicios y hooks.
 - `useDatos` gestiona llamadas, estado de carga y errores.
-- Las imagenes se cargan desde el backend mediante las URLs que devuelve la API.
-- Para que las imagenes funcionen en Codespaces, el backend debe tener `APP_URL` configurado con la URL pública HTTPS del puerto `8095`.
+- Las imágenes se cargan desde el backend mediante las URLs que devuelve la API.
+- Para que las imágenes funcionen en Codespaces, el backend debe tener `APP_URL` configurado con la URL pública HTTPS del puerto `8095`.
