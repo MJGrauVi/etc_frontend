@@ -35,6 +35,9 @@
    RESET BASE
    ============================================================ */
 @layer base {
+   html {
+    scrollbar-gutter: stable;
+  }
   *, *::before, *::after {
     box-sizing: border-box;
   }
