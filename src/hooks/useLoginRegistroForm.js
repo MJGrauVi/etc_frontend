@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const esErrorEmailSinVerificar = (err) => {
-  const textoBackend = `${err.backendMessage || ""} ${err.data?.message || ""}`.toLowerCase();
+  const textoBackend =
+    `${err.backendMessage || ""} ${err.data?.message || ""}`.toLowerCase();
   const hablaDeEmail =
     textoBackend.includes("email") || textoBackend.includes("correo");
   const hablaDeVerificacion =
@@ -103,17 +104,15 @@ const useLoginRegistroForm = () => {
         setTimeout(() => navegar("/"), 2500);
       } else {
         const data = await iniciarLogin(form.email, form.password);
-        console.log("Respuesta login:", data);
-        // Puedo mostrar un mensaje de éxito al iniciar sesión.
         setForm(estadoInicial);
-        setTimeout(() => {
-          if (data?.data?.rol === "Administrador") {
-            navegar("/admin/usuarios");
-          } else {
-            navegar("/");
-          }
-        }, 1500);
+       
+        if (data?.data?.rol === "Administrador") {
+          navegar("/admin/usuarios");
+        } else {
+          navegar("/mis-piezas");
+        }
       }
+      
     } catch (err) {
       console.log("ERROR REAL:", err);
       if (err.message === "NETWORK_ERROR") {
