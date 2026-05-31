@@ -120,7 +120,7 @@ export default function Inicio() {
           </p>
 
           {/* Genero el grid desde el array BENEFICIOS */}
-          <div className="grid grid-cols-1 gap-10 mt-16 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 mt-16 md:grid-cols-2">
             {BENEFICIOS.map((item) => (
               <Card variant="beneficios" key={item.id} {...item} />
             ))}
