@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useMisPiezas from "../hooks/useMisPiezas.js";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
+import { formatoEuro } from "../utils/formatoMoneda.js";
 
 const MisPiezasPage = () => {
   const { piezasFiltradas, cargando, error, filtro, setFiltro } = useMisPiezas();
@@ -119,7 +120,7 @@ const MisPiezasPage = () => {
                     <div className="flex items-center justify-between mt-3">
                       {pieza.precio ? (
                         <span className="text-sm font-semibold text-orange-600">
-                          {parseFloat(pieza.precio).toFixed(2)} €
+                          {formatoEuro(pieza.precio)}
                         </span>
                       ) : (
                         <span className="text-sm text-gray-400">Sin precio</span>

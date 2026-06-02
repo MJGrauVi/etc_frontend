@@ -5,11 +5,13 @@ const normalizar = (valor) => String(valor ?? "").toLowerCase().trim();
 
 const usePublicaciones = () => {
   const { get, cargando, error: errorCarga } = useDatos(true);
-  const { remove, error: errorEliminar } = useDatos();
+  const { remove, post, error: errorAccion } = useDatos();
   const [publicaciones, setPublicaciones] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [estado, setEstado] = useState("todas");
   const [eliminandoId, setEliminandoId] = useState(null);
+  const [publicandoId, setPublicandoId] = useState(null);
+  const [mensajePublicacion, setMensajePublicacion] = useState(null);
 
   useEffect(() => {
     const cargarPublicaciones = async () => {
@@ -66,7 +68,55 @@ const usePublicaciones = () => {
     }
   };
 
-  const error = errorCarga || errorEliminar;
+  const publicarEnFacebook = async (publicacion) => {
+    if (publicacion.estado !== "pendiente") {
+      setMensajePublicacion({
+        tipo: "error",
+        texto: "Cambia la publicacion a Lista para publicar antes de publicarla.",
+      });
+      return false;
+    }
+
+    const mensajeFacebook = [
+      publicacion.titulo,
+      publicacion.contenido,
+      publicacion.hashtags,
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
+    setPublicandoId(publicacion.id);
+    setMensajePublicacion(null);
+
+    try {
+      const respuesta = await post(`publicacion/${publicacion.id}/facebook`, {
+        mensaje: mensajeFacebook,
+      });
+      const publicacionActualizada = respuesta.data?.data ?? respuesta.data;
+
+      setPublicaciones((previas) =>
+        previas.map((item) =>
+          item.id === publicacionActualizada.id ? publicacionActualizada : item,
+        ),
+      );
+
+      setMensajePublicacion({
+        tipo: "success",
+        texto: "Publicacion publicada en Facebook correctamente.",
+      });
+      return true;
+    } catch (err) {
+      setMensajePublicacion({
+        tipo: "error",
+        texto: err.data?.error || err.backendMessage || err.message || "No se pudo publicar en Facebook.",
+      });
+      return false;
+    } finally {
+      setPublicandoId(null);
+    }
+  };
+
+  const error = errorCarga || errorAccion;
 
   return {
     publicacionesFiltradas,
@@ -79,6 +129,10 @@ const usePublicaciones = () => {
     setEstado,
     eliminandoId,
     eliminarPublicacion,
+    publicandoId,
+    publicarEnFacebook,
+    mensajePublicacion,
+    setMensajePublicacion,
   };
 };
 

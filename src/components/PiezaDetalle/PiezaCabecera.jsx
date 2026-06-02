@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import { formatoEuro } from "../../utils/formatoMoneda.js";
 
 const PiezaCabecera = (props) => {
 
@@ -27,7 +28,7 @@ const PiezaCabecera = (props) => {
               )}
               {pieza.precio && (
                 <span className="px-3 py-1 text-xs font-semibold text-gray-600 bg-gray-100 border border-gray-200">
-                  {parseFloat(pieza.precio).toFixed(2)} €
+                  {formatoEuro(pieza.precio)}
                 </span>
               )}
               <span className="px-3 py-1 text-xs font-semibold text-gray-600 bg-gray-100 border border-gray-200">

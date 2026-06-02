@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CalendarDays, Edit3, ExternalLink, Search, Trash2, X } from "lucide-react";
+import { BriefcaseBusiness, CalendarDays, Camera, Edit3, ExternalLink, Send, Share2, Search, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
@@ -60,8 +60,13 @@ const PublicacionesPage = () => {
     setEstado,
     eliminandoId,
     eliminarPublicacion,
+    publicandoId,
+    publicarEnFacebook,
+    mensajePublicacion,
+    setMensajePublicacion,
   } = usePublicaciones();
   const [confirmandoId, setConfirmandoId] = useState(null);
+  const [menuPublicarId, setMenuPublicarId] = useState(null);
 
   if (cargando) return <Cargando />;
 
@@ -121,6 +126,26 @@ const PublicacionesPage = () => {
             </div>
           ) : (
             <div className="space-y-4">
+              {mensajePublicacion && (
+                <div className={`border px-4 py-3 text-sm font-semibold ${
+                  mensajePublicacion.tipo === "success"
+                    ? "border-green-200 bg-green-50 text-green-700"
+                    : "border-red-200 bg-red-50 text-red-700"
+                }`}>
+                  <div className="flex items-center justify-between gap-4">
+                    <span>{mensajePublicacion.texto}</span>
+                    <button
+                      type="button"
+                      onClick={() => setMensajePublicacion(null)}
+                      className="text-current opacity-70 hover:opacity-100"
+                      aria-label="Cerrar mensaje"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {publicacionesFiltradas.map((publicacion) => {
                 const pieza = publicacion.pieza ?? publicacion.piezas;
                 const imagen = obtenerImagenPortada(publicacion);
@@ -128,6 +153,17 @@ const PublicacionesPage = () => {
 
                 const confirmando = confirmandoId === publicacion.id;
                 const eliminando = eliminandoId === publicacion.id;
+                const menuPublicarAbierto = menuPublicarId === publicacion.id;
+                const publicandoFacebook = publicandoId === publicacion.id;
+                const publicacionBloqueada = ["borrador", "error"].includes(publicacion.estado);
+                const puedePublicarFacebook = publicacion.estado === "pendiente";//igual a Lista para publicar.
+
+                const publicarFacebookDesdeListado = async () => {
+                  const publicado = await publicarEnFacebook(publicacion);
+                  if (publicado) {
+                    setMenuPublicarId(null);
+                  }
+                };
 
                 return (
                   <article key={publicacion.id} className="grid gap-4 p-4 text-left transition bg-white border border-gray-200 md:grid-cols-[140px_1fr_auto] hover:border-orange-300 hover:shadow-sm">
@@ -173,15 +209,86 @@ const PublicacionesPage = () => {
                     </div>
 
                     <div className="flex flex-col justify-end gap-2 md:items-end md:justify-center">
-                      <Link to={pieza?.id ? `/pieza/${pieza.id}` : "/mis-piezas"} className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-orange-600 transition border border-orange-300 hover:bg-orange-50 md:w-auto">
+                      <Link to={pieza?.id ? `/pieza/${pieza.id}` : "/mis-piezas"} className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-orange-600 transition border border-orange-300 hover:bg-orange-50 md:w-44">
                         Ver pieza
                         <ExternalLink size={16} />
                       </Link>
 
-                      <Link to={`/publicaciones/${publicacion.id}/editar`} className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-blue-600 transition border border-blue-200 hover:bg-blue-50 md:w-auto">
+                      <Link to={`/publicaciones/${publicacion.id}/editar`} className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-blue-600 transition border border-blue-200 hover:bg-blue-50 md:w-44">
                         Editar
                         <Edit3 size={16} />
                       </Link>
+
+                      <div className="relative w-full group md:w-44">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setMenuPublicarId(menuPublicarAbierto ? null : publicacion.id);
+                          }}
+                          disabled={publicacionBloqueada || publicandoFacebook}
+                          className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-white transition bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <Send size={16} />
+                          {publicandoFacebook ? "Publicando..." : "Publicar"}
+                        </button>
+
+                        {publicacionBloqueada && (
+                          <p className="absolute right-0 z-40 hidden w-56 p-2 mt-2 text-xs leading-relaxed text-gray-600 bg-white border border-gray-200 shadow-lg group-hover:block group-focus-within:block">
+                            {publicacion.estado === "borrador"
+                              ? "Cambia la publicación a Lista para publicar para activar este botón."
+                              : "Corrige el error de la publicación antes de volver a publicarla."}
+                          </p>
+                        )}
+
+                        {menuPublicarAbierto && (
+                          <div className="z-30 w-full p-3 mt-2 bg-white border border-gray-200 shadow-lg md:absolute md:right-0 md:w-64">
+                            <div className="space-y-2">
+                              <button
+                                type="button"
+                                onClick={publicarFacebookDesdeListado}
+                                disabled={!puedePublicarFacebook || publicandoFacebook}
+                                className="flex items-center justify-between w-full gap-3 px-3 py-2 text-sm font-semibold text-blue-700 transition bg-blue-50 hover:bg-blue-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400 disabled:opacity-100"
+                              >
+                                <span className="inline-flex items-center gap-2">
+                                  <Share2 size={16} />
+                                  Facebook
+                                </span>
+                                <span className="text-xs">
+                                  {publicandoFacebook
+                                    ? "Publicando..."
+                                    : puedePublicarFacebook
+                                      ? "Activo"
+                                      : "No disponible"}
+                                </span>
+                              </button>
+
+                              <button
+                                type="button"
+                                disabled
+                                className="flex items-center justify-between w-full gap-3 px-3 py-2 text-sm font-semibold text-gray-400 cursor-not-allowed bg-gray-50"
+                              >
+                                <span className="inline-flex items-center gap-2">
+                                  <Camera size={16} />
+                                  Instagram
+                                </span>
+                                <span className="text-xs">Proximamente</span>
+                              </button>
+
+                              <button
+                                type="button"
+                                disabled
+                                className="flex items-center justify-between w-full gap-3 px-3 py-2 text-sm font-semibold text-gray-400 cursor-not-allowed bg-gray-50"
+                              >
+                                <span className="inline-flex items-center gap-2">
+                                  <BriefcaseBusiness size={16} />
+                                  LinkedIn
+                                </span>
+                                <span className="text-xs">Proximamente</span>
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
 
                       {confirmando ? (
                         <div className="flex flex-col w-full gap-2 md:w-44">
@@ -205,10 +312,10 @@ const PublicacionesPage = () => {
                           </button>
                         </div>
                       ) : (
-                        <button
-                          type="button"
-                          onClick={() => setConfirmandoId(publicacion.id)}
-                          className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-red-600 transition border border-red-200 hover:bg-red-50 md:w-auto"
+                          <button
+                            type="button"
+                            onClick={() => setConfirmandoId(publicacion.id)}
+                          className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-semibold text-red-600 transition border border-red-200 hover:bg-red-50 md:w-44"
                         >
                           <Trash2 size={16} />
                           Eliminar
