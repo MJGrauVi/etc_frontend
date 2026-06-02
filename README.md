@@ -80,15 +80,6 @@ npm run dev
 
 Generar versión de producción:
 
-```bash
-npm run build
-```
-
-Previsualizar la build:
-
-```bash
-npm run preview
-```
 
 ## Despliegue/Demo en gitHub Codespaces
 
