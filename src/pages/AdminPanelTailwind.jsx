@@ -80,7 +80,7 @@ const AdminPanelTailwind = () => {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <h2 className="font-semibold text-gray-800 break-words">
+                    <h2 className="font-semibold text-gray-800 wrap-break-words">
                       {u.nombre}
                     </h2>
                     <p className="mt-1 text-sm text-gray-600 break-all">
