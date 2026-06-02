@@ -78,11 +78,6 @@
 
 /* — Botones ————————————————————————————————————————————————— */
 
-/*
-  btn-primary
-  En móvil ocupa todo el ancho para facilitar el toque con el dedo.
-  En md+ recupera su ancho natural según el contenido.
-*/
 @utility btn-primary {
   @apply w-full px-6 py-3 font-semibold text-white transition bg-orange-500 shadow hover:bg-orange-600 md:w-auto;
 }
@@ -96,23 +91,13 @@
   @apply block mb-1 text-sm font-medium text-gray-700;
 }
 
-/*
-  inputClass
-  py-2 en móvil (compacto), py-3 en md+ (más cómodo en desktop).
-  El ancho específico de cada input se añade encima en el JSX
-  (ej: md:w-96 para el buscador de MisPiezasPage).
-*/
+
 @utility inputClass {
   @apply w-full px-4 py-2 text-gray-800 transition bg-white border border-gray-300 focus:outline-none focus:border-orange-400 md:py-3;
 }
 
 /* — Alertas ————————————————————————————————————————————————— */
 
-/*
-  alerta-base
-  En móvil ocupa todo el ancho y reduce padding.
-  En md+ recupera el ancho máximo y el padding generoso.
-*/
 @utility alerta-base {
   @apply relative z-10 w-full p-6 text-center transition-all duration-300 border shadow-2xl md:max-w-2xl md:p-10;
 }
@@ -129,10 +114,6 @@
   @apply border-green-200 bg-green-50 text-green-950;
 }
 
-/* — Cards generales ————————————————————————————————————————— */
-/* @utility card {
-  @apply p-4 transition bg-white rounded-lg shadow-md hover:shadow-lg;
-} */
 
 /* — Logo ———————————————————————————————————————————————————— */
 
@@ -144,19 +125,12 @@
    UTILIDADES ESPECÍFICAS DE INICIO
    ============================================================ */
 
-/*
-  beneficios-card — tarjetas de la sección "por qué elegirnos"
-  (Ahorro, Garantía, Seguridad, Facilidad)
-  En móvil padding reducido, en md+ el generoso original.
-*/
+
 @utility beneficios-card {
   @apply flex flex-col items-center px-4 py-6 font-semibold text-orange-600 transition border border-orange-300 bg-white/20 backdrop-blur-md hover:bg-orange-50 md:px-8;
 }
 
-/*
-  caracteristicas-card — tarjetas de la sección final "¿Por qué usar ETC?"
-  (Fácil de usar, Tu escaparate digital, Comparte en redes)
-*/
+
 @utility caracteristicas-card {
   @apply flex flex-col items-center p-6 transition shadow-sm bg-gray-50 hover:shadow-md md:p-8;
 }
