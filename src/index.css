@@ -132,7 +132,7 @@
 
 
 @utility caracteristicas-card {
-  @apply flex flex-col items-center p-6 transition shadow-sm bg-gray-50 hover:shadow-md md:p-8;
+  @apply flex flex-col items-center p-6 transition bg-gray-100 shadow-sm hover:shadow-lg md:p-8;
 }
 
 /*

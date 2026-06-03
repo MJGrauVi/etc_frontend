@@ -1,27 +1,23 @@
 import { PiggyBank, BadgeCheck, ShieldCheck, Clock, Plus, Store, Share2 } from "lucide-react";
 
 const ICONOS = {
-  ahorro:     (size) => <PiggyBank   size={size} strokeWidth={2} />,
-  garantia:   (size) => <BadgeCheck  size={size} strokeWidth={2} />,
-  seguridad:  (size) => <ShieldCheck size={size} strokeWidth={2} />,
-  facilidad:  (size) => <Clock       size={size} strokeWidth={2} />,
-  facil:      (size) => <Plus        size={size} strokeWidth={2} />,
-  escaparate: (size) => <Store       size={size} strokeWidth={2} />,
-  redes:      (size) => <Share2      size={size} strokeWidth={2} />,
+  ahorro: (size) => <PiggyBank size={size} strokeWidth={2} />,
+  garantia: (size) => <BadgeCheck size={size} strokeWidth={2} />,
+  seguridad: (size) => <ShieldCheck size={size} strokeWidth={2} />,
+  facilidad: (size) => <Clock size={size} strokeWidth={2} />,
+  facil: (size) => <Plus size={size} strokeWidth={2} />,
+  escaparate: (size) => <Store size={size} strokeWidth={2} />,
+  redes: (size) => <Share2 size={size} strokeWidth={2} />,
 };
+
 const VARIANTS = {
   beneficios: { card: "beneficios-card", circle: "icon-circle", iconSize: 36 },
   caracteristicas: { card: "caracteristicas-card", circle: "icon-circle", iconSize: 32 },
 };
 
-export default function Card({
-  titulo,
-  descripcion,
-  icono,
-  imagen,
-  variant = "benefit",
-}) {
-  const v = VARIANTS[variant];
+const Card = ({ titulo, descripcion, icono, imagen, variant = "benefit" }) => {
+
+  const tarjeta = VARIANTS[variant];
 
   if (variant === "beneficios" && imagen) {
     return (
@@ -32,10 +28,12 @@ export default function Card({
           role="presentation"
           className="absolute inset-0 object-cover w-full h-full transition duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 transition duration-300 bg-black/40 group-hover:bg-black/55" />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/80 to-transparent" />
+       {/*  Capa oscura */}
+        <div className="absolute inset-0 transition duration-300 bg-black/40 group-hover:bg-black/55" /> 
+       {/*  DegRadado */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/80 to-transparent" /> 
 
-        <div className="relative z-10 flex flex-col justify-end h-full min-h-80 p-6 text-left md:min-h-96">
+        <div className="relative z-10 flex flex-col justify-end h-full p-6 text-left min-h-80 md:min-h-96">
           <div className="flex items-center justify-center w-12 h-12 mb-4 text-orange-600 shadow-sm bg-white/90">
             {ICONOS[icono](30)}
           </div>
@@ -50,9 +48,9 @@ export default function Card({
   }
 
   return (
-    <article className={v.card}>
-      <div className={`text-orange-600 bg-orange-100 ${v.circle}`}>
-        {ICONOS[icono](v.iconSize)}
+    <article className={tarjeta.card}>
+      <div className={`text-orange-600 bg-orange-100 ${tarjeta.circle}`}>
+        {ICONOS[icono](tarjeta.iconSize)}
       </div>
       <h3 className="mt-6 text-xl font-semibold text-center text-gray-800">
         {titulo}
@@ -61,3 +59,4 @@ export default function Card({
     </article>
   );
 }
+export default Card;

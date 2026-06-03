@@ -65,7 +65,7 @@ const CARACTERISTICAS = [
   },
 ];
 
-export default function Inicio() {
+const Inicio = () => {
   return (
     <main className="min-h-screen font-sans">
       {/* Muestro el hero */}
@@ -175,3 +175,4 @@ export default function Inicio() {
     </main>
   );
 }
+export default Inicio;
