@@ -1,10 +1,14 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import { formatoEuro } from "../../utils/formatoMoneda.js";
+import useContextoSesion from "../../hooks/useContextoSesion.js";
 
 const PiezaCabecera = (props) => {
 
     const {pieza, onAbrirModalEditar, onEliminar} = props;
+    const { usuario } = useContextoSesion();
+    const textoVolver = usuario?.rol === "Administrador" ? "← Volver a piezas" : "← Volver a mis piezas";
+
   return (
     <section className="py-12 border-b border-gray-200 bg-gray-50">
       <div className="px-6 mx-auto max-w-7xl">
@@ -12,7 +16,7 @@ const PiezaCabecera = (props) => {
           to="/mis-piezas"
           className="text-sm text-orange-500 transition hover:text-orange-600"
         >
-          ← Volver a mis piezas
+          {textoVolver}
         </Link>
 
         <div className="flex flex-wrap items-start justify-between gap-4 mt-3">

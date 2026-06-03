@@ -6,6 +6,9 @@ const enlaceMobile =
   "block w-full px-4 py-2 transition hover:bg-orange-50";
 
 const Menu = ({ usuario, cerrarSesion, mobile = false, onNavigate = () => {} }) => {
+
+  const textoPiezas = usuario?.rol === "Administrador" ? "Piezas" : "Mis piezas";
+  
   if (mobile) {
     return (
       <ul className="px-6 pb-4 space-y-2 font-medium text-gray-700 bg-white shadow-inner md:hidden animate-fadeIn">
@@ -36,7 +39,7 @@ const Menu = ({ usuario, cerrarSesion, mobile = false, onNavigate = () => {} }) 
             </li>
             <li className="w-full">
               <Link to="/mis-piezas" onClick={onNavigate} className={enlaceMobile}>
-                Mis piezas
+                {textoPiezas}
               </Link>
             </li>
             <li className="w-full">
@@ -109,7 +112,7 @@ const Menu = ({ usuario, cerrarSesion, mobile = false, onNavigate = () => {} }) 
           </li>
           <li className="flex items-center h-full">
             <Link to="/mis-piezas" className={enlaceDesktop}>
-              Mis piezas
+              {textoPiezas}
             </Link>
           </li>
           <li className="flex items-center h-full">

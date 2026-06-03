@@ -4,6 +4,7 @@ import { useState } from "react";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
 import usePublicaciones from "../hooks/usePublicaciones.js";
+import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const ESTADOS = {
   borrador: {
@@ -65,8 +66,10 @@ const PublicacionesPage = () => {
     mensajePublicacion,
     setMensajePublicacion,
   } = usePublicaciones();
+  const { usuario } = useContextoSesion();
   const [confirmandoId, setConfirmandoId] = useState(null);
   const [menuPublicarId, setMenuPublicarId] = useState(null);
+  const textoVerPiezas = usuario?.rol === "Administrador" ? "Ver piezas" : "Ver mis piezas";
 
   if (cargando) return <Cargando />;
 
@@ -86,7 +89,7 @@ const PublicacionesPage = () => {
           </div>
 
           <Link to="/mis-piezas" className="text-center btn-secondary">
-            Ver mis piezas
+            {textoVerPiezas}
           </Link>
         </div>
       </section>

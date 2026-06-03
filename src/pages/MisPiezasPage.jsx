@@ -3,9 +3,12 @@ import useMisPiezas from "../hooks/useMisPiezas.js";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
 import { formatoEuro } from "../utils/formatoMoneda.js";
+import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const MisPiezasPage = () => {
   const { piezasFiltradas, cargando, error, filtro, setFiltro } = useMisPiezas();
+  const {usuario} = useContextoSesion();
+  const tituloPagina = usuario?.rol === "Administrador" ? "Piezas" : "Mis piezas";
 
   // Gestiono los estados de carga y error.
 
@@ -21,7 +24,7 @@ const MisPiezasPage = () => {
         <div className="flex flex-col gap-4 px-6 mx-auto max-w-7xl sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
-              Mis piezas
+              {tituloPagina}
             </h1>
             <p className="mt-2 text-gray-600">
               {piezasFiltradas.length} pieza{piezasFiltradas.length !== 1 ? "s" : ""} creada{piezasFiltradas.length !== 1 ? "s" : ""}
