@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import LogoEtcTail from "../components/logo/LogoEtcTail.jsx";
-import useContextoSesion from "../hooks/useContextoSesion.js";
 import Menu from "./Menu.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { usuario, cerrarSesion } = useContextoSesion();
 
   const cerrarMenuMovil = () => setOpen(false);
 
@@ -24,7 +22,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <Menu usuario={usuario} cerrarSesion={cerrarSesion} />
+        <Menu />
 
         <button
           type="button"
@@ -60,8 +58,6 @@ const Navbar = () => {
 
       {open && (
         <Menu
-          usuario={usuario}
-          cerrarSesion={cerrarSesion}
           mobile
           onNavigate={cerrarMenuMovil}
         />

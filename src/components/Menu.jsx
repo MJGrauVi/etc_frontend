@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
+import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const enlaceDesktop =
   "flex items-center h-full px-4 transition hover:bg-orange-50";
 const enlaceMobile =
   "block w-full px-4 py-2 transition hover:bg-orange-50";
 
-const Menu = ({ usuario, cerrarSesion, mobile = false, onNavigate = () => {} }) => {
+const Menu = ({ mobile = false, onNavigate = () => {} }) => {
 
+  const { usuario, cerrarSesion } = useContextoSesion();
   const textoPiezas = usuario?.rol === "Administrador" ? "Piezas" : "Mis piezas";
   
   if (mobile) {
@@ -53,7 +55,7 @@ const Menu = ({ usuario, cerrarSesion, mobile = false, onNavigate = () => {} }) 
               </Link>
             </li>
             <li className="px-4 text-sm text-gray-500">
-              Hola, {usuario.nombre}
+              {usuario.nombre}
             </li>
             <li className="w-full">
               <button
@@ -147,7 +149,7 @@ const Menu = ({ usuario, cerrarSesion, mobile = false, onNavigate = () => {} }) 
             </Link>
           </li>
           <li className="flex items-center h-full px-4 text-sm text-gray-500">
-            Hola, {usuario.nombre}
+            {usuario.nombre}
           </li>
           <li className="flex items-center h-full">
             <button
