@@ -85,10 +85,10 @@ const Inicio = () => {
 
         {/* Muestro el contenido principal del hero */}
         <div className="relative z-20 max-w-4xl px-6 mx-auto text-center -translate-y-6 md:-translate-y-10">
-          <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
+          <h1 className="text-4xl font-bold leading-tight text-white md:text-7xl">
             Muestra al mundo lo que creas
           </h1>
-          <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-200 md:text-xl">
+          <p className="max-w-3xl mx-auto mt-6 text-lg font-medium text-gray-100 md:text-2xl">
             Con ETC puedes crear publicaciones profesionales y compartir tus
             piezas únicas en redes sociales en solo unos clics.
           </p>
