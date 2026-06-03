@@ -88,7 +88,7 @@ const Inicio = () => {
           <h1 className="text-4xl font-bold leading-tight text-white md:text-7xl">
             Muestra al mundo lo que creas
           </h1>
-          <p className="max-w-3xl mx-auto font-medium text-gray-100 textlg mt-7 md:text-2xl">
+          <p className="max-w-3xl mx-auto text-lg font-medium text-gray-100 mt-7 md:text-2xl">
             Con ETC puedes crear publicaciones profesionales y compartir tus
             piezas únicas en redes sociales en solo unos clics.
           </p>
