@@ -71,7 +71,7 @@ const Inicio = () => {
     <main className="min-h-screen font-sans">
       {/* Muestro el hero */}
       <section
-        className="flex items-center justify-center w-full min-h-screen pt-16 "
+        className="relative flex items-center justify-center w-full min-h-screen pt-16 overflow-hidden"
         aria-label="Sección principal"
       >
         {/* Muestro la imagen de fondo decorativa */}
@@ -79,16 +79,16 @@ const Inicio = () => {
           src={fondo}
           alt=""
           role="presentation"
-          className="absolute inset-0 z-0 object-cover object-left w-full h-full"
+          className="absolute inset-0 z-0 object-cover object-center w-full h-full md:object-left"
         />
-        <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-sm" />
+        <div className="absolute inset-0 z-10 bg-black/65" />
 
         {/* Muestro el contenido principal del hero */}
-        <div className="relative z-20 max-w-4xl px-6 mx-auto text-center">
-          <h1 className="text-3xl font-bold leading-tight text-white md:text-6xl">
+        <div className="relative z-20 max-w-4xl px-6 mx-auto text-center -translate-y-6 md:-translate-y-10">
+          <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
             Muestra al mundo lo que creas
           </h1>
-          <p className="mt-6 text-lg text-gray-200 md:text-xl">
+          <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-200 md:text-xl">
             Con ETC puedes crear publicaciones profesionales y compartir tus
             piezas únicas en redes sociales en solo unos clics.
           </p>
