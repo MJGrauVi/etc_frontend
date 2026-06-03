@@ -5,6 +5,7 @@ import seguridad from "../assets/seguridad.png";
 import facilidad from "../assets/facilidad.png";
 import { Link } from "react-router-dom"
 import Card from "../components/Card.jsx";
+import CardConImagen from "../components/CardConImagen.jsx";
 
 const BENEFICIOS = [
   {
@@ -104,7 +105,7 @@ const Inicio = () => {
         </div>
       </section>
 
-      {/* Muestro los beneficios */}
+      {/* Tarjetas beneficios */}
       <section className="py-20 bg-white" aria-labelledby="beneficios-titulo">
         <div className="px-6 mx-auto max-w-7xl">
           <h2 id="beneficios-titulo" className="section-title">
@@ -122,13 +123,12 @@ const Inicio = () => {
           {/* Genero el grid desde el array BENEFICIOS */}
           <div className="grid grid-cols-1 gap-8 mt-16 md:grid-cols-2">
             {BENEFICIOS.map((item) => (
-              <Card variant="beneficios" key={item.id} {...item} />
+              <CardConImagen key={item.id} {...item} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Muestro la llamada a la acción central */}
       <section className="py-20 bg-gray-50" aria-labelledby="cta-titulo">
         <div className="max-w-4xl px-6 mx-auto text-center">
           <h2 id="cta-titulo" className="section-title">
@@ -167,7 +167,7 @@ const Inicio = () => {
           {/* Genero el grid desde el array CARACTERISTICAS */}
           <div className="grid grid-cols-1 gap-10 mt-16 md:grid-cols-3">
             {CARACTERISTICAS.map((item) => (
-              <Card variant="caracteristicas" key={item.id} {...item} />
+              <Card key={item.id} {...item} />
             ))}
           </div>
         </div>
