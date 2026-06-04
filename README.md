@@ -122,12 +122,12 @@ https://tu-codespace-5173.app.github.dev
 
 ## Credenciales De Prueba
 
-Los usuarios de prueba se crean desde los seeders del backend:
 
 ```text
 Administrador: admin@admin.com
 Administrador ETC: etc-apps@proton.me
-Titufas: titufas@gmail.com
+Usuario: titufas@gmail.com
+Usuario: usuatio@usuario.com
 Contrasena: ******
 ```
 
