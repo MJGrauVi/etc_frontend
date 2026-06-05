@@ -66,7 +66,7 @@ const Menu = ({ mobile = false, onNavigate = () => {} }) => {
                 }}
                 className="block w-full px-4 py-2 font-semibold text-center text-white transition bg-orange-500 hover:bg-orange-600"
               >
-                Cerrar sesion
+                Cerrar sesión
               </button>
             </li>
           </>
@@ -76,7 +76,7 @@ const Menu = ({ mobile = false, onNavigate = () => {} }) => {
           <>
             <li className="w-full">
               <Link to="/login" onClick={onNavigate} className={enlaceMobile}>
-                Iniciar sesion
+                Iniciar sesión
               </Link>
             </li>
             <li className="w-full">
@@ -159,7 +159,7 @@ const Menu = ({ mobile = false, onNavigate = () => {} }) => {
               onClick={cerrarSesion}
               className="flex items-center h-full px-5 font-semibold text-white transition bg-orange-500 hover:bg-orange-600"
             >
-              Cerrar sesion
+              Cerrar sesión
             </button>
           </li>
         </>
@@ -169,7 +169,7 @@ const Menu = ({ mobile = false, onNavigate = () => {} }) => {
         <>
           <li className="flex items-center h-full">
             <Link to="/login" className={enlaceDesktop}>
-              Iniciar sesion
+              Iniciar sesión
             </Link>
           </li>
           <li className="flex items-center h-full">

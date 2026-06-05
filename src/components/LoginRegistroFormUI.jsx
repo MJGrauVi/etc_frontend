@@ -20,7 +20,7 @@ const LoginRegistroFormUI = ({
       onSubmit={onSubmit}
     >
       <h2 className="mb-6 text-2xl font-bold text-gray-800">
-        {modoRegistro ? "Crea tu cuenta" : "Inicia sesion"}
+        {modoRegistro ? "Crea tu cuenta" : "Inicia sesión"}
       </h2>
 
       <div className="mb-4">
@@ -43,7 +43,7 @@ const LoginRegistroFormUI = ({
 
       <div className="mb-4">
         <label htmlFor="password" className="labelClass">
-          Contrasena
+          Contraseña
         </label>
         <div className="relative">
           <input
@@ -53,13 +53,13 @@ const LoginRegistroFormUI = ({
             value={form.password}
             onChange={onChange}
             required
-            className="inputClass pr-12"
+            className="pr-12 inputClass"
           />
           <button
             type="button"
             onClick={() => setMostrarPassword((prev) => !prev)}
-            className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-gray-500 transition hover:text-orange-600"
-            aria-label={mostrarPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+            className="absolute inset-y-0 right-0 flex items-center justify-center w-12 text-gray-500 transition hover:text-orange-600"
+            aria-label={mostrarPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
           >
             {mostrarPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
@@ -70,7 +70,7 @@ const LoginRegistroFormUI = ({
         <>
           <div className="mb-4">
             <label htmlFor="password_confirmation" className="labelClass">
-              Repite la contrasena
+              Repite la contraseña
             </label>
             <div className="relative">
               <input
@@ -80,16 +80,16 @@ const LoginRegistroFormUI = ({
                 value={form.password_confirmation}
                 onChange={onChange}
                 required
-                className="inputClass pr-12"
+                className="pr-12 inputClass"
               />
               <button
                 type="button"
                 onClick={() => setMostrarConfirmacion((prev) => !prev)}
-                className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-gray-500 transition hover:text-orange-600"
+                className="absolute inset-y-0 right-0 flex items-center justify-center w-12 text-gray-500 transition hover:text-orange-600"
                 aria-label={
                   mostrarConfirmacion
-                    ? "Ocultar contrasena repetida"
-                    : "Mostrar contrasena repetida"
+                    ? "Ocultar contraseña repetida"
+                    : "Mostrar contraseña repetida"
                 }
               >
                 {mostrarConfirmacion ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -114,7 +114,7 @@ const LoginRegistroFormUI = ({
 
           <div className="mb-4">
             <label htmlFor="direccion" className="labelClass">
-              Direccion <span className="font-normal text-gray-400">(opcional)</span>
+              Dirección <span className="font-normal text-gray-400">(opcional)</span>
             </label>
             <input
               id="direccion"
@@ -128,7 +128,7 @@ const LoginRegistroFormUI = ({
 
           <div className="mb-4">
             <label htmlFor="telefono" className="labelClass">
-              Telefono <span className="font-normal text-gray-400">(opcional)</span>
+              Teléfono <span className="font-normal text-gray-400">(opcional)</span>
             </label>
             <input
               id="telefono"
@@ -148,7 +148,7 @@ const LoginRegistroFormUI = ({
           disabled={cargando || (modoRegistro && emailEnUso)}
           className="w-full px-6 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {cargando ? "Cargando..." : modoRegistro ? "Registrarme" : "Iniciar sesion"}
+          {cargando ? "Cargando..." : modoRegistro ? "Registrarme" : "Iniciar sesión"}
         </button>
 
         <button
@@ -160,7 +160,7 @@ const LoginRegistroFormUI = ({
           {modoRegistro ? (
             <>
               <span className="font-normal text-gray-500">Ya tienes cuenta?</span>{" "}
-              Entra aqui
+              Entra aquí
             </>
           ) : (
             <>

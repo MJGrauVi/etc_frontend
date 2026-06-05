@@ -7,7 +7,7 @@ import MensajeTail from "./MensajeTail.jsx";
 
 const LoginRegistro = () => {
 
-  // Muestro el formulario de registro si llega desde Prueba Gratis.
+  // Lee desde que enlace llega el usuario, prueba gratis .....
   const location = useLocation();
   const mostrarRegistro = location.state?.mostrarRegistro;
   
@@ -37,7 +37,6 @@ const LoginRegistro = () => {
   
       <LoginRegistroFormUI
         form={form}
-        mensaje={mensaje}
         modoRegistro={modoRegistro}
         cargando={cargando}
         onChange={handleChange}

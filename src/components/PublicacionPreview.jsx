@@ -26,12 +26,12 @@ const PublicacionPreview = ({
 
   const publicarFacebook = async () => {
     if (!publicacion.id) {
-      setErrorPublicacion("Guarda la publicacion antes de publicarla en Facebook.");
+      setErrorPublicacion("Guarda la publicación antes de publicarla en Facebook.");
       return;
     }
 
     if (publicacion.estado !== "pendiente") {
-      setErrorPublicacion("Revisa la publicacion y cambia su estado a Lista para publicar antes de publicarla en Facebook.");
+      setErrorPublicacion("Revisa la publicación y cambia su estado a Lista para publicar antes de publicarla en Facebook.");
       return;
     }
 
@@ -44,8 +44,8 @@ const PublicacionPreview = ({
 
       await onPublicarFacebook({ mensaje: mensajeFacebook });
     } catch (error) {
-      console.error("Error preparando publicacion para Facebook", error);
-      setErrorPublicacion("No se pudo preparar la publicacion para Facebook.");
+      console.error("Error preparando publicación para Facebook", error);
+      setErrorPublicacion("No se pudo preparar la publicación para Facebook.");
     }
   };
 
@@ -53,7 +53,7 @@ const PublicacionPreview = ({
     <div className="mt-10 border border-orange-200 bg-orange-50">
       <div className="px-6 py-4 bg-orange-100 border-b border-orange-200">
         <h2 className="text-lg font-semibold text-orange-700">
-          Previsualizacion de la publicacion
+          Previsualización de la publicación
         </h2>
         <p className="text-sm text-orange-600">
           Edita el texto antes de guardar o publicar
@@ -82,7 +82,7 @@ const PublicacionPreview = ({
           >
             <div>
               <label htmlFor="publicacion-titulo" className="block mb-1 text-sm font-medium text-gray-700">
-                Titulo
+                Título
               </label>
               <input
                 id="publicacion-titulo"
@@ -96,7 +96,7 @@ const PublicacionPreview = ({
 
             <div>
               <label htmlFor="publicacion-contenido" className="block mb-1 text-sm font-medium text-gray-700">
-                Descripcion
+                Descripción
               </label>
               <textarea
                 id="publicacion-contenido"
@@ -145,7 +145,7 @@ const PublicacionPreview = ({
                 disabled={guardando}
                 className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
               >
-                {guardando ? "Guardando..." : "Guardar publicacion"}
+                {guardando ? "Guardando..." : "Guardar publicación"}
               </button>
 
               <button
@@ -190,7 +190,7 @@ const PublicacionPreview = ({
             </div>
           </div>
           <p className="mt-2 text-xs text-gray-500">
-            Facebook publicara la imagen portada de la pieza junto con el titulo, la descripcion y los hashtags.
+            Facebook publicara la imagen portada de la pieza junto con el título, la descripción y los hashtags.
           </p>
         </div>
 
