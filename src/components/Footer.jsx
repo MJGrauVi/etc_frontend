@@ -96,37 +96,37 @@ const Footer = () => {
           </div>
 
           <div className="text-center md:text-left">
-            <h4 className="mb-6 text-lg font-bold text-white">Explorar</h4>
+            <h4 className="footer-title">Explorar</h4>
             <nav aria-label="Explorar" className="flex flex-col items-center space-y-3 text-sm md:items-start">
-              <Link to="/" onClick={scrollTop} className="hover:text-primary">
+              <Link to="/" onClick={scrollTop} className="footer-link">
                 Inicio
               </Link>
-              <Link to="/precios" className="hover:text-primary">
+              <Link to="/precios" className="footer-link">
                 Planes y Precios
               </Link>
-              <a href="mailto:etc-apps@proton.me" className="hover:text-primary">
+              <a href="mailto:etc-apps@proton.me" className="footer-link">
                 Soporte
               </a>
             </nav>
           </div>
 
           <div className="text-center md:text-left">
-            <h4 className="mb-6 text-lg font-bold text-white">Legal</h4>
+            <h4 className="footer-title">Legal</h4>
             <nav aria-label="Legal" className="flex flex-col items-center space-y-3 text-sm md:items-start">
-              <Link to="/privacidad" className="hover:text-primary">
+              <Link to="/privacidad" className="footer-link">
                 Privacidad
               </Link>
-              <Link to="/aviso-legal" className="hover:text-primary">
+              <Link to="/aviso-legal" className="footer-link">
                 Aviso Legal
               </Link>
-              <Link to="/cookies" className="hover:text-primary">
+              <Link to="/cookies" className="footer-link">
                 Cookies
               </Link>
             </nav>
           </div>
 
           <div className="md:text-center">
-            <h4 className="mb-6 text-lg font-bold text-white">Síguenos</h4>
+            <h4 className="footer-title">Síguenos</h4>
             <div className="flex flex-wrap justify-center gap-4">
               {REDES.map(({ nombre, href, icono, svgProps }) => (
                 <a
@@ -160,4 +160,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

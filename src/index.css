@@ -164,7 +164,7 @@
 }
 
 @utility footer-title {
-  @apply mb-4 text-lg font-bold text-white;
+  @apply mb-6 text-lg font-bold text-white;
 }
 
 /* ============================================================
