@@ -2,7 +2,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import AppRoutes from "./routes/AppRoutes.jsx";
-import "./App.css";
 
 export default function App() {
   return (

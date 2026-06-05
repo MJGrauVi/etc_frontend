@@ -135,7 +135,7 @@ const PiezaGaleria = ({
 
       {!hayImagenes && (
         <p className="mt-2 text-sm text-orange-600">
-          Necesitas al menos una imagen para generar la publicacion con IA.
+          Necesitas al menos una imagen para generar la publicación con IA.
         </p>
       )}
     </div>
