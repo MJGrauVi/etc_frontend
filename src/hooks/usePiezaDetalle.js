@@ -140,6 +140,14 @@ const usePiezaDetalle = () => {
 
   // Gestiono la generación con IA.
   const generarPublicacion = async () => {
+    if (!pieza.medias?.length) {
+      setMensaje({
+        tipo: "error",
+        texto: "Necesitas al menos una imagen para generar la publicación con IA.",
+      });
+      return;
+    }
+
     setGenerando(true);
     setMensaje({ tipo: "", texto: "" });
     try {

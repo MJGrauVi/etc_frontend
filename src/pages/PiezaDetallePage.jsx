@@ -77,7 +77,6 @@ const PiezaDetallePage = () => {
 
             {/* Muestro la descripción y los botones */}
             <PiezaDescripcionBotones pieza={pieza}
-              publicacion={publicacion}
               generando={generando}
               generarPublicacion={generarPublicacion}
               iniciarManual={iniciarManual} />

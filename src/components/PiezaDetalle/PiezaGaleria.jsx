@@ -64,14 +64,16 @@ const PiezaGaleria = ({
 
       <div className="flex flex-col gap-3 mt-3">
         <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => inputRef.current.click()}
-            disabled={subiendoImagen}
-            className="px-4 py-2 text-sm font-semibold text-orange-600 transition border border-orange-300 hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {subiendoImagen ? "Subiendo..." : "+ Añadir imagen"}
-          </button>
+          {hayImagenes && (
+            <button
+              type="button"
+              onClick={() => inputRef.current.click()}
+              disabled={subiendoImagen}
+              className="px-4 py-2 text-sm font-semibold text-orange-600 transition border border-orange-300 hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {subiendoImagen ? "Subiendo..." : "+ Añadir imagen"}
+            </button>
+          )}
 
           {imagenMostrada && !imagenMostrada.es_portada && (
             <button
@@ -133,11 +135,6 @@ const PiezaGaleria = ({
         </div>
       )}
 
-      {!hayImagenes && (
-        <p className="mt-2 text-sm text-orange-600">
-          Necesitas al menos una imagen para generar la publicación con IA.
-        </p>
-      )}
     </div>
   );
 };
