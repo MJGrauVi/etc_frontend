@@ -9,6 +9,11 @@ const ModalEditarPieza = ({
   mensaje,
   setMensaje
 }) => {
+  const guardarPieza = (event) => {
+    event.preventDefault();
+    onGuardar();
+  };
+
   return (
     <>     
     <MensajeTail
@@ -17,7 +22,10 @@ const ModalEditarPieza = ({
         onClose={() => setMensaje(null)}
       />
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40">
-      <div className="w-full max-w-lg bg-white border border-gray-200 shadow-xl">
+      <form
+        onSubmit={guardarPieza}
+        className="w-full max-w-lg bg-white border border-gray-200 shadow-xl"
+      >
 
         {/* Muestro la cabecera */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
@@ -105,8 +113,7 @@ const ModalEditarPieza = ({
             Cancelar
           </button>
           <button
-            type="button"
-            onClick={onGuardar}
+            type="submit"
             disabled={guardando}
             className="px-6 py-2 text-sm font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -114,7 +121,7 @@ const ModalEditarPieza = ({
           </button>
         </div>
 
-      </div>
+      </form>
     </div>
     </>
   );

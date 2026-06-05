@@ -19,6 +19,11 @@ const PublicacionPreview = ({
   const imagenUrl = mediaPublicacion?.url_completa;
   const puedePublicarFacebook = publicacion.id && publicacion.estado === "pendiente";
 
+  const guardarPublicacion = (event) => {
+    event.preventDefault();
+    onGuardar();
+  };
+
   const publicarFacebook = async () => {
     if (!publicacion.id) {
       setErrorPublicacion("Guarda la publicacion antes de publicarla en Facebook.");
@@ -71,7 +76,10 @@ const PublicacionPreview = ({
             )}
           </div>
 
-          <div className="flex flex-col flex-1 gap-4">
+          <form
+            onSubmit={guardarPublicacion}
+            className="flex flex-col flex-1 gap-4"
+          >
             <div>
               <label htmlFor="publicacion-titulo" className="block mb-1 text-sm font-medium text-gray-700">
                 Titulo
@@ -133,7 +141,7 @@ const PublicacionPreview = ({
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <button
-                onClick={onGuardar}
+                type="submit"
                 disabled={guardando}
                 className="flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
               >
@@ -141,6 +149,7 @@ const PublicacionPreview = ({
               </button>
 
               <button
+                type="button"
                 onClick={publicarFacebook}
                 disabled={publicandoFacebook || !puedePublicarFacebook}
                 className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold text-white transition bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
@@ -158,7 +167,7 @@ const PublicacionPreview = ({
                 Cambia el estado a Lista para publicar y guarda los cambios antes de publicarla en Facebook.
               </p>
             )}
-          </div>
+          </form>
         </div>
 
         <div className="pt-6 mt-6 border-t border-orange-200">
