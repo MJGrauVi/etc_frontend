@@ -22,6 +22,7 @@ const AdminPanelTailwind = () => {
       <select
         value={obtenerRol(u)}
         onChange={(e) => cambiarRol(u.id, e.target.value)}
+        aria-label={`Cambiar rod de ${u.nombre}`}
         className="w-full px-3 py-2 font-semibold text-orange-600 transition bg-white border border-orange-300 cursor-pointer hover:bg-orange-50 focus:outline-none focus:border-orange-500 md:w-auto"
       >
         <option value="" disabled>
@@ -67,6 +68,7 @@ const AdminPanelTailwind = () => {
               placeholder="Buscar por nombre o email..."
               value={filtro}
               onChange={(e) => setFiltro(e.target.value)}
+              aria-label="Buscar usuarios por nombre o correo electrónico"
               className="w-full px-4 py-3 text-gray-700 transition border border-orange-300 md:w-96 bg-white/20 backdrop-blur-md focus:outline-none focus:border-orange-500"
             />
           </div>

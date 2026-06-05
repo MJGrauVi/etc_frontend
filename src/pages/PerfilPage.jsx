@@ -68,9 +68,10 @@ const PerfilPage = () => {
                 </div>
 
                 {/* Muestro el botón para subir el logo */}
-                <label className="w-full px-4 py-2 text-sm font-semibold text-center text-orange-600 transition border border-orange-300 cursor-pointer hover:bg-orange-50">
+                <label htmlFor="perfil-logo" className="w-full px-4 py-2 text-sm font-semibold text-center text-orange-600 transition border border-orange-300 cursor-pointer hover:bg-orange-50">
                   Cambiar logo
                   <input
+                    id="perfil-logo"
                     type="file"
                     accept="image/jpeg,image/png,image/jpg,image/svg+xml"
                     className="hidden"
@@ -85,8 +86,9 @@ const PerfilPage = () => {
               {/* Muestro la columna de datos principales */}
               <div className="flex flex-col flex-1 gap-4">
                 <div>
-                  <label className={labelClase}>Descripción del negocio</label>
+                  <label htmlFor="perfil-descripcion" className={labelClase}>Descripción del negocio</label>
                   <textarea
+                    id="perfil-descripcion"
                     name="descripcion"
                     value={form.descripcion}
                     onChange={handleChange}
@@ -97,8 +99,9 @@ const PerfilPage = () => {
                 </div>
 
                 <div>
-                  <label className={labelClase}>Web</label>
+                  <label htmlFor="perfil-web" className={labelClase}>Web</label>
                   <input
+                    id="perfil-web"
                     type="url"
                     name="web"
                     value={form.web}
@@ -109,8 +112,9 @@ const PerfilPage = () => {
                 </div>
 
                 <div>
-                  <label className={labelClase}>Móvil</label>
+                  <label htmlFor="perfil-movil" className={labelClase}>Móvil</label>
                   <input
+                    id="perfil-movil"
                     type="tel"
                     name="movil"
                     value={form.movil}
@@ -130,8 +134,9 @@ const PerfilPage = () => {
               </h2>
               <div className="flex flex-col gap-4">
                 <div>
-                  <label className={labelClase}>Facebook</label>
+                  <label htmlFor="perfil-facebook" className={labelClase}>Facebook</label>
                   <input
+                    id="perfil-facebook"
                     type="url"
                     name="facebook"
                     value={form.redes_sociales.facebook}
@@ -141,8 +146,9 @@ const PerfilPage = () => {
                   />
                 </div>
                 <div>
-                  <label className={labelClase}>Instagram</label>
+                  <label htmlFor="perfil-instagram" className={labelClase}>Instagram</label>
                   <input
+                    id="perfil-instagram"
                     type="url"
                     name="instagram"
                     value={form.redes_sociales.instagram}
@@ -152,8 +158,9 @@ const PerfilPage = () => {
                   />
                 </div>
                 <div>
-                  <label className={labelClase}>LinkedIn</label>
+                  <label htmlFor="perfil-linkedin" className={labelClase}>LinkedIn</label>
                   <input
+                    id="perfil-linkedin"
                     type="url"
                     name="linkedin"
                     value={form.redes_sociales.linkedin}
@@ -172,8 +179,9 @@ const PerfilPage = () => {
               </h2>
               <div className="flex flex-col gap-4 md:flex-row">
                 <div className="w-full md:w-40">
-                  <label className={labelClase}>Tipo</label>
+                  <label htmlFor="perfil-tipo-documento" className={labelClase}>Tipo</label>
                   <select
+                    id="perfil-tipo-documento"
                     name="tipo_documento"
                     value={form.tipo_documento}
                     onChange={handleChange}
@@ -186,8 +194,9 @@ const PerfilPage = () => {
                   </select>
                 </div>
                 <div className="flex-1">
-                  <label className={labelClase}>Número</label>
+                  <label htmlFor="perfil-documento" className={labelClase}>Número</label>
                   <input
+                    id="perfil-documento"
                     type="text"
                     name="documento"
                     value={form.documento}

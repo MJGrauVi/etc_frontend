@@ -48,6 +48,7 @@ const MisPiezasPage = () => {
               placeholder="Buscar por nombre o categoría..."
               value={filtro}
               onChange={(e) => setFiltro(e.target.value)}
+              aria-label="Buscar piezas por nombre o categoría"
               className="inputClass md:w-96"
             />
           </div>

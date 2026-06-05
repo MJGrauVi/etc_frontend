@@ -125,6 +125,7 @@ const Menu = ({ mobile = false, onNavigate = () => {} }) => {
           <li className="relative h-full">
             <Link
               to="/mi-perfil"
+              aria-label="Ir a mi perfil"
               className="flex items-center h-full px-4 transition group hover:bg-orange-50"
             >
               <div className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
@@ -134,6 +135,7 @@ const Menu = ({ mobile = false, onNavigate = () => {} }) => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"

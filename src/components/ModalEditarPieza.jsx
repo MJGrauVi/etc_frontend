@@ -23,7 +23,9 @@ const ModalEditarPieza = ({
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-800">Editar pieza</h2>
           <button
+            type="button"
             onClick={onCerrar}
+            aria-label="Cerrar edición de la pieza"
             className="text-xl leading-none text-gray-400 transition hover:text-gray-600"
           >
             ✕
@@ -34,10 +36,11 @@ const ModalEditarPieza = ({
         <div className="flex flex-col gap-4 px-6 py-5">
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="editar-pieza-nombre" className="block mb-1 text-sm font-medium text-gray-700">
               Nombre
             </label>
             <input
+              id="editar-pieza-nombre"
               type="text"
               name="nombre"
               value={piezaEdit.nombre}
@@ -47,10 +50,11 @@ const ModalEditarPieza = ({
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="editar-pieza-descripcion" className="block mb-1 text-sm font-medium text-gray-700">
               Descripción
             </label>
             <textarea
+              id="editar-pieza-descripcion"
               name="descripcion"
               value={piezaEdit.descripcion}
               onChange={onChange}
@@ -61,10 +65,11 @@ const ModalEditarPieza = ({
 
           <div className="flex gap-4">
             <div className="flex-1">
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="editar-pieza-categoria" className="block mb-1 text-sm font-medium text-gray-700">
                 Categoría
               </label>
               <input
+                id="editar-pieza-categoria"
                 type="text"
                 name="categoria"
                 value={piezaEdit.categoria}
@@ -73,10 +78,11 @@ const ModalEditarPieza = ({
               />
             </div>
             <div className="w-32">
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="editar-pieza-precio" className="block mb-1 text-sm font-medium text-gray-700">
                 Precio (€)
               </label>
               <input
+                id="editar-pieza-precio"
                 type="number"
                 name="precio"
                 value={piezaEdit.precio}
@@ -92,12 +98,14 @@ const ModalEditarPieza = ({
         {/* Muestro las acciones */}
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
           <button
+            type="button"
             onClick={onCerrar}
             className="px-5 py-2 text-sm text-gray-600 transition border border-gray-300 hover:bg-gray-100"
           >
             Cancelar
           </button>
           <button
+            type="button"
             onClick={onGuardar}
             disabled={guardando}
             className="px-6 py-2 text-sm font-semibold text-white transition bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"

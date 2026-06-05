@@ -73,10 +73,11 @@ const PublicacionPreview = ({
 
           <div className="flex flex-col flex-1 gap-4">
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="publicacion-titulo" className="block mb-1 text-sm font-medium text-gray-700">
                 Titulo
               </label>
               <input
+                id="publicacion-titulo"
                 type="text"
                 name="titulo"
                 value={publicacion.titulo}
@@ -86,10 +87,11 @@ const PublicacionPreview = ({
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="publicacion-contenido" className="block mb-1 text-sm font-medium text-gray-700">
                 Descripcion
               </label>
               <textarea
+                id="publicacion-contenido"
                 name="contenido"
                 value={publicacion.contenido}
                 onChange={onEditar}
@@ -99,10 +101,11 @@ const PublicacionPreview = ({
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="publicacion-hashtags" className="block mb-1 text-sm font-medium text-gray-700">
                 Hashtags
               </label>
               <input
+                id="publicacion-hashtags"
                 type="text"
                 name="hashtags"
                 value={publicacion.hashtags}
@@ -112,10 +115,11 @@ const PublicacionPreview = ({
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="publicacion-estado" className="block mb-1 text-sm font-medium text-gray-700">
                 Estado
               </label>
               <select
+                id="publicacion-estado"
                 name="estado"
                 value={publicacion.estado}
                 onChange={onEditar}

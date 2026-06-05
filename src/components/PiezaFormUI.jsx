@@ -81,7 +81,7 @@ const PiezaFormUI = ({
 
       {/* Añado las fotos */}
       <div className="mb-6">
-        <label className="labelClass">
+        <label htmlFor="fotos-pieza" className="labelClass">
           Fotos de la pieza <span className="font-normal text-gray-400">(jpeg, png, jpg · máx 2MB por foto)</span>
         </label>
 
@@ -92,6 +92,7 @@ const PiezaFormUI = ({
           </svg>
           <span className="text-sm font-medium text-orange-500">Pulsa para seleccionar fotos</span>
           <input
+            id="fotos-pieza"
             type="file"
             accept="image/jpeg,image/png,image/jpg"
             multiple
@@ -113,6 +114,7 @@ const PiezaFormUI = ({
                 <button
                   type="button"
                   onClick={() => onEliminarFoto(i)}
+                  aria-label={`Eliminar foto ${i + 1}`}
                   className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs text-white bg-orange-500 hover:bg-orange-600"
                 >
                   x

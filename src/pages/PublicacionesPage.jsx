@@ -101,9 +101,10 @@ const PublicacionesPage = () => {
               <Search size={18} className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2" />
               <input
                 type="text"
-                placeholder="Buscar por titulo, pieza o hashtags..."
+                placeholder="Buscar por título, pieza o hashtags..."
                 value={filtro}
                 onChange={(event) => setFiltro(event.target.value)}
+                aria-label="Buscar por título, pieza o hashtag"
                 className="pl-10 inputClass"
               />
             </div>

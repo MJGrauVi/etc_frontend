@@ -110,6 +110,8 @@ const PiezaGaleria = ({
               key={media.id}
               type="button"
               onClick={() => setImagenActivaId(media.id)}
+              aria-label={`Mostrar imagen ${media.nombre_original}`}
+              aria-pressed={(imagenActivaId ?? imagenPortada?.id) === media.id}
               className={`relative w-16 h-16 overflow-hidden transition border-2 ${
                 (imagenActivaId ?? imagenPortada?.id) === media.id
                   ? "border-orange-500"

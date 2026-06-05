@@ -26,24 +26,28 @@ const REDES = [
     nombre: "Facebook",
     href: "https://facebook.com/etc_apps",
     icono: "facebook",
+    disponible: true,
     svgProps: { fill: "currentColor", stroke: "none", viewBox: "0 0 24 24" },
   },
   {
     nombre: "Instagram",
     href: "https://instagram.com/etc_apps",
     icono: "instagram",
+    disponible: false,
     svgProps: { fill: "none", stroke: "currentColor", strokeWidth: "2", viewBox: "0 0 24 24" },
   },
   {
     nombre: "LinkedIn",
     href: "https://linkedin.com/company/etc-apps",
     icono: "linkedin",
+    disponible: false,
     svgProps: { fill: "currentColor", stroke: "none", viewBox: "0 0 24 24" },
   },
   {
     nombre: "X (Twitter)",
     href: "https://x.com/etc_apps",
     icono: "x",
+    disponible: false,
     svgProps: { fill: "currentColor", stroke: "none", viewBox: "0 0 24 24" },
   },
 ];
@@ -78,15 +82,14 @@ const Footer = () => {
                 <span>etc-apps@proton.me</span>
               </a>
 
-              <a
-                href="https://etc-apps.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 hover:text-white md:justify-start"
+              <span
+                className="flex items-center justify-center gap-3 cursor-not-allowed opacity-50 md:justify-start"
+                aria-disabled="true"
+                title="Próximamente"
               >
                 <Globe size={20} className="text-primary" aria-hidden="true" />
-                <span>etc-apps.com</span>
-              </a>
+                <span>etc-apps.com (próximamente)</span>
+              </span>
 
               <p className="flex items-center justify-center gap-3 md:justify-start">
                 <MapPin size={20} className="text-primary" aria-hidden="true" />
@@ -101,9 +104,13 @@ const Footer = () => {
               <Link to="/" onClick={scrollTop} className="footer-link">
                 Inicio
               </Link>
-              <Link to="/precios" className="footer-link">
-                Planes y Precios
-              </Link>
+              <span
+                className="footer-link cursor-not-allowed opacity-50"
+                aria-disabled="true"
+                title="Próximamente"
+              >
+                Planes y precios (próximamente)
+              </span>
               <a href="mailto:etc-apps@proton.me" className="footer-link">
                 Soporte
               </a>
@@ -113,30 +120,37 @@ const Footer = () => {
           <div className="text-center md:text-left">
             <h4 className="footer-title">Legal</h4>
             <nav aria-label="Legal" className="flex flex-col items-center space-y-3 text-sm md:items-start">
-              <Link to="/privacidad" className="footer-link">
-                Privacidad
-              </Link>
-              <Link to="/aviso-legal" className="footer-link">
-                Aviso Legal
-              </Link>
-              <Link to="/cookies" className="footer-link">
-                Cookies
-              </Link>
+              <span className="footer-link cursor-not-allowed opacity-50" aria-disabled="true" title="Próximamente">
+                Privacidad (próximamente)
+              </span>
+              <span className="footer-link cursor-not-allowed opacity-50" aria-disabled="true" title="Próximamente">
+                Aviso legal (próximamente)
+              </span>
+              <span className="footer-link cursor-not-allowed opacity-50" aria-disabled="true" title="Próximamente">
+                Cookies (próximamente)
+              </span>
             </nav>
           </div>
 
           <div className="md:text-center">
             <h4 className="footer-title">Síguenos</h4>
             <div className="flex flex-wrap justify-center gap-4">
-              {REDES.map(({ nombre, href, icono, svgProps }) => (
-                <a
-                  key={nombre}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Síguenos en ${nombre}`}
-                  className="p-2 transition-colors bg-gray-800 rounded-full hover:bg-primary hover:text-white"
-                >
+              {REDES.map(({ nombre, href, icono, disponible, svgProps }) => {
+                const ElementoRed = disponible ? "a" : "span";
+
+                return (
+                  <ElementoRed
+                    key={nombre}
+                    {...(disponible
+                      ? { href, target: "_blank", rel: "noopener noreferrer" }
+                      : { "aria-disabled": true, title: "Próximamente" })}
+                    aria-label={disponible ? `Síguenos en ${nombre}` : `${nombre}, próximamente`}
+                    className={`p-2 transition-colors bg-gray-800 rounded-full ${
+                      disponible
+                        ? "hover:bg-primary hover:text-white"
+                        : "cursor-not-allowed opacity-50"
+                    }`}
+                  >
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"
@@ -145,8 +159,9 @@ const Footer = () => {
                   >
                     {ICONOS_REDES[icono]}
                   </svg>
-                </a>
-              ))}
+                  </ElementoRed>
+                );
+              })}
             </div>
           </div>
         </div>
