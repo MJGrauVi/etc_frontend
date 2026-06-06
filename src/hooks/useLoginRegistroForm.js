@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
+import { obtenerMensajeError } from "../utils/mensajesError.js";
 
 const esErrorEmailSinVerificar = (err) => {
   const textoBackend =
@@ -118,7 +119,7 @@ const useLoginRegistroForm = () => {
       if (err.message === "NETWORK_ERROR") {
         mostrarMensaje(
           "error",
-          "Servidor no disponible.\n Disculpe las molestias.",
+          obtenerMensajeError(err),
         );
       } else if (esErrorEmailSinVerificar(err)) {
         mostrarMensaje(

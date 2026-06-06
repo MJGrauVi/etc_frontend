@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { crudService } from "../services/crudService.js";
+import { obtenerMensajeError } from "../utils/mensajesError.js";
 
 const useDatos = (cargandoInicial = false) => {
   const [cargando, setCargando] = useState(cargandoInicial);
@@ -12,7 +13,7 @@ const useDatos = (cargandoInicial = false) => {
     try {
       return await peticion();
     } catch (err) {
-      setError(err.message);
+      setError(obtenerMensajeError(err));
       throw err;
     } finally {
       setCargando(false);

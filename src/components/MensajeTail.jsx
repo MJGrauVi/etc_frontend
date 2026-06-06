@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { createPortal } from "react-dom"; 
 
 const estilosPorTipo = {
   info: "alerta-info",
@@ -21,14 +20,12 @@ const MensajeTail = ({ tipo = "info", texto, onClose, autoClose = true }) => {
 
   const claseTipo = estilosPorTipo[tipo] || estilosPorTipo.info;
 
-  // Uso createPortal para mostrar el mensaje fuera del main.
-  return createPortal(
+  return (
     <div className="fixed inset-0 flex items-center justify-center p-6 overflow-hidden pointer-events-none z-999 ">
       <div className={`alerta-base ${claseTipo} pointer-events-auto`}>
         <p className="text-2xl font-bold tracking-tight">{texto}</p>
       </div>
-    </div>,
-    document.body // Lo envío directamente al final del body
+    </div>
   );
 };
 
