@@ -8,7 +8,7 @@ import MensajeTail from "../components/MensajeTail.jsx";
 import PiezaCabecera from "../components/PiezaDetalle/PiezaCabecera.jsx";
 import PiezaGaleria from "../components/PiezaDetalle/PiezaGaleria.jsx";
 import PiezaDescripcionBotones from "../components/PiezaDetalle/PiezaDescripcionBotones.jsx";
-import ModalEliminar from "../components/PiezaDetalle/ModalEliminar.jsx";
+import ModalEliminar from "../components/ModalEliminar.jsx";
 
 const PiezaDetallePage = () => {
   const {

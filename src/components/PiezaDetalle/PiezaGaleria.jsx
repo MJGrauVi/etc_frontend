@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import ModalEliminar from "../ModalEliminar.jsx";
 
 const PiezaGaleria = ({
   pieza,
@@ -9,6 +10,7 @@ const PiezaGaleria = ({
 }) => {
   const inputRef = useRef(null);
   const [imagenActivaId, setImagenActivaId] = useState(null);
+  const [imagenAEliminar, setImagenAEliminar] = useState(null);
 
   const medias = pieza.medias ?? [];
   const imagenPortada = medias.find((media) => media.es_portada) || medias[0];
@@ -25,10 +27,14 @@ const PiezaGaleria = ({
 
   const eliminarImagenActiva = () => {
     if (!imagenMostrada) return;
-    if (confirm("¿Eliminar esta imagen?")) {
-      onEliminar(imagenMostrada.id);
-      setImagenActivaId(null);
-    }
+    setImagenAEliminar(imagenMostrada);
+  };
+
+  const confirmarEliminarImagen = () => {
+    if (!imagenAEliminar) return;
+    onEliminar(imagenAEliminar.id);
+    setImagenActivaId(null);
+    setImagenAEliminar(null);
   };
 
   return (
@@ -135,6 +141,14 @@ const PiezaGaleria = ({
         </div>
       )}
 
+      <ModalEliminar
+        visible={!!imagenAEliminar}
+        titulo="¿Eliminar esta imagen?"
+        mensaje="Esta acción es irreversible. La imagen se eliminará de la pieza."
+        textoConfirmar="Sí, eliminar imagen"
+        onCancelar={() => setImagenAEliminar(null)}
+        onConfirmar={confirmarEliminarImagen}
+      />
     </div>
   );
 };
