@@ -3,7 +3,7 @@ import Cargando from "../components/Cargando";
 import EstadoError from "../components/EstadoError.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
-const AdminPanelTailwind = () => {
+const AdminUsuariosPage = () => {
   const { usuariosFiltrados, cargando, error, filtro, setFiltro, cambiarRol } =
     useAdminUsuarios();
   const { usuario } = useContextoSesion(); // Identifico al administrador para evitar que cambie su propio rol.
@@ -188,4 +188,4 @@ const AdminPanelTailwind = () => {
   );
 };
 
-export default AdminPanelTailwind;
+export default AdminUsuariosPage;

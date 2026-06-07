@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Inicio from "../pages/Inicio";
-import AdminPanelTailwind from "../pages/AdminPanelTailwind.jsx";
+import InicioPage from "../pages/InicioPage";
+import AdminUsuariosPage from "../pages/AdminUsuariosPage.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
 import NuevaPiezaPage from "../pages/NuevaPiezaPage.jsx";
 import MisPiezasPage from "../pages/MisPiezasPage.jsx";
@@ -8,7 +8,7 @@ import PiezaDetallePage from "../pages/PiezaDetallePage.jsx";
 import PerfilPage from "../pages/PerfilPage.jsx";
 import PublicacionesPage from "../pages/PublicacionesPage.jsx";
 import EditarPublicacionPage from "../pages/EditarPublicacionPage.jsx";
-import Error from "../pages/Error.jsx";
+import ErrorPage from "../pages/ErrorPage.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const RutaAdmin = ({ children }) => {
@@ -30,15 +30,15 @@ const RutaPrivada = ({ children }) => {
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Inicio />} />
+      <Route path="/" element={<InicioPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/error" element={<Error />} />
+      <Route path="/error" element={<ErrorPage />} />
 
       <Route
         path="/admin/usuarios"
         element={
           <RutaAdmin>
-            <AdminPanelTailwind />
+            <AdminUsuariosPage />
           </RutaAdmin>
         }
       />
@@ -91,7 +91,7 @@ const AppRoutes = () => {
           </RutaPrivada>
         }
       />
-      <Route path="*" element={<Error />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
