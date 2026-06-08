@@ -71,8 +71,6 @@ const PublicacionesPage = () => {
   const [menuPublicarId, setMenuPublicarId] = useState(null);
   const textoVerPiezas = usuario?.rol === "Administrador" ? "Ver piezas" : "Ver mis piezas";
 
-  if (cargando) return <Cargando />;
-
   if (error) return <EstadoError mensaje={error} />;
 
   return (
@@ -84,7 +82,9 @@ const PublicacionesPage = () => {
               Publicaciones
             </h1>
             <p className="mt-2 text-gray-600">
-              {publicacionesFiltradas.length} publicacion{publicacionesFiltradas.length !== 1 ? "es" : ""} encontrada{publicacionesFiltradas.length !== 1 ? "s" : ""}
+              {cargando
+                ? "Cargando publicaciones..."
+                : `${publicacionesFiltradas.length} publicación${publicacionesFiltradas.length !== 1 ? "es" : ""} encontrada${publicacionesFiltradas.length !== 1 ? "s" : ""}`}
             </p>
           </div>
 
@@ -96,6 +96,10 @@ const PublicacionesPage = () => {
 
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
+          {cargando ? (
+            <Cargando />
+          ) : (
+            <>
           <div className="flex flex-col gap-4 mb-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative w-full lg:max-w-md">
               <Search size={18} className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2" />
@@ -330,6 +334,8 @@ const PublicacionesPage = () => {
                 );
               })}
             </div>
+          )}
+            </>
           )}
         </div>
       </section>

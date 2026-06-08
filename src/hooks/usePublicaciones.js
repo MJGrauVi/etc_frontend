@@ -72,7 +72,7 @@ const usePublicaciones = () => {
     if (publicacion.estado !== "pendiente") {
       setMensajePublicacion({
         tipo: "error",
-        texto: "Cambia la publicacion a Lista para publicar antes de publicarla.",
+        texto: "Cambia la publicación a Lista para publicar antes de publicarla.",
       });
       return false;
     }
@@ -102,7 +102,7 @@ const usePublicaciones = () => {
 
       setMensajePublicacion({
         tipo: "success",
-        texto: "Publicacion publicada en Facebook correctamente.",
+        texto: "Publicación publicada en Facebook correctamente.",
       });
       return true;
     } catch (err) {

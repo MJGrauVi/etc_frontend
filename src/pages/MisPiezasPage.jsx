@@ -12,8 +12,6 @@ const MisPiezasPage = () => {
 
   // Gestiono los estados de carga y error.
 
-  if (cargando) return <Cargando />;
-
   // Uso un componente común para mantener el mismo criterio de error en las páginas.
   if (error) return <EstadoError mensaje={error} />;
   return (
@@ -27,7 +25,9 @@ const MisPiezasPage = () => {
               {tituloPagina}
             </h1>
             <p className="mt-2 text-gray-600">
-              {piezasFiltradas.length} pieza{piezasFiltradas.length !== 1 ? "s" : ""} creada{piezasFiltradas.length !== 1 ? "s" : ""}
+              {cargando
+                ? "Cargando piezas..."
+                : `${piezasFiltradas.length} pieza${piezasFiltradas.length !== 1 ? "s" : ""} creada${piezasFiltradas.length !== 1 ? "s" : ""}`}
             </p>
           </div>
 
@@ -41,6 +41,10 @@ const MisPiezasPage = () => {
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
 
+          {cargando ? (
+            <Cargando />
+          ) : (
+            <>
           {/* Muestro el buscador*/}
           <div className="mb-8">
             <input
@@ -137,6 +141,8 @@ const MisPiezasPage = () => {
                 </Link>
               ))}
             </div>
+          )}
+            </>
           )}
 
         </div>
