@@ -75,7 +75,7 @@ const PublicacionesPage = () => {
 
   return (
     <main className="min-h-screen font-sans bg-white">
-      <section className="sticky z-40 page-header top-22">
+      <section className="page-header">
         <div className="flex flex-col gap-4 px-6 mx-auto max-w-7xl md:flex-row md:items-center md:justify-between">
           <div className="text-left">
             <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
