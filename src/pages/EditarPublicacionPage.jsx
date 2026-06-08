@@ -1,7 +1,8 @@
+
 import { Link } from "react-router-dom";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
-import MensajeTail from "../components/MensajeTail.jsx";
+import Mensaje from "../components/Mensaje.jsx";
 import PublicacionPreview from "../components/PublicacionPreview.jsx";
 import useEditarPublicacion from "../hooks/useEditarPublicacion.js";
 
@@ -51,7 +52,7 @@ const EditarPublicacionPage = () => {
         </div>
       </section>
 
-      <MensajeTail
+      <Mensaje
         tipo={mensaje.tipo}
         texto={mensaje.texto}
         onClose={() => setMensaje({ tipo: "", texto: "" })}

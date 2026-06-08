@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {Link} from "react-router-dom";
 import { formatoEuro } from "../../utils/formatoMoneda.js";
 import useContextoSesion from "../../hooks/useContextoSesion.js";
@@ -7,7 +7,7 @@ const PiezaCabecera = (props) => {
 
     const {pieza, onAbrirModalEditar, onEliminar} = props;
     const { usuario } = useContextoSesion();
-    const textoVolver = usuario?.rol === "Administrador" ? "← Volver a piezas" : "← Volver a mis piezas";
+    const textoVolver = usuario?.rol === "Administrador" ? "<- Volver a piezas" : "<- Volver a mis piezas";
 
   return (
     <section className="py-12 border-b border-gray-200 bg-gray-50">

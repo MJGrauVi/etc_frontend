@@ -1,6 +1,6 @@
 import usePerfilForm from "../hooks/usePerfilForm.js";
 import Cargando from "../components/Cargando.jsx";
-import MensajeTail from "../components/MensajeTail.jsx";
+import Mensaje from "../components/Mensaje.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 // Reutilizo las clases comunes de la app.
@@ -38,7 +38,7 @@ const PerfilPage = () => {
         </div>
       </section>
       
-      <MensajeTail
+      <Mensaje
         tipo={mensaje.tipo}
         texto={mensaje.texto}
         onClose={() => setMensaje({ tipo: "", texto: "" })}

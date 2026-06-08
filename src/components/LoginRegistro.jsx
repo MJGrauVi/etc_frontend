@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import LoginRegistroFormUI from "./LoginRegistroFormUI";
 import useLoginRegistroForm from "../hooks/useLoginRegistroForm";
-import MensajeTail from "./MensajeTail.jsx";
+import Mensaje from "./Mensaje.jsx";
 
 const LoginRegistro = () => {
 
@@ -45,7 +45,7 @@ const LoginRegistro = () => {
         onBlurEmail={validarEmailUnico}
         emailEnUso={emailEnUso}
       />
-          <MensajeTail
+          <Mensaje
         tipo={mensaje?.tipo}
         texto={mensaje?.texto}
         onClose={() => setMensaje(null)}

@@ -103,7 +103,7 @@ const usePerfilForm = () => {
     cargando,
     guardando,
     mensaje,
-    setMensaje,  // Lo expongo para MensajeTail.
+    setMensaje,  // Lo expongo para Mensaje.
     handleChange,
     handleLogo,
     guardarPerfil,

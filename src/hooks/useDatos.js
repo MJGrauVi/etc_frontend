@@ -6,6 +6,7 @@ const useDatos = (cargandoInicial = false) => {
   const [cargando, setCargando] = useState(cargandoInicial);
   const [error, setError] = useState(null);
 
+  //useCallBack evita recrear funciones en cada render.
   const ejecutarPeticion = useCallback(async (peticion) => {
     setCargando(true);
     setError(null);

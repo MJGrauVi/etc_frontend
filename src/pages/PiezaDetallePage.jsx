@@ -4,7 +4,7 @@ import PublicacionPreview from "../components/PublicacionPreview.jsx";
 import ModalEditarPieza from "../components/ModalEditarPieza.jsx";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
-import MensajeTail from "../components/MensajeTail.jsx";
+import Mensaje from "../components/Mensaje.jsx";
 import PiezaCabecera from "../components/PiezaDetalle/PiezaCabecera.jsx";
 import PiezaGaleria from "../components/PiezaDetalle/PiezaGaleria.jsx";
 import PiezaDescripcionBotones from "../components/PiezaDetalle/PiezaDescripcionBotones.jsx";
@@ -56,7 +56,7 @@ const PiezaDetallePage = () => {
       />
 
       {/* Muestro el mensaje */}
-      <MensajeTail
+      <Mensaje
         tipo={mensaje.tipo}
         texto={mensaje.texto}
         onClose={() => setMensaje({ tipo: "", texto: "" })}

@@ -1,3 +1,4 @@
+import React from 'react';
 import {Plus, Store, Share2 } from "lucide-react";
 
 const ICONOS = {

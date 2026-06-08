@@ -1,3 +1,4 @@
+import React from 'react';
 const EstadoError = ({ mensaje = "No se pudo cargar la información." }) => {
   return (
     <section className="fixed inset-0 flex items-center justify-center p-6 overflow-hidden pointer-events-none z-999">

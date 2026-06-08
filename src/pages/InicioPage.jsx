@@ -67,6 +67,12 @@ const CARACTERISTICAS = [
 ];
 
 const InicioPage = () => {
+  const irACaracteristicas = () => {
+    document
+      .getElementById("caracteristicas")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <main className="min-h-screen font-sans">
       {/* Muestro el hero */}
@@ -100,7 +106,13 @@ const InicioPage = () => {
             >
               Solicita una prueba gratis
             </Link>
-            <button className="btn-secondary">Saber más</button>
+            <button
+              type="button"
+              onClick={irACaracteristicas}
+              className="btn-secondary"
+            >
+              Saber más
+            </button>
           </div>
         </div>
       </section>
@@ -113,9 +125,9 @@ const InicioPage = () => {
           </h2>
 
           <p className="section-subtitle">
-            ETC está construido sobre tecnología cloud moderna, diseñada para
+            ETC está construida y diseñada para
             ser rápida, intuitiva y fácil de integrar en tu día a día. Ofrece
-            herramientas visuales, análisis claros, comunicación integrada y
+            herramientas visuales, comunicación integrada y
             procesos simplificados para ayudarte a mostrar tus creaciones,
             gestionar tu actividad y reducir tiempos y costes.
           </p>
@@ -151,6 +163,7 @@ const InicioPage = () => {
 
       {/* Muestro las características */}
       <section
+        id="caracteristicas"
         className="py-20 bg-white"
         aria-labelledby="caracteristicas-titulo"
       >

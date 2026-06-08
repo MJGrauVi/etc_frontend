@@ -1,3 +1,4 @@
+import React from 'react';
 import { PiggyBank, BadgeCheck, ShieldCheck, Clock } from "lucide-react";
 
 const ICONOS = {

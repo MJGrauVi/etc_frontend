@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { Share2 } from "lucide-react";
 

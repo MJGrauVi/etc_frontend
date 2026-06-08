@@ -1,3 +1,4 @@
+import React from 'react';
 const PiezaDescripcionBotones = ({pieza, generarPublicacion, generando, iniciarManual}) => {
   return (
     <div className="flex-1">

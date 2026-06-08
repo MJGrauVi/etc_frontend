@@ -1,4 +1,5 @@
-import MensajeTail from "./MensajeTail.jsx";
+import React from 'react';
+import Mensaje from "./Mensaje.jsx";
 
 const ModalEditarPieza = ({
   piezaEdit,
@@ -16,7 +17,7 @@ const ModalEditarPieza = ({
 
   return (
     <>     
-    <MensajeTail
+    <Mensaje
         tipo={mensaje?.tipo}
         texto={mensaje?.texto}
         onClose={() => setMensaje(null)}
