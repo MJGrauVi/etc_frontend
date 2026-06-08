@@ -20,11 +20,9 @@ const EditarPublicacionPage = () => {
     publicarEnFacebook,
   } = useEditarPublicacion();
 
-  if (cargando) return <Cargando />;
-
   if (error) return <EstadoError mensaje={error} />;
 
-  if (!publicacion) {
+  if (!cargando && !publicacion) {
     return (
       <main className="min-h-screen px-6 py-12 bg-white">
         <div className="max-w-4xl mx-auto text-center border border-gray-200 bg-gray-50 p-8">
@@ -37,7 +35,7 @@ const EditarPublicacionPage = () => {
     );
   }
 
-  const pieza = publicacion.pieza ?? publicacion.piezas;
+  const pieza = publicacion?.pieza ?? publicacion?.piezas;
 
   return (
     <main className="min-h-screen font-sans bg-white">
@@ -47,7 +45,11 @@ const EditarPublicacionPage = () => {
             Editar publicacion
           </h1>
           <p className="mt-2 text-gray-600">
-            {pieza?.nombre ? `Pieza asociada: ${pieza.nombre}` : "Actualiza el contenido antes de publicarlo."}
+            {cargando
+              ? "Cargando publicación..."
+              : pieza?.nombre
+                ? `Pieza asociada: ${pieza.nombre}`
+                : "Actualiza el contenido antes de publicarlo."}
           </p>
         </div>
       </section>
@@ -60,14 +62,18 @@ const EditarPublicacionPage = () => {
 
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
-          <PublicacionPreview
-            publicacion={publicacion}
-            guardando={guardando}
-            publicandoFacebook={publicandoFacebook}
-            onEditar={handleEditar}
-            onGuardar={guardarCambios}
-            onPublicarFacebook={publicarEnFacebook}
-          />
+          {cargando ? (
+            <Cargando />
+          ) : (
+            <PublicacionPreview
+              publicacion={publicacion}
+              guardando={guardando}
+              publicandoFacebook={publicandoFacebook}
+              onEditar={handleEditar}
+              onGuardar={guardarCambios}
+              onPublicarFacebook={publicarEnFacebook}
+            />
+          )}
         </div>
       </section>
     </main>

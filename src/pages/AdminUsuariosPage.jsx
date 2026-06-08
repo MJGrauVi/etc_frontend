@@ -8,8 +8,6 @@ const AdminUsuariosPage = () => {
   const { usuariosFiltrados, cargando, error, filtro, setFiltro, cambiarRol } =
     useAdminUsuarios();
   const { usuario } = useContextoSesion(); // Identifico al administrador para evitar que cambie su propio rol.
-
-  if (cargando) return <Cargando />;
   if (error) return <EstadoError mensaje={error} />;
 
   const obtenerRol = (u) => u.roles?.[0]?.name ?? "";
@@ -62,6 +60,10 @@ const AdminUsuariosPage = () => {
 
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
+          {cargando ? (
+            <Cargando />
+          ) : (
+            <>
           {/* Muestro el buscador con el estilo de mis botones secundarios. */}
           <div className="mb-8">
             <input
@@ -183,6 +185,8 @@ const AdminUsuariosPage = () => {
             {usuariosFiltrados.length !== 1 ? "s" : ""} encontrado
             {usuariosFiltrados.length !== 1 ? "s" : ""}
           </p>
+            </>
+          )}
         </div>
       </section>
     </main>

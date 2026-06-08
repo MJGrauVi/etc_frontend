@@ -22,8 +22,6 @@ const PerfilPage = () => {
     guardarPerfil,
   } = usePerfilForm();
 
-  if (cargando) return <Cargando />;
-
   return (
     <main className="min-h-screen font-sans bg-white">
       {/* Muestro la cabecera con el patrón común de las páginas */}
@@ -46,7 +44,10 @@ const PerfilPage = () => {
 
       <section className="py-10">
         <div className="max-w-3xl px-6 mx-auto">
-          <form onSubmit={guardarPerfil}>
+          {cargando ? (
+            <Cargando />
+          ) : (
+            <form onSubmit={guardarPerfil}>
             {/* Muestro la sección de logo y datos principales */}
             {/* Uso flex-col en móvil y flex-row en escritorio */}
             <div className="flex flex-col gap-8 mb-8 md:flex-row">
@@ -216,7 +217,8 @@ const PerfilPage = () => {
             >
               {guardando ? "Guardando..." : "Guardar cambios"}
             </button>
-          </form>
+            </form>
+          )}
         </div>
       </section>
     </main>

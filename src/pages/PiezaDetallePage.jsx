@@ -42,18 +42,26 @@ const PiezaDetallePage = () => {
   } = usePiezaDetalle();
 
   const [confirmarEliminar, setConfirmarEliminar] = useState(false);
-
-  if (cargando) return <Cargando />;
   if (error) return <EstadoError mensaje={error} />;
 
   return (
     <main className="min-h-screen font-sans bg-white">
       {/* Muestro la cabecera */}
-      <PiezaCabecera
-        pieza={pieza}
-        onAbrirModalEditar={abrirModalEditar}
-        onEliminar={() => setConfirmarEliminar(true)}
-      />
+      {cargando ? (
+        <section className="page-header">
+          <div className="px-6 mx-auto text-left max-w-7xl">
+            <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">
+              Cargando pieza...
+            </h1>
+          </div>
+        </section>
+      ) : (
+        <PiezaCabecera
+          pieza={pieza}
+          onAbrirModalEditar={abrirModalEditar}
+          onEliminar={() => setConfirmarEliminar(true)}
+        />
+      )}
 
       {/* Muestro el mensaje */}
       <Mensaje
@@ -65,6 +73,10 @@ const PiezaDetallePage = () => {
       {/* Muestro el contenido principal */}
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
+          {cargando ? (
+            <Cargando />
+          ) : (
+            <>
           <div className="grid gap-8 lg:grid-cols-[420px_1fr]">
             {/* Muestro la galería */}
             <PiezaGaleria
@@ -101,6 +113,8 @@ const PiezaDetallePage = () => {
               onGuardar={guardarCambios}
               onPublicarFacebook={publicarEnFacebook}
             />
+          )}
+            </>
           )}
         </div>
       </section>
