@@ -115,7 +115,6 @@ const useLoginRegistroForm = () => {
       }
       
     } catch (err) {
-      console.log("ERROR REAL:", err);
       if (err.message === "NETWORK_ERROR") {
         mostrarMensaje(
           "error",

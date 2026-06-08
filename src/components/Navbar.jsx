@@ -13,7 +13,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 z-50 w-full text-lg bg-white">
       <div className="flex items-center justify-between px-16 mx-auto h-22 max-w-7xl">
         <div className="flex items-center gap-1 md:gap-1">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/"  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}className="flex items-center gap-2">
             <span className="flex items-center p-1">
               <LogoEtcTail className="etc" />
             </span>
