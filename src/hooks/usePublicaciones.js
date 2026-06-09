@@ -5,7 +5,7 @@ const normalizar = (valor) => String(valor ?? "").toLowerCase().trim();
 
 const usePublicaciones = () => {
   const { get, cargando, error: errorCarga } = useDatos(true);
-  const { remove, post, error: errorAccion } = useDatos();
+  const { remove, post } = useDatos();
   const [publicaciones, setPublicaciones] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [estado, setEstado] = useState("todas");
@@ -116,7 +116,7 @@ const usePublicaciones = () => {
     }
   };
 
-  const error = errorCarga || errorAccion;
+  const error = errorCarga;
 
   return {
     publicacionesFiltradas,

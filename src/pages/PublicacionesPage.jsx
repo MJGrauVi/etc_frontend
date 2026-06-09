@@ -3,6 +3,7 @@ import { BriefcaseBusiness, CalendarDays, Camera, Edit3, ExternalLink, Send, Sha
 import { useState } from "react";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
+import Mensaje from "../components/Mensaje.jsx";
 import usePublicaciones from "../hooks/usePublicaciones.js";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
@@ -94,6 +95,12 @@ const PublicacionesPage = () => {
         </div>
       </section>
 
+      <Mensaje
+        tipo={mensajePublicacion?.tipo}
+        texto={mensajePublicacion?.texto}
+        onClose={() => setMensajePublicacion(null)}
+      />
+
       <section className="py-10">
         <div className="px-6 mx-auto max-w-7xl">
           {cargando ? (
@@ -134,25 +141,6 @@ const PublicacionesPage = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {mensajePublicacion && (
-                <div className={`border px-4 py-3 text-sm font-semibold ${
-                  mensajePublicacion.tipo === "success"
-                    ? "border-green-200 bg-green-50 text-green-700"
-                    : "border-red-200 bg-red-50 text-red-700"
-                }`}>
-                  <div className="flex items-center justify-between gap-4">
-                    <span>{mensajePublicacion.texto}</span>
-                    <button
-                      type="button"
-                      onClick={() => setMensajePublicacion(null)}
-                      className="text-current opacity-70 hover:opacity-100"
-                      aria-label="Cerrar mensaje"
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                </div>
-              )}
 
               {publicacionesFiltradas.map((publicacion) => {
                 const pieza = publicacion.pieza ?? publicacion.piezas;
