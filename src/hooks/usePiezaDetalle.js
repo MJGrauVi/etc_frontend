@@ -2,17 +2,21 @@ import { useState, useEffect} from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useDatos from "./useDatos.js";
 
+
+const mensajeConfirmacionDemo = (pageName) =>
+  `No tienes una pagina de Facebook configurada.\n\nSi continuas, esta publicacion se publicara usando la pagina demo${pageName ? ` (${pageName})` : ""}. Para publicar en tu propia pagina, configura primero tu pagina de Facebook en tu perfil.\n\n¿Quieres continuar usando la pagina demo?`;
 const usePiezaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { get, cargando } = useDatos(true);
-  const { post, put, remove, postForm } = useDatos();
+  const { get: getFacebook, post, put, remove, postForm } = useDatos();
 
   const [pieza, setPieza]             = useState(null);
   const [publicacion, setPublicacion] = useState(null);
   const [generando, setGenerando]     = useState(false);
   const [guardando, setGuardando]     = useState(false);
   const [publicandoFacebook, setPublicandoFacebook] = useState(false);
+  const [confirmacionDemoFacebook, setConfirmacionDemoFacebook] = useState(null);
   const [error, setError]             = useState(null);
   const [mensaje, setMensaje]         = useState({ tipo: "", texto: "" });
   const [modoManual, setModoManual]   = useState(false);
@@ -37,7 +41,7 @@ const usePiezaDetalle = () => {
   cargarPieza();
 }, [get, id]);
 
-  // Gestiono la edición de la pieza.
+  // Gestiono la ediciÃ³n de la pieza.
   const abrirModalEditar = () => {
     setPiezaEdit({
       nombre:      pieza.nombre      ?? "",
@@ -69,7 +73,7 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // Gestiono la eliminación de la pieza.
+  // Gestiono la eliminaciÃ³n de la pieza.
   const eliminarPieza = async () => {
     try {
       await remove(`pieza/${id}`);
@@ -79,7 +83,7 @@ const usePiezaDetalle = () => {
     }
   };
 
-  // Gestiono las imágenes.
+  // Gestiono las imÃ¡genes.
   const subirImagen = async (archivo) => {
     setSubiendoImagen(true);
     try {
@@ -138,12 +142,12 @@ const usePiezaDetalle = () => {
     setModoManual(true);
   };
 
-  // Gestiono la generación con IA.
+  // Gestiono la generaciÃ³n con IA.
   const generarPublicacion = async () => {
     if (!pieza.medias?.length) {
       setMensaje({
         tipo: "error",
-        texto: "Necesitas al menos una imagen para generar la publicación con IA.",
+        texto: "Necesitas al menos una imagen para generar la publicaciÃ³n con IA.",
       });
       return;
     }
@@ -161,17 +165,17 @@ const usePiezaDetalle = () => {
         estado: pub.estado === "lista" ? "pendiente" : (pub.estado ?? "borrador"),
       });
       setModoManual(false);
-      setMensaje({ tipo: "success", texto: "Publicación generada correctamente." });
+      setMensaje({ tipo: "success", texto: "PublicaciÃ³n generada correctamente." });
     } catch (err) {
       if (err.status === 429) {
         setMensaje({
           tipo: "error",
-          texto: "Has alcanzado el límite diario de peticiones de IA. Inténtalo mañana."
+          texto: "Has alcanzado el lÃ­mite diario de peticiones de IA. IntÃ©ntalo maÃ±ana."
         });
       } else if (err.status === 500) {
         setMensaje({
           tipo: "error",
-          texto: "La IA está tardando demasiado. Inténtalo de nuevo en unos segundos."
+          texto: "La IA estÃ¡ tardando demasiado. IntÃ©ntalo de nuevo en unos segundos."
         });
       } else {
         setMensaje({ tipo: "error", texto: err.message });
@@ -218,7 +222,7 @@ const usePiezaDetalle = () => {
         estado: normalizarEstado(pubGuardada?.estado ?? datosPublicacion.estado),
       });
       setModoManual(false);
-      setMensaje({ tipo: "success", texto: "Publicación guardada correctamente." });
+      setMensaje({ tipo: "success", texto: "PublicaciÃ³n guardada correctamente." });
 
     } catch (err) {
       if (err.status === 403) {
@@ -228,16 +232,74 @@ const usePiezaDetalle = () => {
           backendMessage: err.backendMessage,
           data: err.data,
         });
-        setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicación." });
+        setMensaje({ tipo: "error", texto: "No tienes permiso para editar esta publicaciÃ³n." });
       } else if (err.status === 422) {
         setMensaje({ tipo: "error", texto: "Datos incorrectos. Revisa los campos." });
       } else if (err.status === 500) {
-        setMensaje({ tipo: "error", texto: "Error del servidor. Inténtalo de nuevo." });
+        setMensaje({ tipo: "error", texto: "Error del servidor. IntÃ©ntalo de nuevo." });
       } else {
         setMensaje({ tipo: "error", texto: err.message });
       }
     } finally {
       setGuardando(false);
+    }
+  };
+
+  const publicarConfirmadoEnFacebook = async (datosPublicacion = {}, { demoConfirmada = false } = {}) => {
+    setPublicandoFacebook(true);
+    setMensaje({ tipo: "", texto: "" });
+
+    try {
+      if (!demoConfirmada) {
+        const destinoRespuesta = await getFacebook(`publicacion/${publicacion.id}/facebook/destination`);
+        const destino = destinoRespuesta.data?.data ?? destinoRespuesta.data;
+
+        if (destino?.requires_confirmation) {
+          setConfirmacionDemoFacebook({
+            datosPublicacion,
+            titulo: "Usar pagina demo de Facebook",
+            mensaje: mensajeConfirmacionDemo(destino.page_name),
+          });
+          return false;
+        }
+      }
+
+      const respuesta = await post(`publicacion/${publicacion.id}/facebook`, {
+        ...datosPublicacion,
+        ...(demoConfirmada && { confirm_demo: true }),
+      });
+      const pubActualizada = respuesta.data?.data ?? respuesta.data;
+      const warning = respuesta.data?.warning;
+
+      setPublicacion({
+        ...pubActualizada,
+        pieza: pubActualizada?.pieza ?? pubActualizada?.piezas ?? publicacion.pieza ?? pieza,
+        pieza_id: pubActualizada?.pieza_id ?? id,
+      });
+      setMensaje({
+        tipo: "success",
+        texto: warning
+          ? `Publicacion publicada en Facebook correctamente. ${warning}`
+          : "Publicacion publicada en Facebook correctamente.",
+      });
+      return true;
+    } catch (err) {
+      if (err.status === 409 && err.data?.requires_demo_confirmation) {
+        setConfirmacionDemoFacebook({
+          datosPublicacion,
+          titulo: "Usar pagina demo de Facebook",
+          mensaje: mensajeConfirmacionDemo(err.data?.destination?.page_name),
+        });
+        return false;
+      }
+
+      setMensaje({
+        tipo: "error",
+        texto: err.data?.error || err.backendMessage || err.message || "No se pudo publicar en Facebook.",
+      });
+      return false;
+    } finally {
+      setPublicandoFacebook(false);
     }
   };
 
@@ -247,7 +309,7 @@ const usePiezaDetalle = () => {
         tipo: "error",
         texto: "Guarda la publicacion antes de publicarla en Facebook.",
       });
-      return;
+      return false;
     }
 
     if (publicacion.estado !== "pendiente") {
@@ -255,28 +317,22 @@ const usePiezaDetalle = () => {
         tipo: "error",
         texto: "Revisa la publicacion y cambia su estado a Lista para publicar antes de publicarla en Facebook.",
       });
-      return;
+      return false;
     }
 
-    setPublicandoFacebook(true);
-    try {
-      const respuesta = await post(`publicacion/${publicacion.id}/facebook`, datosPublicacion);
-      const pubActualizada = respuesta.data?.data ?? respuesta.data;
+    return publicarConfirmadoEnFacebook(datosPublicacion);
+  };
 
-      setPublicacion({
-        ...pubActualizada,
-        pieza: pubActualizada?.pieza ?? pubActualizada?.piezas ?? publicacion.pieza ?? pieza,
-        pieza_id: pubActualizada?.pieza_id ?? id,
-      });
-      setMensaje({ tipo: "success", texto: "Publicacion publicada en Facebook correctamente." });
-    } catch (err) {
-      setMensaje({
-        tipo: "error",
-        texto: err.data?.error || err.backendMessage || err.message || "No se pudo publicar en Facebook.",
-      });
-    } finally {
-      setPublicandoFacebook(false);
-    }
+  const confirmarPublicacionDemoFacebook = async () => {
+    if (!confirmacionDemoFacebook) return false;
+
+    const datosPublicacion = confirmacionDemoFacebook.datosPublicacion;
+    setConfirmacionDemoFacebook(null);
+    return publicarConfirmadoEnFacebook(datosPublicacion, { demoConfirmada: true });
+  };
+
+  const cancelarPublicacionDemoFacebook = () => {
+    setConfirmacionDemoFacebook(null);
   };
 
   return {
@@ -286,6 +342,7 @@ const usePiezaDetalle = () => {
     generando,
     guardando,
     publicandoFacebook,
+    confirmacionDemoFacebook,
     error,
     mensaje,
     setMensaje,
@@ -293,6 +350,8 @@ const usePiezaDetalle = () => {
     handleEditar,
     guardarCambios,
     publicarEnFacebook,
+    confirmarPublicacionDemoFacebook,
+    cancelarPublicacionDemoFacebook,
     modalEditar,
     piezaEdit,
     guardandoPieza,

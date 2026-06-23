@@ -3,20 +3,29 @@ import useDatos from "./useDatos.js";
 
 const normalizar = (valor) => String(valor ?? "").toLowerCase().trim();
 
+const construirMensajeFacebook = (publicacion) =>
+  [publicacion.titulo, publicacion.contenido, publicacion.hashtags]
+    .filter(Boolean)
+    .join("\n\n");
+
+const mensajeConfirmacionDemo = (pageName) =>
+  `No tienes una pagina de Facebook configurada.\n\nSi continuas, esta publicacion se publicara usando la pagina demo${pageName ? ` (${pageName})` : ""}. Para publicar en tu propia pagina, configura primero tu pagina de Facebook en tu perfil.\n\n¿Quieres continuar usando la pagina demo?`;
+
 const usePublicaciones = () => {
   const { get, cargando, error: errorCarga } = useDatos(true);
-  const { remove, post } = useDatos();
+  const { get: getFacebook, remove, post } = useDatos();
   const [publicaciones, setPublicaciones] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [estado, setEstado] = useState("todas");
   const [eliminandoId, setEliminandoId] = useState(null);
   const [publicandoId, setPublicandoId] = useState(null);
+  const [confirmacionDemoFacebook, setConfirmacionDemoFacebook] = useState(null);
   const [mensajePublicacion, setMensajePublicacion] = useState(null);
 
   useEffect(() => {
     const cargarPublicaciones = async () => {
       try {
-        const respuesta = await get("publicaciones");//Cargamos todas las publicaciones del usuario.
+        const respuesta = await get("publicaciones");
         setPublicaciones(respuesta.data ?? respuesta ?? []);
       } catch {
         // useDatos ya conserva el error de la comunicacion.
@@ -68,31 +77,33 @@ const usePublicaciones = () => {
     }
   };
 
-  const publicarEnFacebook = async (publicacion) => {
-    if (publicacion.estado !== "pendiente") {
-      setMensajePublicacion({
-        tipo: "error",
-        texto: "Cambia la publicación a Lista para publicar antes de publicarla.",
-      });
-      return false;
-    }
-
-    const mensajeFacebook = [
-      publicacion.titulo,
-      publicacion.contenido,
-      publicacion.hashtags,
-    ]
-      .filter(Boolean)
-      .join("\n\n");
+  const publicarConfirmadoEnFacebook = async (publicacion, { demoConfirmada = false } = {}) => {
+    const mensajeFacebook = construirMensajeFacebook(publicacion);
 
     setPublicandoId(publicacion.id);
     setMensajePublicacion(null);
 
     try {
+      if (!demoConfirmada) {
+        const destinoRespuesta = await getFacebook(`publicacion/${publicacion.id}/facebook/destination`);
+        const destino = destinoRespuesta.data?.data ?? destinoRespuesta.data;
+
+        if (destino?.requires_confirmation) {
+          setConfirmacionDemoFacebook({
+            publicacion,
+            titulo: "Usar pagina demo de Facebook",
+            mensaje: mensajeConfirmacionDemo(destino.page_name),
+          });
+          return false;
+        }
+      }
+
       const respuesta = await post(`publicacion/${publicacion.id}/facebook`, {
         mensaje: mensajeFacebook,
+        ...(demoConfirmada && { confirm_demo: true }),
       });
       const publicacionActualizada = respuesta.data?.data ?? respuesta.data;
+      const warning = respuesta.data?.warning;
 
       setPublicaciones((previas) =>
         previas.map((item) =>
@@ -102,10 +113,21 @@ const usePublicaciones = () => {
 
       setMensajePublicacion({
         tipo: "success",
-        texto: "Publicación publicada en Facebook correctamente.",
+        texto: warning
+          ? `Publicacion publicada en Facebook correctamente. ${warning}`
+          : "Publicacion publicada en Facebook correctamente.",
       });
       return true;
     } catch (err) {
+      if (err.status === 409 && err.data?.requires_demo_confirmation) {
+        setConfirmacionDemoFacebook({
+          publicacion,
+          titulo: "Usar pagina demo de Facebook",
+          mensaje: mensajeConfirmacionDemo(err.data?.destination?.page_name),
+        });
+        return false;
+      }
+
       setMensajePublicacion({
         tipo: "error",
         texto: err.data?.error || err.backendMessage || err.message || "No se pudo publicar en Facebook.",
@@ -114,6 +136,30 @@ const usePublicaciones = () => {
     } finally {
       setPublicandoId(null);
     }
+  };
+
+  const publicarEnFacebook = async (publicacion) => {
+    if (publicacion.estado !== "pendiente") {
+      setMensajePublicacion({
+        tipo: "error",
+        texto: "Cambia la publicación a Lista para publicar antes de publicarla.",
+      });
+      return false;
+    }
+
+    return publicarConfirmadoEnFacebook(publicacion);
+  };
+
+  const confirmarPublicacionDemoFacebook = async () => {
+    if (!confirmacionDemoFacebook) return false;
+
+    const publicacion = confirmacionDemoFacebook.publicacion;
+    setConfirmacionDemoFacebook(null);
+    return publicarConfirmadoEnFacebook(publicacion, { demoConfirmada: true });
+  };
+
+  const cancelarPublicacionDemoFacebook = () => {
+    setConfirmacionDemoFacebook(null);
   };
 
   const error = errorCarga;
@@ -131,6 +177,9 @@ const usePublicaciones = () => {
     eliminarPublicacion,
     publicandoId,
     publicarEnFacebook,
+    confirmacionDemoFacebook,
+    confirmarPublicacionDemoFacebook,
+    cancelarPublicacionDemoFacebook,
     mensajePublicacion,
     setMensajePublicacion,
   };

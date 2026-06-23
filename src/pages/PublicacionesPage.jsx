@@ -4,6 +4,7 @@ import { useState } from "react";
 import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
 import Mensaje from "../components/Mensaje.jsx";
+import ModalConfirmacion from "../components/ModalConfirmacion.jsx";
 import usePublicaciones from "../hooks/usePublicaciones.js";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
@@ -64,6 +65,9 @@ const PublicacionesPage = () => {
     eliminarPublicacion,
     publicandoId,
     publicarEnFacebook,
+    confirmacionDemoFacebook,
+    confirmarPublicacionDemoFacebook,
+    cancelarPublicacionDemoFacebook,
     mensajePublicacion,
     setMensajePublicacion,
   } = usePublicaciones();
@@ -71,11 +75,22 @@ const PublicacionesPage = () => {
   const [confirmandoId, setConfirmandoId] = useState(null);
   const [menuPublicarId, setMenuPublicarId] = useState(null);
   const textoVerPiezas = usuario?.rol === "Administrador" ? "Ver piezas" : "Ver mis piezas";
+  const confirmandoDemoFacebook = !!confirmacionDemoFacebook && publicandoId === confirmacionDemoFacebook.publicacion?.id;
 
   if (error) return <EstadoError mensaje={error} />;
 
   return (
     <main className="min-h-screen font-sans bg-white">
+      <ModalConfirmacion
+        visible={!!confirmacionDemoFacebook}
+        titulo={confirmacionDemoFacebook?.titulo}
+        mensaje={confirmacionDemoFacebook?.mensaje}
+        textoConfirmar="Continuar con demo"
+        confirmando={confirmandoDemoFacebook}
+        onCancelar={cancelarPublicacionDemoFacebook}
+        onConfirmar={confirmarPublicacionDemoFacebook}
+      />
+
       <section className="page-header">
         <div className="flex flex-col gap-4 px-6 mx-auto max-w-7xl md:flex-row md:items-center md:justify-between">
           <div className="text-left">

@@ -4,6 +4,7 @@ import Cargando from "../components/Cargando.jsx";
 import EstadoError from "../components/EstadoError.jsx";
 import Mensaje from "../components/Mensaje.jsx";
 import PublicacionPreview from "../components/PublicacionPreview.jsx";
+import ModalConfirmacion from "../components/ModalConfirmacion.jsx";
 import useEditarPublicacion from "../hooks/useEditarPublicacion.js";
 
 const EditarPublicacionPage = () => {
@@ -12,12 +13,15 @@ const EditarPublicacionPage = () => {
     cargando,
     guardando,
     publicandoFacebook,
+    confirmacionDemoFacebook,
     error,
     mensaje,
     setMensaje,
     handleEditar,
     guardarCambios,
     publicarEnFacebook,
+    confirmarPublicacionDemoFacebook,
+    cancelarPublicacionDemoFacebook,
   } = useEditarPublicacion();
 
   if (error) return <EstadoError mensaje={error} />;
@@ -58,6 +62,16 @@ const EditarPublicacionPage = () => {
         tipo={mensaje.tipo}
         texto={mensaje.texto}
         onClose={() => setMensaje({ tipo: "", texto: "" })}
+      />
+
+      <ModalConfirmacion
+        visible={!!confirmacionDemoFacebook}
+        titulo={confirmacionDemoFacebook?.titulo}
+        mensaje={confirmacionDemoFacebook?.mensaje}
+        textoConfirmar="Continuar con demo"
+        confirmando={publicandoFacebook}
+        onCancelar={cancelarPublicacionDemoFacebook}
+        onConfirmar={confirmarPublicacionDemoFacebook}
       />
 
       <section className="py-10">
